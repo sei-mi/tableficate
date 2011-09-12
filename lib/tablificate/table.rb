@@ -6,8 +6,8 @@ module Tablificate
       @data     = data
     end
 
-    def column(label)
-      @columns.push(label)
+    def column(label, opts = {})
+      @columns.push(Column.new(label, opts))
     end
 
     def to_s

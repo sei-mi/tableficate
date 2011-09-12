@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <% columns.each do |column| %>
-        <th><%= column.to_s.titleize %></th>
+        <th><%= column.header %></th>
       <% end %>
     </tr>
   </thead>
@@ -10,7 +10,7 @@
     <% rows.each do |row| %>
       <tr>
         <% columns.each do |column| %>
-          <td><%= row.send(column) %></td>
+          <td><%= row.send(column.label) %></td>
         <% end %>
       </tr>
     <% end %>
