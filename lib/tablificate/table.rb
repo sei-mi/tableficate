@@ -6,7 +6,8 @@ module Tablificate
       @data     = data
     end
 
-    def column(label, opts = {})
+    def column(label, opts = {}, &block)
+      opts[:format] = block if block_given?
       @columns.push(Column.new(label, opts))
     end
 

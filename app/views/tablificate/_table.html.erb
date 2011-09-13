@@ -10,7 +10,7 @@
     <% rows.each do |row| %>
       <tr>
         <% columns.each do |column| %>
-          <td><%= row.send(column.label) %></td>
+          <td><%= column.value(row) %></td>
         <% end %>
       </tr>
     <% end %>
