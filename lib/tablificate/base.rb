@@ -1,7 +1,7 @@
 module Tablificate
   class Base
     def self.find_by_params(params)
-      v = @model
+      v = @scope
 
       # sorting
       if params[:sort].present?
@@ -26,8 +26,12 @@ module Tablificate
       v
     end
 
-    def self.scope(model)
-      @model = model.to_s.camelize.constantize
+    def self.scope(model = nil, &block)
+      if model
+        @scope = model.to_s.camelize.constantize
+      else
+        @scope = block.call
+      end
     end
 
     def self.column(label, opts = {})
