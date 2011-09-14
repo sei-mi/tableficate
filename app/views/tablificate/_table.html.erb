@@ -1,3 +1,7 @@
+<% if defined? ::Kaminari %>
+  <%= paginate(rows) %>
+<% end %>
+
 <table border="1">
   <thead>
     <tr>
@@ -5,8 +9,8 @@
         <th>
           <%= column.header %>
           <% if column.sortable? %>
-            <%= link_to 'A', url_for(sort: column.label.to_s, dir: 'A') %>
-            <%= link_to 'D', url_for(sort: column.label.to_s, dir: 'D') %>
+            <%= link_to 'A', url_for(params.merge(sort: column.label.to_s, dir: 'A')) %>
+            <%= link_to 'D', url_for(params.merge(sort: column.label.to_s, dir: 'D')) %>
           <% end %>
         </th>
       <% end %>

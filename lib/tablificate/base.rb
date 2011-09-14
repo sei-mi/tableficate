@@ -3,6 +3,7 @@ module Tablificate
     def self.find_by_params(params)
       v = @model
 
+      # sorting
       if params[:sort].present?
         v = v.order(@sort[params[:sort].to_sym] || "#{params[:sort]} ASC")
         if params[:dir] == 'D'
@@ -10,7 +11,15 @@ module Tablificate
         end
       end
 
-      v.all
+      # pagination
+      if defined? ::Kaminari
+        v = v.page(params[:page] || 1)
+        v = v.per(params[:per]) if params[:per].present?
+      else
+        v.all
+      end
+
+      v
     end
 
     def self.scope(model)
