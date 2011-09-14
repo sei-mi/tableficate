@@ -3,9 +3,10 @@ module Tablificate
     attr_reader :label, :header
 
     def initialize(label, opts = {})
-      @label  = label
-      @header = opts[:header] || label.to_s.titleize
-      @format = opts[:format]
+      @label    = label
+      @header   = opts[:header] || label.to_s.titleize
+      @format   = opts[:format]
+      @sortable = opts[:sortable] == false ? false : true
     end
 
     def value(row)
@@ -14,6 +15,10 @@ module Tablificate
       else
         row.send(@label)
       end
+    end
+
+    def sortable?
+      @sortable
     end
   end
 end

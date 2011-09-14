@@ -29,4 +29,15 @@ describe Tablificate::Column do
 
     column.value(row).should == 'September 12, 2000 at 01:45:37 pm'
   end
+
+  it 'should allow sorting to be turned on and off' do
+    column = Tablificate::Column.new(:foo, sortable: false)
+    column.sortable?.should be false
+
+    column = Tablificate::Column.new(:foo, sortable: true)
+    column.sortable?.should be true
+
+    column = Tablificate::Column.new(:foo)
+    column.sortable?.should be true
+  end
 end

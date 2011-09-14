@@ -1,8 +1,14 @@
-<table>
+<table border="1">
   <thead>
     <tr>
       <% columns.each do |column| %>
-        <th><%= column.header %></th>
+        <th>
+          <%= column.header %>
+          <% if column.sortable? %>
+            <%= link_to 'A', url_for(sort: column.label.to_s, dir: 'A') %>
+            <%= link_to 'D', url_for(sort: column.label.to_s, dir: 'D') %>
+          <% end %>
+        </th>
       <% end %>
     </tr>
   </thead>
