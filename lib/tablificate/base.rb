@@ -15,6 +15,10 @@ module Tablificate
       if defined? ::Kaminari
         v = v.page(params[:page] || 1)
         v = v.per(params[:per]) if params[:per].present?
+      elsif defined? ::WillPaginate
+        paginate_opts = {page: params[:page] || 1}
+        paginate_opts[:per_page] = params[:per] if params[:per].present?
+        v = v.paginate(paginate_opts)
       else
         v.all
       end

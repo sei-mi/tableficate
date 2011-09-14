@@ -1,5 +1,7 @@
 <% if defined? ::Kaminari %>
   <%= paginate(rows) %>
+<% elsif defined? ::WillPaginate %>
+  <%= will_paginate(rows) %>
 <% end %>
 
 <table border="1">
