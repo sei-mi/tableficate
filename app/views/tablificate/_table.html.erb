@@ -1,13 +1,13 @@
 <% if defined? ::Kaminari %>
-  <%= paginate(rows) %>
+  <%= paginate(table.rows) %>
 <% elsif defined? ::WillPaginate %>
-  <%= will_paginate(rows) %>
+  <%= will_paginate(table.rows) %>
 <% end %>
 
 <table border="1">
   <thead>
     <tr>
-      <% columns.each do |column| %>
+      <% table.columns.each do |column| %>
         <th>
           <%= column.header %>
           <% if column.sortable? %>
@@ -19,9 +19,9 @@
     </tr>
   </thead>
   <tbody>
-    <% rows.each do |row| %>
+    <% table.rows.each do |row| %>
       <tr>
-        <% columns.each do |column| %>
+        <% table.columns.each do |column| %>
           <td><%= column.value(row) %></td>
         <% end %>
       </tr>

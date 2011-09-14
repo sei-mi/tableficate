@@ -1,9 +1,11 @@
 module Tablificate
   class Table
+    attr_reader :columns, :rows
+
     def initialize(template, data)
       @template = template
       @columns  = []
-      @data     = data
+      @rows     = data
     end
 
     def column(label, opts = {}, &block)
@@ -12,7 +14,7 @@ module Tablificate
     end
 
     def to_s
-      @template.render partial: 'tablificate/table', locals: {columns: @columns, rows: @data}
+      @template.render partial: 'tablificate/table', locals: {table: self}
     end
   end
 end
