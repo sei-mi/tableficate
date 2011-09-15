@@ -4,9 +4,11 @@ module Tablificate
       v = @scope.scoped
 
       # sorting
-      if params[:sort].present?
-        v = v.order(@sort[params[:sort].to_sym] || "#{params[:sort]} ASC")
-        if params[:dir] == 'desc'
+      field = params[:sort] || (@default_sort && @default_sort[0])
+      dir   = params[:dir]  || (@default_sort && @default_sort[1])
+      if field.present?
+        v = v.order(@sort[field.to_sym] || "#{field.to_s} ASC")
+        if dir == 'desc'
           v = v.reverse_order
         end
       end
@@ -20,6 +22,10 @@ module Tablificate
       else
         @scope = block.call
       end
+    end
+
+    def self.default_sort(label, dir = 'asc')
+      @default_sort = [label, dir]
     end
 
     def self.column(label, opts = {})
