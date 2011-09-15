@@ -1,7 +1,7 @@
 module Tablificate
   class Base
     def self.find_by_params(params)
-      v = @scope
+      v = @scope.scoped
 
       # sorting
       if params[:sort].present?
@@ -19,8 +19,6 @@ module Tablificate
         paginate_opts = {page: params[:page] || 1}
         paginate_opts[:per_page] = params[:per] if params[:per].present?
         v = v.paginate(paginate_opts)
-      else
-        v.all
       end
 
       v
