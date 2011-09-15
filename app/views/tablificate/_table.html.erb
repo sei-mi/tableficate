@@ -11,7 +11,7 @@
         <th>
           <%= column.header %>
           <% if column.sortable? %>
-            <%= link_to 'A', url_for(params.merge(sort: column.label.to_s, dir: 'acs')) %>
+            <%= link_to 'A', url_for(params.merge(sort: column.label.to_s, dir: 'asc')) %>
             <%= link_to 'D', url_for(params.merge(sort: column.label.to_s, dir: 'desc')) %>
           <% end %>
         </th>
