@@ -6,7 +6,7 @@ module Tablificate
       # sorting
       if params[:sort].present?
         v = v.order(@sort[params[:sort].to_sym] || "#{params[:sort]} ASC")
-        if params[:dir] == 'D'
+        if params[:dir] == 'desc'
           v = v.reverse_order
         end
       end
