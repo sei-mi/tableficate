@@ -1,7 +1,7 @@
 module Tablificate
   class Base
     def self.find_by_params(params)
-      v = @scope.scoped
+      v = @scope
 
       # sorting
       field = params[:sort] || (@default_sort && @default_sort[0])
@@ -13,6 +13,14 @@ module Tablificate
         end
       end
 
+      # return an arel object with our data attached
+      v = v.tablificate_ext
+      sorting = {field: nil, dir: nil}
+      if field.present?
+        sorting[:field] = field.to_sym
+        sorting[:dir]   = (dir.present? and ['asc', 'desc'].include?(dir)) ? dir : 'asc'
+      end
+      v.tablificate_add_data(:current_sort, sorting)
       v
     end
 

@@ -1,11 +1,12 @@
 module Tablificate
   class Table
-    attr_reader :columns, :rows
+    attr_reader :columns, :rows, :current_sort
 
-    def initialize(template, data)
-      @template = template
-      @columns  = []
-      @rows     = data
+    def initialize(template, rows, data = {})
+      @template     = template
+      @columns      = []
+      @rows         = rows
+      @current_sort = data[:current_sort]
     end
 
     def column(label, opts = {}, &block)
