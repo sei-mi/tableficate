@@ -2,16 +2,23 @@ module Tablificate
   class Table
     attr_reader :columns, :rows, :current_sort
 
-    def initialize(template, rows, data = {})
-      @template     = template
-      @columns      = []
-      @rows         = rows
+    def initialize(template, rows, options, data)
+      @template = template
+      @rows     = rows
+      @columns  = []
+
+      @options = {
+        sortable: false
+      }.merge(options)
+
       @current_sort = data[:current_sort]
     end
 
-    def column(label, opts = {}, &block)
-      opts[:format] = block if block_given?
-      @columns.push(Column.new(label, opts))
+    def column(label, options = {}, &block)
+      options[:format] = block if block_given?
+      options[:sortable] = @options[:sortable] if options[:sortable].nil?
+
+      @columns.push(Column.new(label, options))
     end
 
     def to_s

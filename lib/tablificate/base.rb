@@ -36,9 +36,9 @@ module Tablificate
       @default_sort = [label, dir]
     end
 
-    def self.column(label, opts = {})
+    def self.column(label, options = {})
       @sort ||= {}
-      @sort[label] = opts[:sort] if opts[:sort].present?
+      @sort[label] = options[:sort] if options[:sort].present?
     end
   end
 end

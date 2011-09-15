@@ -2,23 +2,22 @@ module Tablificate
   class Column
     attr_reader :label, :header
 
-    def initialize(label, opts = {})
-      @label    = label
-      @header   = opts[:header] || label.to_s.titleize
-      @format   = opts[:format]
-      @sortable = opts[:sortable] == false ? false : true
+    def initialize(label, options = {})
+      @label   = label
+      @header  = options.delete(:header) || label.to_s.titleize
+      @options = options
     end
 
     def value(row)
-      if @format
-        @format.call(row)
+      if @options[:format]
+        @options[:format].call(row)
       else
         row.send(@label)
       end
     end
 
     def sortable?
-      @sortable
+      @options[:sortable]
     end
   end
 end
