@@ -4,10 +4,10 @@ module Tablificate
       v = @scope
 
       # sorting
-      field = params[:sort] || (@default_sort && @default_sort[0])
-      dir   = params[:dir]  || (@default_sort && @default_sort[1])
-      if field.present?
-        v = v.order(@sort[field.to_sym] || "#{field.to_s} ASC")
+      column = params[:sort] || (@default_sort && @default_sort[0])
+      dir    = params[:dir]  || (@default_sort && @default_sort[1])
+      if column.present?
+        v = v.order(@sort[column.to_sym] || "#{column.to_s} ASC")
         if dir == 'desc'
           v = v.reverse_order
         end
@@ -15,10 +15,10 @@ module Tablificate
 
       # return an arel object with our data attached
       v = v.tablificate_ext
-      sorting = {field: nil, dir: nil}
-      if field.present?
-        sorting[:field] = field.to_sym
-        sorting[:dir]   = (dir.present? and ['asc', 'desc'].include?(dir)) ? dir : 'asc'
+      sorting = {column: nil, dir: nil}
+      if column.present?
+        sorting[:column] = column.to_sym
+        sorting[:dir]    = (dir.present? and ['asc', 'desc'].include?(dir)) ? dir : 'asc'
       end
       v.tablificate_add_data(:current_sort, sorting)
       v

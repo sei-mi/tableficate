@@ -8,19 +8,7 @@
   <thead>
     <tr>
       <% table.columns.each do |column| %>
-        <th>
-          <%= column.header %>
-          <% if column.sortable? %>
-            <%= link_to 'A', url_for(params.merge(sort: column.label.to_s, dir: 'asc')) %>
-            <% if table.current_sort[:field] == column.label and table.current_sort[:dir] == 'asc' %>
-              *
-            <% end %>
-            <%= link_to 'D', url_for(params.merge(sort: column.label.to_s, dir: 'desc')) %>
-            <% if table.current_sort[:field] == column.label and table.current_sort[:dir] == 'desc' %>
-              *
-            <% end %>
-          <% end %>
-        </th>
+        <%= column.render %>
       <% end %>
     </tr>
   </thead>

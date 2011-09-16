@@ -18,11 +18,16 @@ module Tablificate
       options[:format] = block if block_given?
       options[:sortable] = @options[:sortable] if options[:sortable].nil?
 
-      @columns.push(Column.new(label, options))
+      @columns.push(Column.new(@template, self, label, options))
     end
 
-    def to_s
-      @template.render partial: 'tablificate/table', locals: {table: self}
+    def render(options = {})
+      options.reverse_merge!(
+        partial: 'tablificate/table',
+        locals:  {table: self}
+      )
+
+      @template.render options
     end
   end
 end
