@@ -38,6 +38,6 @@ describe Tablificate::Column do
     column.sortable?.should be true
 
     column = Tablificate::Column.new(:foo)
-    column.sortable?.should be true
+    column.sortable?.should be false
   end
 end
