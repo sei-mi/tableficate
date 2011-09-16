@@ -14,11 +14,11 @@ module Tablificate
       @current_sort = data[:current_sort]
     end
 
-    def column(label, options = {}, &block)
+    def column(name, options = {}, &block)
       options[:format] = block if block_given?
       options[:sortable] = @options[:sortable] if options[:sortable].nil?
 
-      @columns.push(Column.new(@template, self, label, options))
+      @columns.push(Column.new(@template, self, name, options))
     end
 
     def render(options = {})

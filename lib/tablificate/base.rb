@@ -32,13 +32,13 @@ module Tablificate
       end
     end
 
-    def self.default_sort(label, dir = 'asc')
-      @default_sort = [label, dir]
+    def self.default_sort(name, dir = 'asc')
+      @default_sort = [name, dir]
     end
 
-    def self.column(label, options = {})
+    def self.column(name, options = {})
       @sort ||= {}
-      @sort[label] = options[:sort] if options[:sort].present?
+      @sort[name] = options[:sort] if options[:sort].present?
     end
   end
 end
