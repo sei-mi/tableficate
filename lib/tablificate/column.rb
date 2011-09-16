@@ -17,7 +17,7 @@ module Tablificate
     end
 
     def sortable?
-      @options[:sortable]
+      !!@options[:sortable]
     end
   end
 end
