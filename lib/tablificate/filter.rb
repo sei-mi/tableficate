@@ -8,7 +8,7 @@ module Tablificate
       @name       = name
       @attributes = attributes
 
-      @label = @attributes.delete(:label) || name.to_s.titleize
+      @label = @attributes.delete(:label) || table.columns.detect{|column| column.name == @name}.header
     end
 
     def render(options = {})
