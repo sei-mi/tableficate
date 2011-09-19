@@ -8,7 +8,7 @@ module Tablificate
         params[:filter].each do |name, value|
           value.strip!
 
-          if @filter[name.to_sym]
+          if @filter && @filter[name.to_sym]
             name = name.to_sym
             if @filter[name].class == Proc
               v = @filter[name].call(v, value)
