@@ -6,6 +6,8 @@ module Tablificate
       # filtering
       if params[:filter]
         params[:filter].each do |name, value|
+          next if value.blank?
+
           value.strip!
 
           if @filter && @filter[name.to_sym]
