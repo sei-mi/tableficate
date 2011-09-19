@@ -19,12 +19,12 @@ module Tablificate
       end
     end
 
-    def filterable?
-      !!@options[:filterable]
+    def show_filter?
+      !!@options[:show_filter]
     end
 
-    def sortable?
-      !!@options[:sortable]
+    def show_sort?
+      !!@options[:show_sort]
     end
 
     def is_sorted?(dir = nil)

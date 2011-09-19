@@ -31,24 +31,24 @@ describe Tablificate::Column do
   end
 
   it 'should allow sorting to be turned on and off' do
-    column = Tablificate::Column.new(nil, nil, :foo, sortable: false)
-    column.sortable?.should be false
+    column = Tablificate::Column.new(nil, nil, :foo, show_sort: false)
+    column.show_sort?.should be false
 
-    column = Tablificate::Column.new(nil, nil, :foo, sortable: true)
-    column.sortable?.should be true
+    column = Tablificate::Column.new(nil, nil, :foo, show_sort: true)
+    column.show_sort?.should be true
 
     column = Tablificate::Column.new(nil, nil, :foo)
-    column.sortable?.should be false
+    column.show_sort?.should be false
   end
 
   it 'should allow filtering to be turned on and off' do
-    column = Tablificate::Column.new(nil, nil, :foo, filterable: false)
-    column.filterable?.should be false
+    column = Tablificate::Column.new(nil, nil, :foo, show_filter: false)
+    column.show_filter?.should be false
 
-    column = Tablificate::Column.new(nil, nil, :foo, filterable: true)
-    column.filterable?.should be true
+    column = Tablificate::Column.new(nil, nil, :foo, show_filter: true)
+    column.show_filter?.should be true
 
     column = Tablificate::Column.new(nil, nil, :foo)
-    column.filterable?.should be false
+    column.show_filter?.should be false
   end
 end

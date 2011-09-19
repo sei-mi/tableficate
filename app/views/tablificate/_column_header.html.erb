@@ -1,6 +1,6 @@
 <th>
   <%= column.header %>
-  <% if column.sortable? %>
+  <% if column.show_sort? %>
     <%= link_to 'A', url_for(params.merge(sort: column.name.to_s, dir: 'asc')) %>
     <% if column.is_sorted?('asc') %>
       *
