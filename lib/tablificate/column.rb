@@ -19,10 +19,6 @@ module Tablificate
       end
     end
 
-    def show_filter?
-      !!@options[:show_filter]
-    end
-
     def show_sort?
       !!@options[:show_sort]
     end

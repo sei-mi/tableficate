@@ -9,8 +9,7 @@ module Tablificate
       @filters  = []
 
       @options = {
-        show_sorts:   false,
-        show_filters: false
+        show_sorts: false
       }.merge(options)
 
       @current_sort = data[:current_sort]
@@ -19,8 +18,7 @@ module Tablificate
     def column(name, options = {}, &block)
       options[:format] = block if block_given?
       options.reverse_merge!(
-        show_sort:   @options[:show_sorts],
-        show_filter: @options[:show_filters]
+        show_sort: @options[:show_sorts]
       )
 
       @columns.push(Column.new(@template, self, name, options))
@@ -28,10 +26,6 @@ module Tablificate
 
     def show_sort?
       self.columns.detect{|column| column.show_sort?}
-    end
-
-    def show_filter?
-      self.columns.detect{|column| column.show_filter?}
     end
 
     def input_filter(name, attributes = {})

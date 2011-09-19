@@ -40,15 +40,4 @@ describe Tablificate::Column do
     column = Tablificate::Column.new(nil, nil, :foo)
     column.show_sort?.should be false
   end
-
-  it 'should allow filtering to be turned on and off' do
-    column = Tablificate::Column.new(nil, nil, :foo, show_filter: false)
-    column.show_filter?.should be false
-
-    column = Tablificate::Column.new(nil, nil, :foo, show_filter: true)
-    column.show_filter?.should be true
-
-    column = Tablificate::Column.new(nil, nil, :foo)
-    column.show_filter?.should be false
-  end
 end
