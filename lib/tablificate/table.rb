@@ -25,7 +25,7 @@ module Tablificate
     end
 
     def show_sort?
-      self.columns.detect{|column| column.show_sort?}
+      self.columns.any?{|column| column.show_sort?}
     end
 
     def input_filter(name, attributes = {})
