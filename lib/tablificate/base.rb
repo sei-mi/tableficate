@@ -27,7 +27,7 @@ module Tablificate
       column = params[:sort] || (@default_sort && @default_sort[0])
       dir    = params[:dir]  || (@default_sort && @default_sort[1])
       if column.present?
-        v = v.order(@sort[column.to_sym] || "#{column.to_s} ASC")
+        v = v.order((@sort && @sort[column.to_sym]) || "#{column.to_s} ASC")
         if dir == 'desc'
           v = v.reverse_order
         end
