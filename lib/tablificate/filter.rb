@@ -2,11 +2,11 @@ module Tablificate
   class Filter
     attr_reader :name, :label, :attributes
 
-    def initialize(template, table, name, options = {})
+    def initialize(template, table, name, attributes = {})
       @template   = template
       @table      = table
       @name       = name
-      @attributes = options
+      @attributes = attributes
 
       @label = @attributes.delete(:label) || name.to_s.titleize
     end

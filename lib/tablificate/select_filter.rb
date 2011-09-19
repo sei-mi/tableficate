@@ -1,16 +1,16 @@
 module Tablificate
-  class InputFilter < Filter
-    def initialize(template, table, name, attributes = {})
+  class SelectFilter < Filter
+    attr_reader :options
+
+    def initialize(template, table, name, options, attributes = {})
       super(template, table, name, attributes)
 
-      @attributes.reverse_merge!(
-        type: 'text'
-      )
+      @options = options
     end
 
     def render(options = {})
       options.reverse_merge!(
-        partial: 'tablificate/input_filter',
+        partial: 'tablificate/select_filter',
         locals:  {filter: self}
       )
 

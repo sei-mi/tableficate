@@ -34,8 +34,12 @@ module Tablificate
       self.columns.detect{|column| column.filterable?}
     end
 
-    def input_filter(name, options = {})
-      @filters.push(InputFilter.new(@template, self, name, options))
+    def input_filter(name, attributes = {})
+      @filters.push(InputFilter.new(@template, self, name, attributes))
+    end
+
+    def select_filter(name, options, attributes = {})
+      @filters.push(SelectFilter.new(@template, self, name, options, attributes))
     end
 
     def render(options = {})

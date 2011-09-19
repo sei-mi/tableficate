@@ -18,7 +18,7 @@ module Tablificate
               v = v.where(["#{@filter[name][:field]} LIKE ?", value])
             end
           else
-            v = v.where(["#{name.gsub(/\W/, '')} LIKE ?", "%#{value}%"])
+            v = v.where(["#{name.gsub(/\W/, '')} LIKE ?", value])
           end
         end
       end
@@ -69,7 +69,6 @@ module Tablificate
         @filter[name] = block
       else
         options.reverse_merge!(
-          match: 'contains',
           field: name
         )
 
