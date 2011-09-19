@@ -6,8 +6,9 @@ module Tablificate
       @template = template
       @table    = table
       @name     = name
-      @header   = options.delete(:header) || name.to_s.titleize
       @options  = options
+
+      @header = @options.delete(:header) || name.to_s.titleize
     end
 
     def value(row)
@@ -16,6 +17,10 @@ module Tablificate
       else
         row.send(@name)
       end
+    end
+
+    def filterable?
+      !!@options[:filterable]
     end
 
     def sortable?

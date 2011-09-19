@@ -3,6 +3,26 @@ module Tablificate
     def self.find_by_params(params)
       v = @scope
 
+      # filtering
+      if params[:filter]
+        params[:filter].each do |name, value|
+          value.strip!
+
+          if @filter[name.to_sym]
+            name = name.to_sym
+            if @filter[name].class == Proc
+              v = @filter[name].call(v, value)
+            else
+              value = "%#{value}%" if @filter[name][:match] == 'contains'
+
+              v = v.where(["#{@filter[name][:field]} LIKE ?", value])
+            end
+          else
+            v = v.where(["#{name.gsub(/\W/, '')} LIKE ?", "%#{value}%"])
+          end
+        end
+      end
+
       # sorting
       column = params[:sort] || (@default_sort && @default_sort[0])
       dir    = params[:dir]  || (@default_sort && @default_sort[1])
@@ -25,10 +45,10 @@ module Tablificate
     end
 
     def self.scope(model = nil, &block)
-      if model
-        @scope = model.to_s.camelize.constantize
-      else
+      if block_given?
         @scope = block.call
+      else
+        @scope = model.to_s.camelize.constantize
       end
     end
 
@@ -38,7 +58,23 @@ module Tablificate
 
     def self.column(name, options = {})
       @sort ||= {}
+
       @sort[name] = options[:sort] if options[:sort].present?
+    end
+
+    def self.filter(name, options = {}, &block)
+      @filter ||= {}
+
+      if block_given?
+        @filter[name] = block
+      else
+        options.reverse_merge!(
+          match: 'contains',
+          field: name
+        )
+
+        @filter[name] = options
+      end
     end
   end
 end

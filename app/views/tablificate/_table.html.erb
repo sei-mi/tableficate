@@ -1,3 +1,13 @@
+<% if table.filters.any? %>
+  <%= form_tag '', method: :get do %>
+    <% table.filters.each do |filter| %>
+      <%= filter.render %>
+    <% end %>
+
+    <%= submit_tag('Filter') %>
+  <% end %>
+<% end %>
+
 <% if defined? ::Kaminari %>
   <%= paginate(table.rows) %>
 <% elsif defined? ::WillPaginate %>

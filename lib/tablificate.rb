@@ -1,5 +1,7 @@
 require 'tablificate/engine'
 require 'tablificate/column'
+require 'tablificate/filter'
+require 'tablificate/input_filter'
 require 'tablificate/table'
 require 'tablificate/helper'
 require 'tablificate/base'
