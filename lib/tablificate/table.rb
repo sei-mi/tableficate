@@ -15,6 +15,10 @@ module Tablificate
       @current_sort = data[:current_sort]
     end
 
+    def actions(options = {}, &block)
+      @columns.push(ActionColumn.new(@template, options, block))
+    end
+
     def column(name, options = {}, &block)
       options[:format] = block if block_given?
       options.reverse_merge!(

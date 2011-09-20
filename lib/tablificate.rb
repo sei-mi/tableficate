@@ -1,5 +1,6 @@
 require 'tablificate/engine'
 require 'tablificate/column'
+require 'tablificate/action_column'
 require 'tablificate/filter'
 require 'tablificate/input_filter'
 require 'tablificate/select_filter'

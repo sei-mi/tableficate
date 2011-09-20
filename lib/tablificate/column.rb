@@ -30,7 +30,7 @@ module Tablificate
         is_sorted = @table.current_sort[:dir] == dir
       end
 
-      return is_sorted
+      is_sorted
     end
 
     def render(options = {})
