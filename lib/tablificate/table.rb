@@ -1,6 +1,6 @@
 module Tablificate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters
+    attr_reader :columns, :rows, :current_sort, :filters, :attributes
 
     def initialize(template, rows, options, data)
       @template = template
@@ -11,6 +11,8 @@ module Tablificate
       @options = {
         show_sorts: false
       }.merge(options)
+
+      @attributes = @options.delete(:html) || {}
 
       @current_sort = data[:current_sort]
     end

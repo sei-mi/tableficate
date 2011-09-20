@@ -14,7 +14,7 @@
   <%= will_paginate(table.rows) %>
 <% end %>
 
-<table border="1">
+<table <%= raw table.attributes.map{|name, value| "#{name}=\"#{value}\""}.join(' ') %>>
   <thead>
     <tr>
       <% table.columns.each do |column| %>
