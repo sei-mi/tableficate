@@ -12,7 +12,7 @@ module Tablificate
         show_sorts: false
       }.merge(options)
 
-      @attributes = @options.delete(:html) || {}
+      @attributes = Attributes.new().merge(@options.delete(:html) || {})
 
       @current_sort = data[:current_sort]
     end
