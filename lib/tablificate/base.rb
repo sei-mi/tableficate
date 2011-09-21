@@ -36,8 +36,8 @@ module Tablificate
       end
 
       # sorting
-      column = params[:sort] || (@default_sort && @default_sort[0])
-      dir    = params[:dir]  || (@default_sort && @default_sort[1])
+      column = params[:sort].try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
+      dir    = params[:dir]                       || @default_sort.try(:[], 1)
       if column.present?
         scope = scope.order((@sort && @sort[column.to_sym]) || "#{column.to_s} ASC")
         if dir == 'desc'
