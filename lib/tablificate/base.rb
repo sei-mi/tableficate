@@ -39,7 +39,7 @@ module Tablificate
       column = params[:sort].try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
       dir    = params[:dir]                       || @default_sort.try(:[], 1)
       if column.present?
-        scope = scope.order((@sort && @sort[column.to_sym]) || "#{column.to_s} ASC")
+        scope = scope.order(@sort.try(:[], column.to_sym) || "#{@scope.column_names.include?(column.to_s) ? @scope.table_name + '.' : ''}#{column.to_s} ASC")
         if dir == 'desc'
           scope = scope.reverse_order
         end
