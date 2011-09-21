@@ -6,7 +6,7 @@ module Tablificate
       # filtering
       if params[:filter]
         params[:filter].each do |name, value|
-          next if value.blank?
+          next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
 
           name = name.to_sym
           value.strip! if value.is_a?(String)
@@ -24,7 +24,11 @@ module Tablificate
               else
                 scope = scope.where(name => value)
               end
+            elsif value.is_a?(Hash)
+              scope = scope.where(["#{name.to_s.gsub(/\W/, '')} BETWEEN :start AND :stop", value])
             end
+          elsif value.is_a?(Hash)
+            scope = scope.where(["#{name.to_s.gsub(/\W/, '')} BETWEEN :start AND :stop", value])
           else
             scope = scope.where(name => value)
           end

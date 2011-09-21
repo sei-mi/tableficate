@@ -1,0 +1,5 @@
+<%= label_tag "filter[#{filter.name}][start]", filter.start.label %>
+<%= text_field_tag("filter[#{filter.name}][start]", (params[:filter] && params[:filter][filter.name] && params[:filter][filter.name][:start]) || '', filter.start.attributes) %>
+<%= label_tag "filter[#{filter.name}][stop]", filter.stop.label %>
+<%= text_field_tag("filter[#{filter.name}][stop]", (params[:filter] && params[:filter][filter.name] && params[:filter][filter.name][:stop]) || '', filter.stop.attributes) %>
+<br/>

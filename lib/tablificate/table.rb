@@ -38,6 +38,10 @@ module Tablificate
       @filters.push(InputFilter.new(@template, self, name, attributes))
     end
 
+    def input_range_filter(name, options = {})
+      @filters.push(InputRangeFilter.new(@template, self, name, options))
+    end
+
     def select_filter(name, options, attributes = {})
       @filters.push(SelectFilter.new(@template, self, name, options, attributes))
     end
