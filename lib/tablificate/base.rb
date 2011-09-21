@@ -22,10 +22,10 @@ module Tablificate
               if @filter[name][:match] == 'contains'
                 scope = scope.where(["#{name.to_s.gsub(/\W/, '')} REGEXP ?", value.join('|')])
               else
-                scope = scope.where(name => value)
+                scope = scope.where(@filter[name][:field] => value)
               end
             elsif value.is_a?(Hash)
-              scope = scope.where(["#{name.to_s.gsub(/\W/, '')} BETWEEN :start AND :stop", value])
+              scope = scope.where(["#{@filter[name][:field].to_s.gsub(/\W/, '')} BETWEEN :start AND :stop", value])
             end
           elsif value.is_a?(Hash)
             scope = scope.where(["#{name.to_s.gsub(/\W/, '')} BETWEEN :start AND :stop", value])
