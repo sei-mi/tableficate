@@ -17,5 +17,9 @@ module Tablificate
     def tablificate_row_tag(row, columns)
       render partial: 'tablificate/row', locals: {row: row, columns: columns}
     end
+
+    def tablificate_filter_tag(filter)
+      render partial: filter.template, locals: {filter: filter}
+    end
   end
 end

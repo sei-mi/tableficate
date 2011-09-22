@@ -2,11 +2,10 @@ module Tablificate
   class Column
     attr_reader :name, :header
 
-    def initialize(template, table, name, options = {})
-      @template = template
-      @table    = table
-      @name     = name
-      @options  = options
+    def initialize(table, name, options = {})
+      @table   = table
+      @name    = name
+      @options = options
 
       @header = @options.delete(:header) || name.to_s.titleize
     end

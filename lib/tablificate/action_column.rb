@@ -1,9 +1,8 @@
 module Tablificate
   class ActionColumn < Column
-    def initialize(template, options = {}, block)
-      @template = template
-      @options  = options
-      @block    = block
+    def initialize(options = {}, block)
+      @options = options
+      @block   = block
 
       @name   = ''
       @header = @options.delete(:header) || @name

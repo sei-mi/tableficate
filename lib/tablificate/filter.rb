@@ -1,18 +1,14 @@
 module Tablificate
   class Filter
-    attr_reader :name, :label, :attributes
+    attr_reader :name, :label, :attributes, :template
 
-    def initialize(template, table, name, attributes = {})
-      @template   = template
+    def initialize(table, name, attributes = {})
       @table      = table
       @name       = name
       @attributes = attributes
 
-      @label = @attributes.delete(:label) || table.columns.detect{|column| column.name == @name}.header
-    end
-
-    def render(options = {})
-      @template.render options
+      @template = self.class.to_s.underscore
+      @label    = @attributes.delete(:label) || table.columns.detect{|column| column.name == @name}.header
     end
   end
 end

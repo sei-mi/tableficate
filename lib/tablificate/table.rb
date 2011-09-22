@@ -18,7 +18,7 @@ module Tablificate
     end
 
     def actions(options = {}, &block)
-      @columns.push(ActionColumn.new(@template, options, block))
+      @columns.push(ActionColumn.new(options, block))
     end
 
     def column(name, options = {}, &block)
@@ -27,7 +27,7 @@ module Tablificate
         show_sort: @options[:show_sorts]
       )
 
-      @columns.push(Column.new(@template, self, name, options))
+      @columns.push(Column.new(self, name, options))
     end
 
     def show_sort?
@@ -35,15 +35,15 @@ module Tablificate
     end
 
     def input_filter(name, attributes = {})
-      @filters.push(InputFilter.new(@template, self, name, attributes))
+      @filters.push(InputFilter.new(self, name, attributes))
     end
 
     def input_range_filter(name, options = {})
-      @filters.push(InputRangeFilter.new(@template, self, name, options))
+      @filters.push(InputRangeFilter.new(self, name, options))
     end
 
     def select_filter(name, options, attributes = {})
-      @filters.push(SelectFilter.new(@template, self, name, options, attributes))
+      @filters.push(SelectFilter.new(self, name, options, attributes))
     end
 
     def render(options = {})

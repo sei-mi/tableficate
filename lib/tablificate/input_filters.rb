@@ -1,48 +1,30 @@
 module Tablificate
   class InputFilter < Filter
-    def initialize(template, table, name, attributes = {})
-      super(template, table, name, attributes)
+    def initialize(table, name, attributes = {})
+      super(table, name, attributes)
 
       @attributes.reverse_merge!(
         type: 'text'
       )
-    end
-
-    def render(options = {})
-      options.reverse_merge!(
-        partial: 'tablificate/input_filter',
-        locals:  {filter: self}
-      )
-
-      super(options)
     end
   end
 
   class InputRangeFilter < Filter
     attr_reader :start, :stop
 
-    def initialize(template, table, name, options = {})
+    def initialize(table, name, options = {})
       start_attributes = options.delete(:start) || {}
       stop_attributes  = options.delete(:stop)  || {}
 
-      super(template, table, name, options)
+      super(table, name, options)
 
       start_attributes.reverse_merge!(@attributes)
       start_attributes.reverse_merge!(label: self.label)
       stop_attributes.reverse_merge!(@attributes)
       stop_attributes.reverse_merge!(label: self.label)
 
-      @start = InputFilter.new(template, table, "#{name}_start", start_attributes)
-      @stop  = InputFilter.new(template, table, "#{name}_stop",  stop_attributes)
-    end
-
-    def render(options = {})
-      options.reverse_merge!(
-        partial: 'tablificate/input_range_filter',
-        locals:  {filter: self}
-      )
-
-      super(options)
+      @start = InputFilter.new(table, "#{name}_start", start_attributes)
+      @stop  = InputFilter.new(table, "#{name}_stop",  stop_attributes)
     end
   end
 end
