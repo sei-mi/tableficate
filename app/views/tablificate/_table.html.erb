@@ -18,17 +18,13 @@
   <thead>
     <tr>
       <% table.columns.each do |column| %>
-        <%= column.render %>
+        <%= tablificate_header_tag column %>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% table.rows.each do |row| %>
-      <tr>
-        <% table.columns.each do |column| %>
-          <td><%= column.value(row) %></td>
-        <% end %>
-      </tr>
+      <%= tablificate_row_tag row, table.columns %>
     <% end %>
   </tbody>
 </table>

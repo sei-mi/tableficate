@@ -32,14 +32,5 @@ module Tablificate
 
       is_sorted
     end
-
-    def render(options = {})
-      options.reverse_merge!(
-        partial: 'tablificate/column_header',
-        locals:  {column: self}
-      )
-
-      @template.render options
-    end
   end
 end
