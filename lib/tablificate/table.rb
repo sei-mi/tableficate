@@ -1,6 +1,6 @@
 module Tablificate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters, :attributes
+    attr_reader :columns, :rows, :current_sort, :filters, :attributes, :options
 
     def initialize(template, rows, options, data)
       @template = template
@@ -9,7 +9,8 @@ module Tablificate
       @filters  = []
 
       @options = {
-        show_sorts: false
+        show_sorts: false,
+        theme:      ''
       }.merge(options)
 
       @attributes = Attributes.new().merge(@options.delete(:html) || {})
@@ -18,7 +19,7 @@ module Tablificate
     end
 
     def actions(options = {}, &block)
-      @columns.push(ActionColumn.new(options, block))
+      @columns.push(ActionColumn.new(self, options, block))
     end
 
     def column(name, options = {}, &block)
@@ -48,7 +49,7 @@ module Tablificate
 
     def render(options = {})
       options.reverse_merge!(
-        partial: 'tablificate/table',
+        partial: Tablificate::Utils::template_path('table', @options[:theme]),
         locals:  {table: self}
       )
 

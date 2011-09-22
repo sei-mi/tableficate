@@ -1,6 +1,7 @@
 module Tablificate
   class ActionColumn < Column
-    def initialize(options = {}, block)
+    def initialize(table, options = {}, block)
+      @table   = table
       @options = options
       @block   = block
 

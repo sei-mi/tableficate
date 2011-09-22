@@ -7,19 +7,19 @@ module Tablificate
     end
 
     def tablificate_header_tag(column)
-      render partial: 'tablificate/column_header', locals: {column: column}
+      render partial: Tablificate::Utils::template_path('column_header', column.table.options[:theme]), locals: {column: column}
     end
 
     def tablificate_data_tag(row, column)
-      render partial: 'tablificate/data', locals: {row: row, column: column}
+      render partial: Tablificate::Utils::template_path('data', column.table.options[:theme]), locals: {row: row, column: column}
     end
 
     def tablificate_row_tag(row, columns)
-      render partial: 'tablificate/row', locals: {row: row, columns: columns}
+      render partial: Tablificate::Utils::template_path('row', columns.first.table.options[:theme]), locals: {row: row, columns: columns}
     end
 
     def tablificate_filter_tag(filter)
-      render partial: filter.template, locals: {filter: filter}
+      render partial: Tablificate::Utils::template_path(filter.template, filter.table.options[:theme]), locals: {filter: filter}
     end
   end
 end

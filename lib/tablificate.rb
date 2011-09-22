@@ -1,4 +1,5 @@
 require 'tablificate/engine'
+require 'tablificate/utils'
 require 'tablificate/column'
 require 'tablificate/action_column'
 require 'tablificate/filter'

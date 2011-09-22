@@ -1,6 +1,6 @@
 module Tablificate
   class Column
-    attr_reader :name, :header
+    attr_reader :name, :header, :table
 
     def initialize(table, name, options = {})
       @table   = table
