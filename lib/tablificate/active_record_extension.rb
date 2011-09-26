@@ -10,7 +10,7 @@ module Tablificate
         end
 
         def tablificate_get_data
-          @tablificate_data
+          @tablificate_data || {}
         end
       end
     end
