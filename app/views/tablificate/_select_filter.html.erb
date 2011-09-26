@@ -1,3 +1,4 @@
-<%= label_tag "filter[#{filter.name}]", filter.label %>
-<%= select_tag("filter[#{filter.name}]", filter.options, filter.attributes) %>
-<br/>
+<div>
+  <%= label_tag "filter[#{filter.name}]", filter.label %>
+  <%= select_tag("filter[#{filter.name}]", filter.options, filter.attributes) %>
+</div>
