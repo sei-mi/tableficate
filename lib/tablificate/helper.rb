@@ -1,6 +1,6 @@
 module Tablificate
   module Helper
-    def table_for(rows, options = {}, &block)
+    def table_for(rows, options = {})
       t = Tablificate::Table.new(self, rows, options, rows.tablificate_get_data)
       yield(t)
       t.render
