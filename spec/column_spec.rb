@@ -1,4 +1,4 @@
-require 'rails'
+require 'rails/all'
 require 'tablificate/column'
 
 describe Tablificate::Column do
