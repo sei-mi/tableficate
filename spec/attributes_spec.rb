@@ -9,4 +9,10 @@ describe Tablificate::Attributes do
 
     attrs.to_s.should == ' id="table_id" name="table_name"'
   end
+
+  it 'should output an empty string when there are no attributes' do
+    attrs = Tablificate::Attributes.new()
+    
+    attrs.to_s.should == ''
+  end
 end
