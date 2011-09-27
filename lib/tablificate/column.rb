@@ -2,17 +2,18 @@ module Tablificate
   class Column
     attr_reader :name, :header, :table
 
-    def initialize(table, name, options = {})
+    def initialize(table, name, options = {}, &block)
       @table   = table
       @name    = name
       @options = options
+      @block   = block
 
       @header = @options.delete(:header) || name.to_s.titleize
     end
 
     def value(row)
-      if @options[:format]
-        @options[:format].call(row)
+      if @block
+        @block.call(row).html_safe
       else
         row.send(@name)
       end

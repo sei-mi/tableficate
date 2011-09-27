@@ -23,12 +23,11 @@ module Tablificate
     end
 
     def column(name, options = {}, &block)
-      options[:format] = block if block_given?
       options.reverse_merge!(
         show_sort: @options[:show_sorts]
       )
 
-      @columns.push(Column.new(self, name, options))
+      @columns.push(Column.new(self, name, options, &block))
     end
 
     def show_sort?

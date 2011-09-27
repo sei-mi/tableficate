@@ -1,16 +1,7 @@
 module Tablificate
   class ActionColumn < Column
     def initialize(table, options = {}, block)
-      @table   = table
-      @options = options
-      @block   = block
-
-      @name   = ''
-      @header = @options.delete(:header) || @name
-    end
-
-    def value(row)
-      @block.call(row).html_safe
+      super(table, '', options, &block)
     end
 
     def show_sort?

@@ -25,7 +25,9 @@ describe Tablificate::Column do
     row = mock('SuperHero')
     row.stub!(:birthdate).and_return(Time.utc(2000, 9, 12, 13, 45, 37))
 
-    column = Tablificate::Column.new(nil, :born_at, format: Proc.new {|row| row.birthdate.strftime('%B %d, %Y at %I:%M:%S %P')})
+    column = Tablificate::Column.new(nil, :born_at) do |row|
+      row.birthdate.strftime('%B %d, %Y at %I:%M:%S %P')
+    end
 
     column.value(row).should == 'September 12, 2000 at 01:45:37 pm'
   end
