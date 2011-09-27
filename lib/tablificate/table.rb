@@ -18,16 +18,16 @@ module Tablificate
       @current_sort = data[:current_sort]
     end
 
-    def actions(options = {}, &block)
-      @columns.push(ActionColumn.new(self, options, block))
-    end
-
     def column(name, options = {}, &block)
       options.reverse_merge!(
         show_sort: @options[:show_sorts]
       )
 
       @columns.push(Column.new(self, name, options, &block))
+    end
+
+    def actions(options = {}, &block)
+      @columns.push(ActionColumn.new(self, options, block))
     end
 
     def show_sort?
