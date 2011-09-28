@@ -6,6 +6,10 @@ module Tablificate
       @attributes.reverse_merge!(
         type: 'text'
       )
+
+      if File.exists?('app/views/' + Tablificate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.erb", table.options[:theme]))
+        @template = "#{@attributes[:type]}_#{@template}"
+      end
     end
   end
 
