@@ -16,6 +16,10 @@ describe Tablificate::InputFilter do
     file = File.open('app/views/tablificate/_email_input_filter.html.erb', 'w')
     Tablificate::InputFilter.new(@table, :first_name, label: 'First', type: 'email').template.should == 'email_input_filter'
     File.delete(file.path)
+
+    file = File.open('app/views/tablificate/_email_input_filter.html.haml', 'w')
+    Tablificate::InputFilter.new(@table, :first_name, label: 'First', type: 'email').template.should == 'email_input_filter'
+    File.delete(file.path)
   end
 
   it 'should default to the "text" type of input' do

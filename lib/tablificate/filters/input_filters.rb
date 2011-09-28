@@ -7,7 +7,7 @@ module Tablificate
         type: 'text'
       )
 
-      if File.exists?('app/views/' + Tablificate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.erb", table.options[:theme]))
+      if not Dir.glob('app/views/' + Tablificate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.*", table.options[:theme])).empty?
         @template = "#{@attributes[:type]}_#{@template}"
       end
     end
