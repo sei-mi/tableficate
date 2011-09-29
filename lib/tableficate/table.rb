@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class Table
     attr_reader :columns, :rows, :current_sort, :filters, :attributes, :options
 
@@ -48,7 +48,7 @@ module Tablificate
 
     def render(options = {})
       options.reverse_merge!(
-        partial: Tablificate::Utils::template_path('table', @options[:theme]),
+        partial: Tableficate::Utils::template_path('table', @options[:theme]),
         locals:  {table: self}
       )
 

@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class SelectFilter < Filter
     attr_reader :options
 

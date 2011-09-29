@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class Attributes < Hash
     def to_s
       output = self.map{|name, value| "#{name}=\"#{value}\""}.join(' ')

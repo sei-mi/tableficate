@@ -1,6 +1,6 @@
-module Tablificate
+module Tableficate
   class TableGenerator < Rails::Generators::NamedBase
-    desc('Create a Tablificate table model.')
+    desc('Create a Tableficate table model.')
 
     source_root File.expand_path('../templates', __FILE__)
 

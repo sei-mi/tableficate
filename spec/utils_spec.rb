@@ -1,12 +1,12 @@
 require 'rails/all'
-require 'tablificate/utils'
+require 'tableficate/utils'
 
-describe Tablificate::Utils do
+describe Tableficate::Utils do
   it 'should construct a path with no theme' do
-    Tablificate::Utils::template_path('template.rb').should == 'tablificate/template.rb'
+    Tableficate::Utils::template_path('template.rb').should == 'tableficate/template.rb'
   end
 
   it 'should construct a path with a theme' do
-    Tablificate::Utils::template_path('template.rb', 'futuristic').should == 'tablificate/futuristic/template.rb'
+    Tableficate::Utils::template_path('template.rb', 'futuristic').should == 'tableficate/futuristic/template.rb'
   end
 end

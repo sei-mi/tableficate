@@ -1,7 +1,7 @@
 <% if table.filters.any? %>
   <%= form_tag '', method: :get do %>
     <% table.filters.each do |filter| %>
-      <%= tablificate_filter_tag filter %>
+      <%= tableficate_filter_tag filter %>
     <% end %>
 
     <%= submit_tag('Filter') %>
@@ -18,13 +18,13 @@
   <thead>
     <tr>
       <% table.columns.each do |column| %>
-        <%= tablificate_header_tag column %>
+        <%= tableficate_header_tag column %>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% table.rows.each do |row| %>
-      <%= tablificate_row_tag row, table.columns %>
+      <%= tableficate_row_tag row, table.columns %>
     <% end %>
   </tbody>
 </table>

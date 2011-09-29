@@ -1,8 +1,8 @@
-module Tablificate
+module Tableficate
   class ThemeGenerator < Rails::Generators::NamedBase
-    desc('Create a Tablificate theme.')
+    desc('Create a Tableficate theme.')
 
-    VIEW_PATH = 'app/views/tablificate'
+    VIEW_PATH = 'app/views/tableficate'
 
     source_root File.expand_path("../../../../../#{VIEW_PATH}", __FILE__)
 

@@ -1,11 +1,11 @@
 require 'rails/all'
-require 'tablificate'
+require 'tableficate'
 
-describe Tablificate::SelectFilter do
+describe Tableficate::SelectFilter do
   it 'should find the correct template type' do
-    table = Tablificate::Table.new(nil, nil, {}, {})
+    table = Tableficate::Table.new(nil, nil, {}, {})
     table.column(:month)
 
-    Tablificate::SelectFilter.new(table, :month, {}).template.should == 'select_filter'
+    Tableficate::SelectFilter.new(table, :month, {}).template.should == 'select_filter'
   end
 end

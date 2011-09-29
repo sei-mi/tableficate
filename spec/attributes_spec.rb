@@ -1,9 +1,9 @@
 require 'rails/all'
-require 'tablificate/attributes'
+require 'tableficate/attributes'
 
-describe Tablificate::Attributes do
+describe Tableficate::Attributes do
   it 'should output HTML style attributes with a leading space when to_s is called' do
-    attrs = Tablificate::Attributes.new()
+    attrs = Tableficate::Attributes.new()
     attrs[:id]   = 'table_id'
     attrs[:name] = 'table_name'
 
@@ -11,7 +11,7 @@ describe Tablificate::Attributes do
   end
 
   it 'should output an empty string when there are no attributes' do
-    attrs = Tablificate::Attributes.new()
+    attrs = Tableficate::Attributes.new()
     
     attrs.to_s.should == ''
   end

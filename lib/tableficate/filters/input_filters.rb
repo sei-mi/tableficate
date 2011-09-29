@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class InputFilter < Filter
     def initialize(table, name, attributes = {})
       super(table, name, attributes)
@@ -7,7 +7,7 @@ module Tablificate
         type: 'text'
       )
 
-      if not Dir.glob('app/views/' + Tablificate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.*", table.options[:theme])).empty?
+      if not Dir.glob('app/views/' + Tableficate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.*", table.options[:theme])).empty?
         @template = "#{@attributes[:type]}_#{@template}"
       end
     end

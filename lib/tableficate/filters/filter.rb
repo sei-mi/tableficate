@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class Filter
     attr_reader :name, :label, :attributes, :template, :table
 

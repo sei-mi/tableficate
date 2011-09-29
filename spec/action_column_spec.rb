@@ -1,9 +1,9 @@
 require 'rails/all'
-require 'tablificate'
+require 'tableficate'
 
-describe Tablificate::ActionColumn do
+describe Tableficate::ActionColumn do
   before(:all) do
-    @action_column = Tablificate::ActionColumn.new(nil, nil) do
+    @action_column = Tableficate::ActionColumn.new(nil, nil) do
       Actions!
     end
   end

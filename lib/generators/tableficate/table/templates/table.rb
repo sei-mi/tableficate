@@ -1,4 +1,4 @@
-class <%= class_name %> < Tablificate::Base
+class <%= class_name %> < Tableficate::Base
 <% if scope -%>
   scope :<%= scope.tableize %>
 <% end -%>

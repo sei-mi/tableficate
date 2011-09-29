@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class Column
     attr_reader :name, :header, :table
 

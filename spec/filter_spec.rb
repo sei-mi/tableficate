@@ -1,20 +1,20 @@
 require 'rails/all'
-require 'tablificate'
+require 'tableficate'
 
-describe Tablificate::Filter do
+describe Tableficate::Filter do
   it 'should find the correct template type' do
-    table = Tablificate::Table.new(nil, nil, {}, {})
+    table = Tableficate::Table.new(nil, nil, {}, {})
     table.column(:first_name)
 
-    Tablificate::Filter.new(table, :first_name).template.should == 'filter'
+    Tableficate::Filter.new(table, :first_name).template.should == 'filter'
   end
 
   it 'should use the provided label or default to the column header' do
-    table = Tablificate::Table.new(nil, nil, {}, {})
+    table = Tableficate::Table.new(nil, nil, {}, {})
     table.column(:first_name)
     table.column(:last_name, header: 'Last')
 
-    Tablificate::Filter.new(table, :first_name).label.should == 'First Name'
-    Tablificate::Filter.new(table, :last_name).label.should == 'Last'
+    Tableficate::Filter.new(table, :first_name).label.should == 'First Name'
+    Tableficate::Filter.new(table, :last_name).label.should == 'Last'
   end
 end

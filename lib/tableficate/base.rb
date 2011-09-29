@@ -1,4 +1,4 @@
-module Tablificate
+module Tableficate
   class Base
     def self.find_by_params(params)
       scope = @scope
@@ -50,13 +50,13 @@ module Tablificate
       end
 
       # return an arel object with our data attached
-      scope = scope.tablificate_ext
+      scope = scope.tableficate_ext
       sorting = {column: nil, dir: nil}
       if column.present?
         sorting[:column] = column.to_sym
         sorting[:dir]    = (dir.present? and ['asc', 'desc'].include?(dir)) ? dir : 'asc'
       end
-      scope.tablificate_add_data(:current_sort, sorting)
+      scope.tableficate_add_data(:current_sort, sorting)
       scope
     end
 
