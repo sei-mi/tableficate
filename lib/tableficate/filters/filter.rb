@@ -11,5 +11,9 @@ module Tableficate
       @label      = @options[:label] || table.columns.detect{|column| column.name == @name}.header
       @field_name = "filter[#{@name}]"
     end
+
+    def field_value(params)
+      params[:filter][@name] rescue ''
+    end
   end
 end
