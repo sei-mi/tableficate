@@ -1,11 +1,11 @@
 module Tableficate
   class SelectFilter < Filter
-    attr_reader :options
+    attr_reader :choices
 
-    def initialize(table, name, options, attributes = {})
-      super(table, name, attributes)
+    def initialize(table, name, choices, options = {})
+      super(table, name, options)
 
-      @options = options
+      @choices = choices
     end
   end
 end

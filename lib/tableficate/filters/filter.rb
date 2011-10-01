@@ -1,14 +1,15 @@
 module Tableficate
   class Filter
-    attr_reader :name, :label, :attributes, :template, :table
+    attr_reader :name, :label, :options, :template, :table, :field_name
 
-    def initialize(table, name, attributes = {})
-      @table      = table
-      @name       = name
-      @attributes = attributes
+    def initialize(table, name, options = {})
+      @table   = table
+      @name    = name
+      @options = options
 
-      @template = self.class.name.demodulize.underscore
-      @label    = @attributes.delete(:label) || table.columns.detect{|column| column.name == @name}.header
+      @template   = self.class.name.demodulize.underscore
+      @label      = @options[:label] || table.columns.detect{|column| column.name == @name}.header
+      @field_name = "filter[#{@name}]"
     end
   end
 end

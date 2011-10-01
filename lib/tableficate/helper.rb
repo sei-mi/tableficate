@@ -21,5 +21,17 @@ module Tableficate
     def tableficate_filter_tag(filter)
       render partial: Tableficate::Utils::template_path(filter.template, filter.table.options[:theme]), locals: {filter: filter}
     end
+
+    def tableficate_label_tag(filter)
+      label_tag(filter.field_name, filter.label, filter.options[:label_options] || {})
+    end
+
+    def tableficate_text_field_tag(filter)
+      text_field_tag(filter.field_name, (params[:filter][filter.name] rescue ''), filter.options[:field_options] || {})
+    end
+
+    def tableficate_select_tag(filter)
+      select_tag(filter.field_name, filter.choices, filter.options)
+    end
   end
 end

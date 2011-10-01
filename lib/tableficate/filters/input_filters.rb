@@ -1,15 +1,29 @@
 module Tableficate
   class InputFilter < Filter
-    def initialize(table, name, attributes = {})
-      super(table, name, attributes)
+    def initialize(table, name, options = {})
+      super(table, name, options)
 
-      @attributes.reverse_merge!(
-        type: 'text'
-      )
+      type = @options[:field_options][:type] rescue 'text'
 
-      if not Dir.glob('app/views/' + Tableficate::Utils::template_path("_#{@attributes[:type]}_#{@template}.html.*", table.options[:theme])).empty?
-        @template = "#{@attributes[:type]}_#{@template}"
+      if not Dir.glob('app/views/' + Tableficate::Utils::template_path("_#{type}_#{@template}.html.*", table.options[:theme])).empty?
+        @template = "#{type}_#{@template}"
       end
+    end
+  end
+
+  class InputStartFilter < InputFilter
+    def initialize(table, name, options = {})
+      super(table, name, options)
+
+      @field_name += '[start]'
+    end
+  end
+
+  class InputStopFilter < InputFilter
+    def initialize(table, name, options = {})
+      super(table, name, options)
+
+      @field_name += '[stop]'
     end
   end
 
@@ -17,18 +31,18 @@ module Tableficate
     attr_reader :start, :stop
 
     def initialize(table, name, options = {})
-      start_attributes = options.delete(:start) || {}
-      stop_attributes  = options.delete(:stop)  || {}
+      start_options = options.delete(:start) || {}
+      stop_options  = options.delete(:stop)  || {}
 
       super(table, name, options)
 
-      start_attributes.reverse_merge!(@attributes)
-      start_attributes.reverse_merge!(label: self.label)
-      stop_attributes.reverse_merge!(@attributes)
-      stop_attributes.reverse_merge!(label: self.label)
+      start_options.reverse_merge!(@options)
+      start_options.reverse_merge!(label: self.label)
+      stop_options.reverse_merge!(@options)
+      stop_options.reverse_merge!(label: self.label)
 
-      @start = InputFilter.new(table, "#{name}_start", start_attributes)
-      @stop  = InputFilter.new(table, "#{name}_stop",  stop_attributes)
+      @start = InputStartFilter.new(table, "#{name}_start", start_options)
+      @stop  = InputStopFilter.new(table, "#{name}_stop",  stop_options)
     end
   end
 end

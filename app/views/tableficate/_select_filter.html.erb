@@ -1,4 +1,4 @@
 <div>
-  <%= label_tag "filter[#{filter.name}]", filter.label %>
-  <%= select_tag("filter[#{filter.name}]", filter.options, filter.attributes) %>
+  <%= tableficate_label_tag(filter) %>
+  <%= tableficate_select_tag(filter) %>
 </div>

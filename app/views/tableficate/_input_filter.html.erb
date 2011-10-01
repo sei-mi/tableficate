@@ -1,4 +1,4 @@
 <div>
-  <%= label_tag "filter[#{filter.name}]", filter.label %>
-  <%= text_field_tag("filter[#{filter.name}]", (params[:filter] && params[:filter][filter.name]) || '', filter.attributes) %>
+  <%= tableficate_label_tag(filter) %>
+  <%= tableficate_text_field_tag(filter) %>
 </div>
