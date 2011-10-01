@@ -15,8 +15,8 @@ describe Tableficate::InputRangeFilter do
   it 'should create a start input and a stop input' do
     filter = Tableficate::InputRangeFilter.new(@table, :birth_date, label: 'Birthday')
 
-    filter.start.name.should == 'birth_date_start'
-    filter.stop.name.should == 'birth_date_stop'
+    filter.start.name.should == :birth_date_start
+    filter.stop.name.should == :birth_date_stop
 
     filter.start.is_a?(Tableficate::InputFilter).should be true
     filter.stop.is_a?(Tableficate::InputFilter).should be true

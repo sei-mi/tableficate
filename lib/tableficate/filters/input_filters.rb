@@ -19,7 +19,7 @@ module Tableficate
     end
 
     def name
-      "#{@name}_start"
+      "#{@name}_start".to_sym
     end
 
     def field_value(params)
@@ -35,7 +35,7 @@ module Tableficate
     end
 
     def name
-      "#{@name}_stop"
+      "#{@name}_stop".to_sym
     end
 
     def field_value(params)
