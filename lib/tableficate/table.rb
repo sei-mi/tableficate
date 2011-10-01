@@ -13,7 +13,7 @@ module Tableficate
         theme:      ''
       }.merge(options)
 
-      @attributes = Attributes.new().merge(@options.delete(:html) || {})
+      @attributes = @options.delete(:html) || {}
 
       @current_sort = data[:current_sort]
     end

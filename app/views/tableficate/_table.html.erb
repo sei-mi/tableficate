@@ -14,7 +14,7 @@
   <%= will_paginate(table.rows) %>
 <% end %>
 
-<table<%= raw table.attributes %>>
+<%= content_tag(:table) do %>
   <thead>
     <tr>
       <% table.columns.each do |column| %>
@@ -27,4 +27,4 @@
       <%= tableficate_row_tag row, table.columns %>
     <% end %>
   </tbody>
-</table>
+<% end %>
