@@ -1,6 +1,6 @@
 module Tableficate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters, :attributes, :options
+    attr_reader :columns, :rows, :current_sort, :filters, :options
 
     def initialize(template, rows, options, data)
       @template = template
@@ -12,8 +12,6 @@ module Tableficate
         show_sorts: false,
         theme:      ''
       }.merge(options)
-
-      @attributes = @options.delete(:html) || {}
 
       @current_sort = data[:current_sort]
     end
@@ -34,16 +32,16 @@ module Tableficate
       self.columns.any?{|column| column.show_sort?}
     end
 
-    def input_filter(name, attributes = {})
-      @filters.push(InputFilter.new(self, name, attributes))
+    def input_filter(name, options = {})
+      @filters.push(InputFilter.new(self, name, options))
     end
 
     def input_range_filter(name, options = {})
       @filters.push(InputRangeFilter.new(self, name, options))
     end
 
-    def select_filter(name, options, attributes = {})
-      @filters.push(SelectFilter.new(self, name, options, attributes))
+    def select_filter(name, choices, options = {})
+      @filters.push(SelectFilter.new(self, name, choices, options))
     end
 
     def render(options = {})

@@ -14,7 +14,7 @@
   <%= will_paginate(table.rows) %>
 <% end %>
 
-<%= content_tag(:table) do %>
+<%= content_tag(:table, table.options[:html]) do %>
   <thead>
     <tr>
       <% table.columns.each do |column| %>
