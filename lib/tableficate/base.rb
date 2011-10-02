@@ -4,48 +4,50 @@ module Tableficate
       scope = @scope
 
       # filtering
-      if params[:filter]
-        params[:filter].each do |name, value|
-          next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
+      if params
+        if params[:filter]
+          params[:filter].each do |name, value|
+            next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
 
-          name = name.to_sym
-          value.strip! if value.is_a?(String)
+            name = name.to_sym
+            value.strip! if value.is_a?(String)
 
-          if @filter and @filter[name]
-            if @filter[name].is_a?(Proc)
-              scope = @filter[name].call(scope, value)
-            elsif value.is_a?(String)
-              value = "%#{value}%" if @filter[name][:match] == 'contains'
+            if @filter and @filter[name]
+              if @filter[name].is_a?(Proc)
+                scope = @filter[name].call(scope, value)
+              elsif value.is_a?(String)
+                value = "%#{value}%" if @filter[name][:match] == 'contains'
 
-              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
-            elsif value.is_a?(Array)
-              full_column_name = get_full_column_name(@filter[name][:field])
+                scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
+              elsif value.is_a?(Array)
+                full_column_name = get_full_column_name(@filter[name][:field])
 
-              if @filter[name][:match] == 'contains'
-                scope = scope.where(["#{full_column_name} REGEXP ?", value.join('|')])
-              else
-                scope = scope.where(["#{full_column_name} IN(?)", value])
+                if @filter[name][:match] == 'contains'
+                  scope = scope.where(["#{full_column_name} REGEXP ?", value.join('|')])
+                else
+                  scope = scope.where(["#{full_column_name} IN(?)", value])
+                end
+              elsif value.is_a?(Hash)
+                scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
               end
+            elsif value.is_a?(Array)
+              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} IN(?)", value])
             elsif value.is_a?(Hash)
-              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
+              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} BETWEEN :start AND :stop", value])
+            else
+              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} LIKE ?", value])
             end
-          elsif value.is_a?(Array)
-            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} IN(?)", value])
-          elsif value.is_a?(Hash)
-            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} BETWEEN :start AND :stop", value])
-          else
-            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} LIKE ?", value])
           end
         end
-      end
 
-      # sorting
-      column = params[:sort].try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
-      dir    = params[:dir]                       || @default_sort.try(:[], 1)
-      if column.present?
-        scope = scope.order(@sort.try(:[], column.to_sym) || "#{get_full_column_name(column.to_s)} ASC")
-        if dir == 'desc'
-          scope = scope.reverse_order
+        # sorting
+        column = params[:sort].try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
+        dir    = params[:dir]                       || @default_sort.try(:[], 1)
+        if column.present?
+          scope = scope.order(@sort.try(:[], column.to_sym) || "#{get_full_column_name(column.to_s)} ASC")
+          if dir == 'desc'
+            scope = scope.reverse_order
+          end
         end
       end
 

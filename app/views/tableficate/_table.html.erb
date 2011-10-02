@@ -9,9 +9,9 @@
 <% end %>
 
 <% if defined? ::Kaminari %>
-  <%= paginate(table.rows) %>
+  <%= paginate(table.rows, param_name: "#{table.as}[page]") %>
 <% elsif defined? ::WillPaginate %>
-  <%= will_paginate(table.rows) %>
+  <%= will_paginate(table.rows, param_name: "#{table.as}[page]") %>
 <% end %>
 
 <%= content_tag(:table, table.options[:html]) do %>

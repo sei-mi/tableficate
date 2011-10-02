@@ -27,7 +27,7 @@ module Tableficate
     end
 
     def tableficate_text_field_tag(filter)
-      text_field_tag(filter.field_name, filter.field_value(params), filter.options[:field_options] || {})
+      text_field_tag(filter.field_name, filter.field_value(params[filter.table.as]), filter.options[:field_options] || {})
     end
 
     def tableficate_select_tag(filter)

@@ -1,12 +1,13 @@
 module Tableficate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters, :options
+    attr_reader :columns, :rows, :current_sort, :filters, :options, :as
 
     def initialize(template, rows, options, data)
       @template = template
       @rows     = rows
       @columns  = []
       @filters  = []
+      @as       = options[:as] || rows.table_name
 
       @options = {
         show_sorts: false,
