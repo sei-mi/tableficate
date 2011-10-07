@@ -1,5 +1,4 @@
-require 'rails/all'
-require 'tableficate/utils'
+require 'spec_helper'
 
 describe Tableficate::Utils do
   it 'should construct a path with no theme' do

@@ -1,5 +1,4 @@
-require 'rails/all'
-require 'tableficate'
+require 'spec_helper'
 
 describe Tableficate::ActionColumn do
   before(:all) do
@@ -14,5 +13,9 @@ describe Tableficate::ActionColumn do
 
   it 'should always indicate that it is not sorted' do
     @action_column.is_sorted?.should be false
+  end
+
+  it 'should have a blank name' do
+    @action_column.name.should == ''
   end
 end
