@@ -11,11 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111007154222) do
+ActiveRecord::Schema.define(:version => 20111010191626) do
 
   create_table "nobel_prize_winners", :force => true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
+    t.string "first_name"
+    t.string "last_name"
+  end
+
+  create_table "nobel_prizes", :force => true do |t|
+    t.integer "nobel_prize_winner_id"
     t.string  "category"
     t.integer "year"
   end

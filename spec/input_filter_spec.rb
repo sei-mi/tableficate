@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Tableficate::InputFilter do
   before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.limit(1), {}, {})
+    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:first_name)
   end
 
@@ -23,7 +23,7 @@ end
 
 describe Tableficate::InputStartFilter do
   before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.limit(1), {}, {})
+    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 
@@ -43,7 +43,7 @@ end
 
 describe Tableficate::InputStopFilter do
   before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.limit(1), {}, {})
+    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 
@@ -63,7 +63,7 @@ end
 
 describe Tableficate::InputRangeFilter do
   before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.limit(1), {}, {})
+    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 
