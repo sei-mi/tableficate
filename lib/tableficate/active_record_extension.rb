@@ -3,6 +3,8 @@ module Tableficate
     extend ActiveSupport::Concern
 
     included do
+      extend Tableficate::Finder
+
       self.scope :tableficate_ext, ->{} do
         def tableficate_add_data(key, value)
           @tableficate_data ||= {}

@@ -57,16 +57,7 @@ describe Tableficate::Base do
     npw.reverse_order_value.should be true
   end
 
-  it 'should filter based on single input passed in' do
-    class FilterByExactInput < Tableficate::Base
-      scope(:nobel_prize_winner)
-    end
-    npw = FilterByExactInput.tableficate({filter: {first_name: 'Albert'}})
-    npw.size.should == 1
-    npw.first.first_name.should == 'Albert'
-    npw = FilterByExactInput.tableficate({filter: {first_name: 'Al'}})
-    npw.size.should == 0
-
+  it 'should filter using match: "contains"' do
     class FilterByContainsInput < Tableficate::Base
       scope(:nobel_prize_winner)
 
@@ -77,17 +68,7 @@ describe Tableficate::Base do
     npw.first.first_name.should == 'Albert'
   end
 
-  it 'should filter based on multiple inputs passed in' do
-    class FilterByExactInput < Tableficate::Base
-      scope(:nobel_prize_winner)
-    end
-    npw = FilterByExactInput.tableficate({filter: {first_name: ['Albert', 'Marie']}})
-    npw.size.should == 2
-    npw.first.first_name.should == 'Albert'
-    npw.last.first_name.should == 'Marie'
-    npw = FilterByExactInput.tableficate({filter: {first_name: ['Al', 'Mar']}})
-    npw.size.should == 0
-
+  it 'should filter multiple inputs using match: "contains"' do
     class FilterByContainsInput < Tableficate::Base
       scope(:nobel_prize_winner)
 
@@ -99,52 +80,21 @@ describe Tableficate::Base do
     npw.last.first_name.should == 'Marie'
   end
 
-   it 'should attach the table name to the fields from the primary table to avoid ambiguity' do
-    class PrimaryTable < Tableficate::Base
-      scope do
-        NobelPrizeWinner.joins(:nobel_prizes)
-      end
+  it 'should allow custom block filters' do
+    class BlockFilter < Tableficate::Base
+      scope(:nobel_prize_winner)
 
-      default_sort(:first_name)
+      filter(:full_name) do |scope, value|
+        first_name, last_name = value.split(/\s+/)
+
+        if last_name.nil?
+          scope.where(['first_name LIKE ? OR last_name LIKE ?', first_name, first_name])
+        else
+          scope.where(['first_name LIKE ? AND last_name LIKE ?', first_name, last_name])
+        end 
+      end 
     end
-    npw = PrimaryTable.tableficate({})
-    npw.order_values.should == ["#{npw.table_name}.first_name ASC"]
-
-    # secondary table fields are left vague for maximum flexibility
-    class SecondaryTable < Tableficate::Base
-      scope do
-        NobelPrizeWinner.joins(:nobel_prizes)
-      end
-
-      default_sort(:year)
-    end
-    npw = SecondaryTable.tableficate({})
-    npw.order_values.should == ["year ASC"]
-   end
-
-   it 'should allow ranged input filters' do
-     class NobelPrizeYear < Tableficate::Base
-       scope(:nobel_prize)
-     end
-     npy = NobelPrizeYear.tableficate({filter: {year: {start: 1900, stop: 1930}}})
-     npy.size.should == 4
-   end
-
-   it 'should allow custom block filters' do
-     class BlockFilter < Tableficate::Base
-       scope(:nobel_prize_winner)
-
-       filter(:full_name) do |scope, value|
-         first_name, last_name = value.split(/\s+/)
-
-         if last_name.nil?
-           scope.where(['first_name LIKE ? OR last_name LIKE ?', first_name, first_name])
-         else
-           scope.where(['first_name LIKE ? AND last_name LIKE ?', first_name, last_name])
-         end 
-       end 
-     end
-     npw = BlockFilter.tableficate({filter: {full_name: 'Bohr'}})
-     npw.first.first_name.should == 'Niels'
-   end
+    npw = BlockFilter.tableficate({filter: {full_name: 'Bohr'}})
+    npw.first.first_name.should == 'Niels'
+  end
 end
