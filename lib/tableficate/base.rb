@@ -23,7 +23,10 @@ module Tableficate
                 full_column_name = get_full_column_name(@filter[name][:field])
 
                 if @filter[name][:match] == 'contains'
-                  scope = scope.where(["#{full_column_name} REGEXP ?", value.join('|')])
+                  scope = scope.where([
+                    Array.new(value.size, "#{full_column_name} LIKE ?").join(' OR '),
+                    *value.map{|v| "%#{v}%"}
+                  ])
                 else
                   scope = scope.where(["#{full_column_name} IN(?)", value])
                 end
