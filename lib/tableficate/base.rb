@@ -43,7 +43,7 @@ module Tableficate
 
       # sorting
       column = params.try(:[], :sort).try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
-      dir    = params.try(:[], :dir)                       || @default_sort.try(:[], 1)
+      dir    = params.try(:[], :dir)                       || @default_sort.try(:[], 1) || 'asc'
       dir.downcase!
       if column.present?
         scope = scope.order(@sort.try(:[], column.to_sym) || "#{get_full_column_name(column.to_s)} ASC")
