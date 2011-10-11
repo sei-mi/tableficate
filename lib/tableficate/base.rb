@@ -1,6 +1,6 @@
 module Tableficate
   class Base
-    def self.find_by_params(params)
+    def self.tableficate(params)
       scope = @scope
 
       # filtering

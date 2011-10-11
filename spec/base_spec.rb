@@ -21,7 +21,7 @@ describe Tableficate::Base do
 
       default_sort(:first_name)
     end
-    npw = DefaultOrder.find_by_params({})
+    npw = DefaultOrder.tableficate({})
     npw.order_values.should == ["#{npw.table_name}.first_name ASC"]
     npw.reverse_order_value.should == nil
 
@@ -30,7 +30,7 @@ describe Tableficate::Base do
 
       default_sort(:first_name, 'desc')
     end
-    npw = DefaultOrderDesc.find_by_params({})
+    npw = DefaultOrderDesc.tableficate({})
     npw.order_values.should == ["#{npw.table_name}.first_name ASC"]
     npw.reverse_order_value.should be true
 
@@ -41,7 +41,7 @@ describe Tableficate::Base do
 
       column(:full_name, sort: 'first_name ASC, last_name ASC')
     end
-    npw = DefaultOrderWithOverride.find_by_params({})
+    npw = DefaultOrderWithOverride.tableficate({})
     npw.order_values.should == ["first_name ASC, last_name ASC"]
     npw.reverse_order_value.should == nil
 
@@ -52,7 +52,7 @@ describe Tableficate::Base do
 
       column(:full_name, sort: 'first_name ASC, last_name ASC')
     end
-    npw = DefaultOrderWithOverrideDesc.find_by_params({})
+    npw = DefaultOrderWithOverrideDesc.tableficate({})
     npw.order_values.should == ["first_name ASC, last_name ASC"]
     npw.reverse_order_value.should be true
   end
@@ -61,10 +61,10 @@ describe Tableficate::Base do
     class FilterByExactInput < Tableficate::Base
       scope(:nobel_prize_winner)
     end
-    npw = FilterByExactInput.find_by_params({filter: {first_name: 'Albert'}})
+    npw = FilterByExactInput.tableficate({filter: {first_name: 'Albert'}})
     npw.size.should == 1
     npw.first.first_name.should == 'Albert'
-    npw = FilterByExactInput.find_by_params({filter: {first_name: 'Al'}})
+    npw = FilterByExactInput.tableficate({filter: {first_name: 'Al'}})
     npw.size.should == 0
 
     class FilterByContainsInput < Tableficate::Base
@@ -72,7 +72,7 @@ describe Tableficate::Base do
 
       filter(:first_name, match: 'contains')
     end
-    npw = FilterByContainsInput.find_by_params({filter: {first_name: 'Al'}})
+    npw = FilterByContainsInput.tableficate({filter: {first_name: 'Al'}})
     npw.size.should == 1
     npw.first.first_name.should == 'Albert'
   end
@@ -81,11 +81,11 @@ describe Tableficate::Base do
     class FilterByExactInput < Tableficate::Base
       scope(:nobel_prize_winner)
     end
-    npw = FilterByExactInput.find_by_params({filter: {first_name: ['Albert', 'Marie']}})
+    npw = FilterByExactInput.tableficate({filter: {first_name: ['Albert', 'Marie']}})
     npw.size.should == 2
     npw.first.first_name.should == 'Albert'
     npw.last.first_name.should == 'Marie'
-    npw = FilterByExactInput.find_by_params({filter: {first_name: ['Al', 'Mar']}})
+    npw = FilterByExactInput.tableficate({filter: {first_name: ['Al', 'Mar']}})
     npw.size.should == 0
 
     class FilterByContainsInput < Tableficate::Base
@@ -93,7 +93,7 @@ describe Tableficate::Base do
 
       filter(:first_name, match: 'contains')
     end
-    npw = FilterByContainsInput.find_by_params({filter: {first_name: ['Al', 'Mar']}})
+    npw = FilterByContainsInput.tableficate({filter: {first_name: ['Al', 'Mar']}})
     npw.size.should == 2
     npw.first.first_name.should == 'Albert'
     npw.last.first_name.should == 'Marie'
@@ -107,7 +107,7 @@ describe Tableficate::Base do
 
       default_sort(:first_name)
     end
-    npw = PrimaryTable.find_by_params({})
+    npw = PrimaryTable.tableficate({})
     npw.order_values.should == ["#{npw.table_name}.first_name ASC"]
 
     # secondary table fields are left vague for maximum flexibility
@@ -118,7 +118,7 @@ describe Tableficate::Base do
 
       default_sort(:year)
     end
-    npw = SecondaryTable.find_by_params({})
+    npw = SecondaryTable.tableficate({})
     npw.order_values.should == ["year ASC"]
    end
 
@@ -126,7 +126,7 @@ describe Tableficate::Base do
      class NobelPrizeYear < Tableficate::Base
        scope(:nobel_prize)
      end
-     npy = NobelPrizeYear.find_by_params({filter: {year: {start: 1900, stop: 1930}}})
+     npy = NobelPrizeYear.tableficate({filter: {year: {start: 1900, stop: 1930}}})
      npy.size.should == 4
    end
 
@@ -144,7 +144,7 @@ describe Tableficate::Base do
          end 
        end 
      end
-     npw = BlockFilter.find_by_params({filter: {full_name: 'Bohr'}})
+     npw = BlockFilter.tableficate({filter: {full_name: 'Bohr'}})
      npw.first.first_name.should == 'Niels'
    end
 end
