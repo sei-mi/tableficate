@@ -2,6 +2,7 @@ module Tableficate
   module Finder
     def tableficate(params)
       scope = @scope || self
+      raise Tableficate::MissingScope unless scope.new.kind_of?(ActiveRecord::Base)
 
       # filtering
       if params

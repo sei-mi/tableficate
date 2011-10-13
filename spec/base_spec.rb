@@ -13,6 +13,9 @@ describe Tableficate::Base do
       end
     end
     BlockScope.send(:instance_variable_get, '@scope').should == NobelPrizeWinner.joins(:nobel_prizes)
+
+    class NoScope < Tableficate::Base; end
+    lambda {NoScope.tableficate({})}.should raise_error(Tableficate::MissingScope)
   end
 
   it 'should allow for a default order' do

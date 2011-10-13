@@ -1,4 +1,5 @@
 require 'tableficate/engine'
+require 'tableficate/exceptions'
 require 'tableficate/utils'
 require 'tableficate/finder'
 require 'tableficate/column'
