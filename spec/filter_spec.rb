@@ -23,4 +23,8 @@ describe Tableficate::Filter do
     Tableficate::Filter.new(@table, :first_name).field_value({filter: {first_name: 'Aaron'}}).should == 'Aaron'
     Tableficate::Filter.new(@table, :first_name).field_value({}).should == ''
   end
+
+  it 'should allow for filters that do not match a particular field' do
+    Tableficate::Filter.new(@table, :custom_field).label.should == 'Custom Field'
+  end
 end

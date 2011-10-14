@@ -8,7 +8,7 @@ module Tableficate
       @options = options
 
       @template   = self.class.name.demodulize.underscore
-      @label      = @options[:label] || table.columns.detect{|column| column.name == @name}.header
+      @label      = @options[:label] || table.columns.detect{|column| column.name == @name}.try(:header) || name.to_s.titleize
       @field_name = "#{table.as}[filter][#{@name}]"
     end
 
