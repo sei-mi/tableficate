@@ -15,7 +15,7 @@ module Tableficate
 
             if @filter and @filter[name]
               if @filter[name].is_a?(Proc)
-                scope = @filter[name].call(scope, value)
+                scope = @filter[name].call(value, scope)
               elsif value.is_a?(String)
                 value = "%#{value}%" if @filter[name][:match] == 'contains'
 

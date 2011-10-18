@@ -87,7 +87,7 @@ describe Tableficate::Base do
     class BlockFilter < Tableficate::Base
       scope(:nobel_prize_winner)
 
-      filter(:full_name) do |scope, value|
+      filter(:full_name) do |value, scope|
         first_name, last_name = value.split(/\s+/)
 
         if last_name.nil?
