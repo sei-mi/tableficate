@@ -25,10 +25,7 @@ module Tableficate
 
     def is_sorted?(dir = nil)
       is_sorted = @table.current_sort[:column] == self.name
-      
-      if is_sorted and dir
-        is_sorted = @table.current_sort[:dir] == dir
-      end
+      is_sorted = @table.current_sort[:dir] == dir if is_sorted and dir
 
       is_sorted
     end

@@ -47,13 +47,10 @@ module Tableficate
 
       # sorting
       column = params.try(:[], :sort).try(:gsub, /\W/, '') || @default_sort.try(:[], 0)
-      dir    = params.try(:[], :dir)                       || @default_sort.try(:[], 1) || 'asc'
-      dir.downcase!
+      dir = (params.try(:[], :dir) || @default_sort.try(:[], 1) || 'asc').downcase
       if column.present?
         scope = scope.order(@sort.try(:[], column.to_sym) || "#{get_full_column_name(column.to_s)} ASC")
-        if dir == 'desc'
-          scope = scope.reverse_order
-        end
+        scope = scope.reverse_order if dir == 'desc'
       end
 
       # return an arel object with our data attached
@@ -61,7 +58,7 @@ module Tableficate
       sorting = {column: nil, dir: nil}
       if column.present?
         sorting[:column] = column.to_sym
-        sorting[:dir]    = (dir.present? and ['asc', 'desc'].include?(dir)) ? dir : 'asc'
+        sorting[:dir]    = ['asc', 'desc'].include?(dir) ? dir : 'asc'
       end
       scope.tableficate_add_data(:current_sort, sorting)
       scope

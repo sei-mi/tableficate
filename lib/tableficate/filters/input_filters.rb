@@ -58,7 +58,7 @@ module Tableficate
       stop_options.reverse_merge!(label: self.label)
 
       @start = InputStartFilter.new(table, name, start_options)
-      @stop  = InputStopFilter.new(table, name,  stop_options)
+      @stop  = InputStopFilter.new(table, name, stop_options)
     end
   end
 end
