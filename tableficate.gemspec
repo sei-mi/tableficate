@@ -6,9 +6,9 @@ Gem::Specification.new do |s|
   s.name        = "tableficate"
   s.version     = Tableficate::VERSION
   s.authors     = ["Aaron Lasseigne"]
-  s.email       = ["aaron.lasseigne@gmail.com"]
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.email       = ["alasseigne@sei-mi.com"]
+  s.summary     = %q{Simple tables for Rails.}
+  s.description = %q{Simple tables for Rails.}
 
   s.rubyforge_project = "tableficate"
 
