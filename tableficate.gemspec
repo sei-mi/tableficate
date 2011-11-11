@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Tableficate::VERSION
   s.authors     = ["Aaron Lasseigne"]
   s.email       = ["alasseigne@sei-mi.com"]
+  s.homepage    = "https://github.com/sei-mi/tableficate"
   s.summary     = %q{Simple tables for Rails.}
   s.description = %q{Simple tables for Rails.}
 
