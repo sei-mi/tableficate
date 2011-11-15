@@ -1,4 +1,5 @@
 ## 0.2.0
+* select based range filter
 
 ## 0.1.1
 * corrected version file

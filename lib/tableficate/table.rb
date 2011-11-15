@@ -45,6 +45,10 @@ module Tableficate
       @filters.push(SelectFilter.new(self, name, choices, options))
     end
 
+    def select_range_filter(name, choices_start, choices_stop, options = {})
+      @filters.push(SelectRangeFilter.new(self, name, choices_start, choices_stop, options))
+    end
+
     def render(options = {})
       options.reverse_merge!(
         partial: Tableficate::Utils::template_path('table', @options[:theme]),

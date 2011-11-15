@@ -83,7 +83,7 @@ describe Tableficate::InputRangeFilter do
     filter.start.label.should == 'Nobel Prize Won In'
     filter.stop.label.should == 'Nobel Prize Won In'
 
-    filter = Tableficate::InputRangeFilter.new(@table, :birth_date, label: 'Nobel Prize Won In', start: {label: 'Nobel Prize Won Between'}, stop: {label: 'and'})
+    filter = Tableficate::InputRangeFilter.new(@table, :year, label: 'Nobel Prize Won In', start: {label: 'Nobel Prize Won Between'}, stop: {label: 'and'})
     filter.start.label.should == 'Nobel Prize Won Between'
     filter.stop.label.should == 'and'
   end
