@@ -1,5 +1,7 @@
 ## 0.2.0
-* select based range filter
+* complete filter rewrite
+ * new filter functions
+ * select based range filter
 
 ## 0.1.1
 * corrected version file

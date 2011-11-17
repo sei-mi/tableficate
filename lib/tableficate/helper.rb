@@ -31,7 +31,7 @@ module Tableficate
     end
 
     def tableficate_select_tag(filter)
-      select_tag(filter.field_name, filter.choices, filter.options)
+      select_tag(filter.field_name, filter.options.delete(:collection), filter.options)
     end
   end
 end

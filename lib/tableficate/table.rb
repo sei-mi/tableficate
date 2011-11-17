@@ -1,6 +1,6 @@
 module Tableficate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters, :options, :as
+    attr_reader :columns, :rows, :current_sort, :filters, :options, :as, :template
 
     def initialize(template, rows, options, data)
       @template = template
@@ -33,20 +33,22 @@ module Tableficate
       self.columns.any?{|column| column.show_sort?}
     end
 
-    def input_filter(name, options = {})
-      @filters.push(InputFilter.new(self, name, options))
+    def filter(name, options = {})
+      as_map = {
+        text:   Filter::TextField,
+        select: Filter::Select
+      }
+
+      @filters.push(as_map[options.delete(:as) || options[:collection] ? :select : :text].new(self, name, options))
     end
 
-    def input_range_filter(name, options = {})
-      @filters.push(InputRangeFilter.new(self, name, options))
-    end
+    def filter_range(name, options = {})
+      as_map = {
+        text:   Filter::TextFieldRange,
+        select: Filter::SelectRange
+      }
 
-    def select_filter(name, choices, options = {})
-      @filters.push(SelectFilter.new(self, name, choices, options))
-    end
-
-    def select_range_filter(name, choices_start, choices_stop, options = {})
-      @filters.push(SelectRangeFilter.new(self, name, choices_start, choices_stop, options))
+      @filters.push(as_map[options.delete(:as) || options[:collection] ? :select : :text].new(self, name, options))
     end
 
     def render(options = {})
