@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe Tableficate::Table do
   before(:each) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.limit(1), {}, {current_sort: {column: :first_name, dir: 'asc'}})
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    @table = Tableficate::Table.new(template, NobelPrizeWinner.limit(1), {}, {current_sort: {column: :first_name, dir: 'asc'}})
   end
 
   it 'should have the current sort if provided' do
@@ -65,23 +68,23 @@ describe Tableficate::Table do
     table.show_sort?.should be false
   end
 
-#  it 'should add a TextField filter' do
-#    @table.filter(:first_name, label: 'First')
-#    @table.filter(:last_name, label: 'Last')
-#
-#    @table.filters.first.name.should == :first_name
-#    @table.filters.first.is_a?(Tableficate::Filter::TextField).should be true
-#    @table.filters.last.name.should == :last_name
-#  end
+  it 'should add a TextField filter' do
+    @table.filter(:first_name, label: 'First')
+    @table.filter(:last_name, label: 'Last')
 
-#  it 'should add a TextFieldRange filter' do
-#    @table.filter_range(:first_name, label: 'First')
-#    @table.filter_range(:last_name, label: 'Last')
-#
-#    @table.filters.first.name.should == :first_name
-#    @table.filters.first.is_a?(Tableficate::Filter::TextFieldRange).should be true
-#    @table.filters.last.name.should == :last_name
-#  end
+    @table.filters.first.name.should == :first_name
+    @table.filters.first.is_a?(Tableficate::Filter::TextField).should be true
+    @table.filters.last.name.should == :last_name
+  end
+
+  it 'should add a TextFieldRange filter' do
+    @table.filter_range(:first_name, label: 'First')
+    @table.filter_range(:last_name, label: 'Last')
+
+    @table.filters.first.name.should == :first_name
+    @table.filters.first.is_a?(Tableficate::Filter::TextFieldRange).should be true
+    @table.filters.last.name.should == :last_name
+  end
 
   it 'should add a Select filter' do
     @table.filter(:first_name, collection: {}, label: 'First')
