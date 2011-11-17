@@ -48,8 +48,8 @@ Our View:
         link_to('View', account_path(account))
       end
 
-      t.input_filter :first_name
-      t.input_filter :last_name
+      t.filter :first_name
+      t.filter :last_name
     %>
 
 This creates a sortable table with two filters, 4 data columns and an action column. Column headers are automatically generated but can be overridden as seen on the "id" column. The column output can also be overridden by passing a block to the call. This setup provides easy table creation but only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
@@ -102,7 +102,7 @@ Our new view:
         link_to('View', account_path(account))
       end
 
-      t.input_filter :full_name
+      t.filter :full_name
     %>
 
 In the view we've merged the first and last name into a new full name column. Now we have default sorting, sortable columns and a full name filter.
