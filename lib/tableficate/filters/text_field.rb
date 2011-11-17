@@ -1,7 +1,7 @@
 module Tableficate
   module Filter
     class TextField < InputField
-      def initialize(table, name, options)
+      def initialize(table, name, options = {})
         super(table, name, options)
 
         # look for a template for this class and if none exists step through the ancestors until we find one

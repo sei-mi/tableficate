@@ -65,30 +65,30 @@ describe Tableficate::Table do
     table.show_sort?.should be false
   end
 
-  it 'should add an InputFilter' do
-    @table.input_filter(:first_name, label: 'First')
-    @table.input_filter(:last_name, label: 'Last')
+#  it 'should add a TextField filter' do
+#    @table.filter(:first_name, label: 'First')
+#    @table.filter(:last_name, label: 'Last')
+#
+#    @table.filters.first.name.should == :first_name
+#    @table.filters.first.is_a?(Tableficate::Filter::TextField).should be true
+#    @table.filters.last.name.should == :last_name
+#  end
+
+#  it 'should add a TextFieldRange filter' do
+#    @table.filter_range(:first_name, label: 'First')
+#    @table.filter_range(:last_name, label: 'Last')
+#
+#    @table.filters.first.name.should == :first_name
+#    @table.filters.first.is_a?(Tableficate::Filter::TextFieldRange).should be true
+#    @table.filters.last.name.should == :last_name
+#  end
+
+  it 'should add a Select filter' do
+    @table.filter(:first_name, collection: {}, label: 'First')
+    @table.filter(:last_name, collection: {}, label: 'Last')
 
     @table.filters.first.name.should == :first_name
-    @table.filters.first.is_a?(Tableficate::InputFilter).should be true
-    @table.filters.last.name.should == :last_name
-  end
-
-  it 'should add an InputRangeFilter' do
-    @table.input_range_filter(:first_name, label: 'First')
-    @table.input_range_filter(:last_name, label: 'Last')
-
-    @table.filters.first.name.should == :first_name
-    @table.filters.first.is_a?(Tableficate::InputRangeFilter).should be true
-    @table.filters.last.name.should == :last_name
-  end
-
-  it 'should add an SelectFilter' do
-    @table.select_filter(:first_name, {}, label: 'First')
-    @table.select_filter(:last_name, {}, label: 'Last')
-
-    @table.filters.first.name.should == :first_name
-    @table.filters.first.is_a?(Tableficate::SelectFilter).should be true
+    @table.filters.first.is_a?(Tableficate::Filter::Select).should be true
     @table.filters.last.name.should == :last_name
   end
 end
