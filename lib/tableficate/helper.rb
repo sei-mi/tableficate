@@ -31,6 +31,8 @@ module Tableficate
     end
 
     def tableficate_select_tag(filter)
+      filter.options[:collection] = filter.options[:collection].html_safe if filter.options[:collection].respond_to?(:html_safe)
+
       select_tag(filter.field_name, filter.options.delete(:collection), filter.options)
     end
   end
