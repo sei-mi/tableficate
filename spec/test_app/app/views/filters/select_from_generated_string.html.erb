@@ -6,6 +6,6 @@
   t.column :year 
 
   t.filter :category,
-    collection:    options_for_select(['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine']),
+    collection:    options_for_select([[1, 'Chemistry'], [2, 'Literature'], [3, 'Peace'], [4, 'Physics'], [5, 'Physiology or Medicine']]),
     include_blank: true
 end %>
