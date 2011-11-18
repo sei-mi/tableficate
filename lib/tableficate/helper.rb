@@ -31,6 +31,15 @@ module Tableficate
     end
 
     def tableficate_select_tag(filter)
+      field_value = filter.field_value(params[filter.table.as])
+      if field_value.present? and filter.options[:collection].is_a?(String)
+        if filter.options[:collection].match(/<option[^>]*value\s*=/)
+          filter.options[:collection].gsub!(/(<option[^>]*value\s*=\s*['"]?#{field_value}[^>]*)/, '\1 selected="selected"')
+        else
+          filter.options[:collection].gsub!(/>#{field_value}</, " selected=\"selected\">#{field_value}<")
+        end
+      end
+
       filter.options[:collection] = filter.options[:collection].html_safe if filter.options[:collection].respond_to?(:html_safe)
 
       select_tag(filter.field_name, filter.options.delete(:collection), filter.options)
