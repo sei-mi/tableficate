@@ -1,0 +1,11 @@
+<%= table_for @npw do |t|
+  t.column :id 
+  t.column :first_name 
+  t.column :last_name 
+  t.column :category 
+  t.column :year 
+
+  t.filter :year,
+    collection:    1900..2000,
+    include_blank: true
+end %>
