@@ -11,15 +11,6 @@ describe Tableficate::Helper, type: :request do
       page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='Peace'][@selected='selected']")
     end
 
-    it 'allows for a collection to accept a generated string' do
-      visit '/filters/select_from_generated_string'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace']")
-    end
-    it 'selects an option from the params when the collection is a generated string' do
-      visit '/filters/select_from_generated_string?nobel_prize_winners[filter][category]=Peace'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace'][@selected='selected']")
-    end
-
     it 'allows for a collection to accept a range' do
       visit '/filters/select_from_range'
       page.should have_xpath("//select[@id='nobel_prize_winners_filter_year']/option[@value='1900']")
