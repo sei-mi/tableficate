@@ -1,0 +1,12 @@
+<%= table_for @npw do |t|
+  t.column :id 
+  t.column :first_name 
+  t.column :last_name 
+  t.column :category 
+  t.column :year 
+
+  t.filter :category,
+    as:            :radio,
+    collection:    ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'],
+    include_blank: true
+end %>
