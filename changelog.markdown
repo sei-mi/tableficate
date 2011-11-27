@@ -3,6 +3,9 @@
  * new filter functions
  * select based range filter
 
+## 0.1.3
+* fixing html_safe break in 0.1.2
+
 ## 0.1.2
 * only call html_safe when needed on column block calls
 
