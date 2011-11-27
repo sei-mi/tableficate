@@ -14,7 +14,7 @@ module Tableficate
     def value(row)
       if @block
         output = @block.call(row)
-        output = output.html_safe if respond_to? :html_safe
+        output = output.html_safe if output.respond_to? :html_safe
         output
       else
         row.send(@name)
