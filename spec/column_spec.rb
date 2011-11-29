@@ -23,6 +23,14 @@ describe Tableficate::Column do
 
     column.value(row).should == 'Norman Borlaug'
   end
+  it 'should not escape html in block outputs' do
+    row = NobelPrizeWinner.find_by_first_name_and_last_name('Norman', 'Borlaug')
+    column = Tableficate::Column.new(nil, :full_name) do |row|
+      [row.first_name, row.last_name].join('<br/>')
+    end
+
+    ERB::Util::html_escape(column.value(row)).should == 'Norman<br/>Borlaug'
+  end
 
   it 'should allow sorting to be turned on and off' do
     column = Tableficate::Column.new(nil, :first_name, show_sort: false)
