@@ -2,9 +2,9 @@ module Tableficate
   class Base
     extend Tableficate::Finder
 
-    def self.scope(model = nil, &block)
+    def self.scope(model = nil)
       if block_given?
-        @scope = block.call
+        @scope = yield
       else
         @scope = model.to_s.camelize.constantize
       end

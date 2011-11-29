@@ -1,7 +1,8 @@
 ## 0.2.0
-* complete filter rewrite
- * new filter functions
- * select based range filter
+ * complete filter rewrite
+ * replaced existing filter functions in table_for calls
+ * added select based range filter
+ * added radio button filters
 
 ## 0.1.3
 * fixing html_safe break in 0.1.2

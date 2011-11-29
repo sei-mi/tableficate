@@ -47,5 +47,26 @@ module Tableficate
 
       select_tag(filter.field_name, filter.options.delete(:collection), filter.options)
     end
+
+    def tableficate_radio_tags(filter, &block)
+      field_value = filter.field_value(params[filter.table.as])
+
+      collection = Tableficate::Filter::Collection.new(filter.options[:collection], selected: filter.field_value(params[filter.table.as]))
+
+      html = []
+      if block_given?
+        html = collection.map {|choice| capture(choice, &block)}
+      else
+        collection.each do |choice|
+          html.push(
+            radio_button_tag(filter.field_name, choice.value, choice.checked?, choice.options),
+            label_tag("#{filter.field_name}[#{choice.value}]", choice.name),
+            '<br/>'
+          )
+        end
+      end
+
+      html.join("\n").html_safe
+    end
   end
 end

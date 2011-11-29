@@ -36,10 +36,11 @@ module Tableficate
     def filter(name, options = {})
       as_map = {
         text:   Filter::TextField,
-        select: Filter::Select
+        select: Filter::Select,
+        radio:  Filter::Radio
       }
 
-      @filters.push(as_map[options.delete(:as) || options[:collection] ? :select : :text].new(self, name, options))
+      @filters.push(as_map[options.delete(:as) || (options[:collection] ? :select : :text)].new(self, name, options))
     end
 
     def filter_range(name, options = {})
@@ -48,7 +49,7 @@ module Tableficate
         select: Filter::SelectRange
       }
 
-      @filters.push(as_map[options.delete(:as) || options[:collection] ? :select : :text].new(self, name, options))
+      @filters.push(as_map[options.delete(:as) || (options[:collection] ? :select : :text)].new(self, name, options))
     end
 
     def render(options = {})

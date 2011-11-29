@@ -1,4 +1,6 @@
-<%= table_for @npw do |t|
+<% theme = params[:theme] %>
+
+<%= table_for @npw, theme: theme do |t|
   t.column :id 
   t.column :first_name 
   t.column :last_name 
@@ -7,6 +9,6 @@
 
   t.filter :category,
     as:            :radio,
-    collection:    [[1, 'Chemistry'], [2, 'Literature'], [3, 'Peace'], [4, 'Physics'], [5, 'Physiology or Medicine']],
+    collection:    ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'],
     include_blank: true
 end %>
