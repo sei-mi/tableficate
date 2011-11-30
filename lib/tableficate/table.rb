@@ -35,9 +35,10 @@ module Tableficate
 
     def filter(name, options = {})
       as_map = {
-        text:   Filter::TextField,
-        select: Filter::Select,
-        radio:  Filter::Radio
+        text:     Filter::TextField,
+        select:   Filter::Select,
+        radio:    Filter::Radio,
+        checkbox: Filter::CheckBox
       }
 
       @filters.push(as_map[options.delete(:as) || (options[:collection] ? :select : :text)].new(self, name, options))

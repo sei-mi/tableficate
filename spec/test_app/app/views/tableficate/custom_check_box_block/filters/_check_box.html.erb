@@ -1,0 +1,7 @@
+<div>
+  <%= tableficate_label_tag(filter) %>
+  <%= tableficate_check_box_tags(filter) do |choice| %>
+    <%= label_tag("#{filter.field_name}[#{choice.value}]", choice.name) %>
+    <%= check_box_tag("#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.options.reverse_merge(name: "#{filter.field_name}[]")) %>
+  <% end %>
+</div>

@@ -120,4 +120,45 @@ describe Tableficate::Helper, type: :request do
       page.should have_xpath('//table/tbody/tr', count: NobelPrizeWinner.joins(:nobel_prizes).where('nobel_prizes.category = ?', selected_category).size)
     end
   end
+
+  describe 'tableficate_check_box_tags' do
+    it 'takes a block for custom output' do
+      visit '/filters/check_box_tags?theme=custom_check_box_block'
+
+      page.html.should match /<label for="nobel_prize_winners_filter_category_Chemistry">Chemistry<\/label>\s*<input id="nobel_prize_winners_filter_category_Chemistry" name="nobel_prize_winners\[filter\]\[category\]\[\]" type="checkbox" value="Chemistry">/
+    end
+
+    it 'should display a group of check box tags with no selection and nothing filtered' do
+      visit '/filters/check_box_tags'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        id = "nobel_prize_winners_filter_category_#{category.gsub(/ /, '_')}"
+
+        page.should have_xpath("//input[@type='checkbox'][@id='#{id}'][@value='#{category}']")
+
+        page.has_no_checked_field?(id).should be true
+      end
+
+      page.should have_xpath('//table/tbody/tr', count: NobelPrizeWinner.joins(:nobel_prizes).size)
+    end
+
+    it 'should display a group of check box tags with a selection and the table filtered' do
+      selected_category = 'Peace'
+      visit "/filters/check_box_tags?nobel_prize_winners[filter][category]=#{selected_category}"
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        id = "nobel_prize_winners_filter_category_#{category.gsub(/ /, '_')}"
+
+        page.should have_xpath("//input[@type='checkbox'][@id='#{id}'][@value='#{category}']")
+
+        if category == selected_category
+          page.has_checked_field?(id).should be true
+        else
+          page.has_no_checked_field?(id).should be true
+        end
+      end
+
+      page.should have_xpath('//table/tbody/tr', count: NobelPrizeWinner.joins(:nobel_prizes).where('nobel_prizes.category = ?', selected_category).size)
+    end
+  end
 end

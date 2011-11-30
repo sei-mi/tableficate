@@ -75,5 +75,28 @@ module Tableficate
 
       html.join("\n").html_safe
     end
+
+    def tableficate_check_box_tags(filter, &block)
+      field_value = filter.field_value(params[filter.table.as])
+
+      collection = Tableficate::Filter::Collection.new(filter.options[:collection], selected: filter.field_value(params[filter.table.as]))
+
+      html = []
+      if block_given?
+        html = collection.map {|choice| capture(choice, &block)}
+      else
+        collection.each do |choice|
+          html.push(
+            check_box_tag(
+              "#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.options.reverse_merge(name: "#{filter.field_name}[]")
+            ),
+            label_tag("#{filter.field_name}[#{choice.value}]", choice.name),
+            '<br/>'
+          )
+        end
+      end
+
+      html.join("\n").html_safe
+    end
   end
 end
