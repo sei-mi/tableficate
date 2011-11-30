@@ -118,3 +118,8 @@ The theme can then be applied to a table by passing "theme: 'NAME'" to the "tabl
     <%= table_for @accounts, theme: 'foo' do |t|
       ...
     %>
+
+## Changes From 0.1
+
+1. The filter functions used in the "table_for" call have been completely changed. They will need to be rewritten in all of your calls.
+2. New filter partials have been added to accomodate the new filter types that are available. If you have custom themes they will need to be updated. This can be done by rerunning 'rails generate tableficate:theme <name>'. This does not overwrite files you have altered for your new theme.
