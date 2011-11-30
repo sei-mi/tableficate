@@ -9,7 +9,7 @@ module Tableficate
         @options = options
 
         @template   = 'filters/' + self.class.name.demodulize.underscore
-        @label      = @options[:label] || table.columns.detect{|column| column.name == @name}.try(:header) || name.to_s.titleize
+        @label      = @options.delete(:label) || table.columns.detect{|column| column.name == @name}.try(:header) || name.to_s.titleize
         @field_name = "#{table.as}[filter][#{@name}]"
       end
 
