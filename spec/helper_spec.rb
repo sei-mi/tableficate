@@ -52,6 +52,8 @@ describe Tableficate::Helper, type: :request do
   describe 'tableficate_radio_tags' do
     it 'takes a block for custom output' do
       visit '/filters/radio_tags?theme=custom_radio_block'
+
+      page.html.should match /<label for="nobel_prize_winners_filter_category_Chemistry">Chemistry<\/label>\s*<input id="nobel_prize_winners_filter_category_Chemistry" name="nobel_prize_winners\[filter\]\[category\]" type="radio" value="Chemistry">/
     end
 
     it 'should display a group of radio tags with no selection and nothing filtered' do
