@@ -7,7 +7,7 @@ A DSL for easy table creation with sorting and filtering. It tries to do to tabl
 
 If you're using Bundler, add this to your Gemfile:
 
-    gem 'tableficate'
+    gem 'tableficate', '~0.2.0'
 
 ## Support
 
