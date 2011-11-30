@@ -23,11 +23,11 @@ module Tableficate
     end
 
     def tableficate_label_tag(filter)
-      label_tag(filter.field_name, filter.label, filter.options[:label_options] || {})
+      label_tag(filter.field_name, filter.label, filter.options[:label_options])
     end
 
     def tableficate_text_field_tag(filter)
-      text_field_tag(filter.field_name, filter.field_value(params[filter.table.as]), filter.options[:field_options] || {})
+      text_field_tag(filter.field_name, filter.field_value(params[filter.table.as]), filter.options)
     end
 
     def tableficate_select_tag(filter)
