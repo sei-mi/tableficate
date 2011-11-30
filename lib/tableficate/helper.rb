@@ -34,16 +34,23 @@ module Tableficate
       field_value = filter.field_value(params[filter.table.as])
 
       if field_value.present? and filter.options[:collection].is_a?(String)
-        if filter.options[:collection].match(/<option[^>]*value\s*=/)
-          filter.options[:collection].gsub!(/(<option[^>]*value\s*=\s*['"]?#{field_value}[^>]*)/, '\1 selected="selected"')
-        else
-          filter.options[:collection].gsub!(/>#{field_value}</, " selected=\"selected\">#{field_value}<")
+        Array.wrap(field_value).each do |fv|
+          if filter.options[:collection].match(/<option[^>]*value\s*=/)
+            filter.options[:collection].gsub!(/(<option[^>]*value\s*=\s*['"]?#{fv}[^>]*)/, '\1 selected="selected"')
+          else
+            filter.options[:collection].gsub!(/>#{fv}</, " selected=\"selected\">#{fv}<")
+          end
         end
-      else
-        filter.options[:collection] = options_for_select(filter.options[:collection], field_value)
+      elsif not filter.options[:collection].is_a?(String)
+        filter.options[:collection] = Tableficate::Filter::Collection.new(filter.options[:collection], selected: field_value).map {|choice|
+          html_attributes = choice.options.length > 0 ? ' ' + choice.options.map {|k, v| %(#{k.to_s}="#{v}")}.join(' ') : ''
+          selected_attribute = choice.selected? ? ' selected="selected"' : ''
+
+          %(<option value="#{ERB::Util.html_escape(choice.value)}"#{selected_attribute}#{html_attributes}>#{ERB::Util.html_escape(choice.name)}</option>)
+        }.join("\n")
       end
 
-      filter.options[:collection] = filter.options[:collection].html_safe if filter.options[:collection].respond_to?(:html_safe)
+      filter.options[:collection] = filter.options[:collection].html_safe
 
       select_tag(filter.field_name, filter.options.delete(:collection), filter.options)
     end

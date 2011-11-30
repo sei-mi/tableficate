@@ -5,7 +5,7 @@
   t.column :category 
   t.column :year 
 
-  t.filter :year,
-    collection:    1900..2000,
-    include_blank: true
+  t.filter :category,
+    collection: ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'],
+    multiple:   true
 end %>

@@ -7,45 +7,76 @@ describe Tableficate::Helper, type: :request do
       visit '/filters/select_from_string'
       page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='Peace']")
     end
+
     it 'selects an option from the params when the collection is a string' do
       visit '/filters/select_from_string?nobel_prize_winners[filter][category]=Peace'
       page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='Peace'][@selected='selected']")
     end
 
-    it 'allows for a collection to accept a range' do
-      visit '/filters/select_from_range'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_year']/option[@value='1900']")
-    end
-    it 'selects an option from the params when the collection is a range' do
-      visit '/filters/select_from_range?nobel_prize_winners[filter][year]=1903'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_year']/option[@value='1903'][@selected='selected']")
+    it 'should display a multi select box from a string' do
+      visit '/filters/multi_select_from_string'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='#{category}']")
+        page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='#{category}'][@selected='selected']")
+      end
     end
 
-    it 'allows for a collection to accept a hash' do
-      visit '/filters/select_from_hash'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace'][text()='3']")
-    end
-    it 'selects an option from the params when the collection is a hash' do
-      visit '/filters/select_from_hash?nobel_prize_winners[filter][category]=Peace'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace'][@selected='selected']")
+    it 'should display a multi select box and select an option' do
+      visit '/filters/multi_select_from_string?nobel_prize_winners[filter][category][]=Peace&nobel_prize_winners[filter][category][]=Literature'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='#{category}']")
+        if category == 'Peace' or category == 'Literature'
+          page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='#{category}'][@selected='selected']")
+        else
+          page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[text()='#{category}'][@selected='selected']")
+        end
+      end
     end
 
-    it 'allows for a collection to accept an array' do
-      visit '/filters/select_from_array'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace']")
-    end
-    it 'selects an option from the params when the collection is an array' do
-      visit '/filters/select_from_array?nobel_prize_winners[filter][category]=Peace'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace'][@selected='selected']")
+    it 'should display a select box' do
+      visit '/filters/select_tag'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}']")
+        page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+      end
     end
 
-    it 'allows for a collection to accept a nested array' do
-      visit '/filters/select_from_nested_array'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace']")
+    it 'should display a select box and select an option' do
+      visit '/filters/select_tag?nobel_prize_winners[filter][category]=Peace'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}']")
+        if category == 'Peace'
+          page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+        else
+          page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+        end
+      end
     end
-    it 'selects an option from the params when the collection is a nested array' do
-      visit '/filters/select_from_nested_array?nobel_prize_winners[filter][category]=Peace'
-      page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='Peace'][@selected='selected']")
+
+    it 'should display a multi select box' do
+      visit '/filters/multi_select_tag'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}']")
+        page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+      end
+    end
+
+    it 'should display a select box and select an option' do
+      visit '/filters/multi_select_tag?nobel_prize_winners[filter][category][]=Peace&nobel_prize_winners[filter][category][]=Literature'
+
+      ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'].each do |category|
+        page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}']")
+        if category == 'Peace' or category == 'Literature'
+          page.should have_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+        else
+          page.should have_no_xpath("//select[@id='nobel_prize_winners_filter_category']/option[@value='#{category}'][@selected='selected']")
+        end
+      end
     end
   end
 
