@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe Tableficate::Filter::InputFieldStart do
-  before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
+  before(:each) do
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 
@@ -21,8 +24,11 @@ describe Tableficate::Filter::InputFieldStart do
 end
 
 describe Tableficate::Filter::InputFieldStop do
-  before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
+  before(:each) do
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 
@@ -41,8 +47,11 @@ describe Tableficate::Filter::InputFieldStop do
 end
 
 describe Tableficate::Filter::InputFieldRange do
-  before(:all) do
-    @table = Tableficate::Table.new(nil, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
+  before(:each) do
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
   end
 

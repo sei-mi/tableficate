@@ -35,7 +35,7 @@ module Tableficate
 
     def filter(name, options = {})
       as_map = {
-        text:     Filter::TextField,
+        text:     Filter::InputField,
         select:   Filter::Select,
         radio:    Filter::Radio,
         checkbox: Filter::CheckBox
@@ -46,7 +46,7 @@ module Tableficate
 
     def filter_range(name, options = {})
       as_map = {
-        text:   Filter::TextFieldRange,
+        text:   Filter::InputFieldRange,
         select: Filter::SelectRange
       }
 
