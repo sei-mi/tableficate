@@ -65,11 +65,30 @@ module Tableficate
 
     def filter_range(name, options = {})
       as_map = {
-        text:   Filter::InputRange,
-        select: Filter::SelectRange
+        :'datetime-local' => Filter::InputRange,
+        text:     Filter::InputRange,
+        email:    Filter::InputRange,
+        url:      Filter::InputRange,
+        tel:      Filter::InputRange,
+        number:   Filter::InputRange,
+        range:    Filter::InputRange,
+        date:     Filter::InputRange,
+        month:    Filter::InputRange,
+        week:     Filter::InputRange,
+        time:     Filter::InputRange,
+        datetime: Filter::InputRange,
+        search:   Filter::InputRange,
+        color:    Filter::InputRange,
+        select:   Filter::SelectRange
       }
 
-      @filters.push(as_map[options.delete(:as) || (options[:collection] ? :select : :text)].new(self, name, options))
+      as = options.delete(:as) || (options[:collection] ? :select : :text)
+
+      raise Filter::UnknownInputType if as_map[as].nil?
+
+      options[:type] = as.to_s
+
+      @filters.push(as_map[as].new(self, name, options))
     end
 
     def render(options = {})
