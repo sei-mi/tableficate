@@ -7,7 +7,7 @@ module Tableficate
     end
 
     def tableficate_header_tag(column)
-      render partial: Tableficate::Utils::template_path('column_header', column.table.options[:theme]), locals: {column: column}
+      render partial: Tableficate::Utils::template_path('header', column.table.options[:theme]), locals: {column: column}
     end
 
     def tableficate_data_tag(row, column)
