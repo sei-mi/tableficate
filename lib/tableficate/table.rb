@@ -35,13 +35,32 @@ module Tableficate
 
     def filter(name, options = {})
       as_map = {
+        :'datetime-local' => Filter::Input,
         text:     Filter::Input,
+        email:    Filter::Input,
+        url:      Filter::Input,
+        tel:      Filter::Input,
+        number:   Filter::Input,
+        range:    Filter::Input,
+        date:     Filter::Input,
+        month:    Filter::Input,
+        week:     Filter::Input,
+        time:     Filter::Input,
+        datetime: Filter::Input,
+        search:   Filter::Input,
+        color:    Filter::Input,
         select:   Filter::Select,
         radio:    Filter::Radio,
         checkbox: Filter::CheckBox
       }
 
-      @filters.push(as_map[options.delete(:as) || (options[:collection] ? :select : :text)].new(self, name, options))
+      as = options.delete(:as) || (options[:collection] ? :select : :text)
+
+      raise Filter::UnknownInputType if as_map[as].nil?
+
+      options[:type] = as.to_s
+
+      @filters.push(as_map[as].new(self, name, options))
     end
 
     def filter_range(name, options = {})

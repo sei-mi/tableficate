@@ -77,6 +77,17 @@ describe Tableficate::Table do
     @table.filters.last.name.should == :last_name
   end
 
+  it 'should raise an error if an unrecognized type is passed' do
+    lambda {@table.filter(:first_name, as: :foo)}.should raise_error(Tableficate::Filter::UnknownInputType)
+  end
+
+  it 'should add the Input for known types and pass through the type based on :as' do
+    @table.filter(:first_name, as: :search)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.options[:type].should == 'search'
+  end
+
   it 'should add a InputRange filter' do
     @table.filter_range(:first_name, label: 'First')
     @table.filter_range(:last_name, label: 'Last')

@@ -3,5 +3,6 @@ module Tableficate
   
   module Filter
     class MissingTemplate < StandardError; end
+    class UnknownInputType < StandardError; end
   end
 end
