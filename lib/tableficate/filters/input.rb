@@ -1,6 +1,6 @@
 module Tableficate
   module Filter
-    class InputField < Base
+    class Input < Base
       def initialize(table, name, options = {})
         super(table, name, options)
 

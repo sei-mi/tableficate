@@ -1,6 +1,6 @@
 module Tableficate
   module Filter
-    class InputFieldStart < InputField
+    class InputStart < Input
       def initialize(table, name, options = {})
         super(table, name, options)
 
@@ -16,7 +16,7 @@ module Tableficate
       end
     end
 
-    class InputFieldStop < InputField
+    class InputStop < Input
       def initialize(table, name, options = {})
         super(table, name, options)
 
@@ -32,7 +32,7 @@ module Tableficate
       end
     end
 
-    class InputFieldRange < Base
+    class InputRange < Base
       attr_reader :start, :stop
 
       def initialize(table, name, options = {})
@@ -46,8 +46,8 @@ module Tableficate
         stop_options.reverse_merge!(@options)
         stop_options.reverse_merge!(label: self.label)
 
-        @start = InputFieldStart.new(table, name, start_options)
-        @stop  = InputFieldStop.new(table, name, stop_options)
+        @start = InputStart.new(table, name, start_options)
+        @stop  = InputStop.new(table, name, stop_options)
 
         # look for a template for this class and if none exists step through the ancestors until we find one
         current_class = self.class

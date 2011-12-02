@@ -68,21 +68,21 @@ describe Tableficate::Table do
     table.show_sort?.should be false
   end
 
-  it 'should add an InputField filter' do
+  it 'should add an Input filter' do
     @table.filter(:first_name, label: 'First')
     @table.filter(:last_name, label: 'Last')
 
     @table.filters.first.name.should == :first_name
-    @table.filters.first.is_a?(Tableficate::Filter::InputField).should be true
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
     @table.filters.last.name.should == :last_name
   end
 
-  it 'should add a InputFieldRange filter' do
+  it 'should add a InputRange filter' do
     @table.filter_range(:first_name, label: 'First')
     @table.filter_range(:last_name, label: 'Last')
 
     @table.filters.first.name.should == :first_name
-    @table.filters.first.is_a?(Tableficate::Filter::InputFieldRange).should be true
+    @table.filters.first.is_a?(Tableficate::Filter::InputRange).should be true
     @table.filters.last.name.should == :last_name
   end
 
