@@ -1,6 +1,8 @@
 # Tableficate
 A DSL for easy table creation with sorting and filtering. It tries to do to tables what simple_form and formtastic have done for forms. Below you'll find basic documentation with more compelete docs forthcoming.
 
+This project follows [Semantic Versioning](http://semver.org/).
+
 ## Installation
 
     $ gem install tableficate
