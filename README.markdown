@@ -54,7 +54,7 @@ Our View:
       t.filter :last_name
     %>
 
-This creates a sortable table with two filters, 4 data columns and an action column. Column headers are automatically generated but can be overridden as seen on the "id" column. The column output can also be overridden by passing a block to the call. This setup provides easy table creation but only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
+This creates a sortable table with two filters, 4 data columns and an action column. Column headers are automatically generated but can be overridden as seen on the `:id` column. The column output can also be overridden by passing a block to the call. This setup provides easy table creation but only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
 
 Having created the basic table we now want to default the sorting to show newest accounts first and we want the first and last name to be merged into one name column. First we'll need to create a table model.
 
@@ -84,13 +84,13 @@ Our table model:
       end
     end
 
-We've defined a scope that we're wrapping. Then we provide a default sorting and explain how to sort and filter a new column called ":full_name".
+We've defined a scope that we're wrapping. Then we provide a default sorting and explain how to sort and filter a new column called `:full_name`.
 
 Our new controller:
 
     @accounts = AccountReport.tableficate(params[:accounts]).page(params.try(:[], :accounts_page) || 1)
 
-The only change here is that "Accounts.active" has changed to "AccountReport".
+The only change here is that `Accounts.active` has changed to `AccountReport`.
 
 Our new view:
 
@@ -115,7 +115,7 @@ New themes can be created using the theme generator.
 
     $ rails generate tableficate:theme NAME
 
-The theme can then be applied to a table by passing "theme: 'NAME'" to the "table_for" call.
+The theme can then be applied to a table by passing `theme: 'NAME'` to the `table_for` call.
 
     <%= table_for @accounts, theme: 'foo' do |t|
       ...
@@ -123,5 +123,5 @@ The theme can then be applied to a table by passing "theme: 'NAME'" to the "tabl
 
 ## Changes From 0.1
 
-1. The filter functions used in the "table_for" call have been completely changed. They will need to be rewritten in all of your calls.
-2. New filter partials have been added to accomodate the new filter types that are available. If you have custom themes they will need to be updated. This can be done by first moving "_column_header.html.erb" to "_header.html.erb", "filters/_input_field.html.erb" to "filters/_input.html.erb" and "filters/_input_field_range.html.erb" to "filters/_input_range.html.erb". Then rerun 'rails generate tableficate:theme <name>'. This will not overwrite files you have altered for your new theme.
+1. The filter functions used in the `table_for` call have been completely changed. They will need to be rewritten in all of your calls.
+2. New filter partials have been added to accomodate the new filter types that are available. If you have custom themes they will need to be updated. This can be done by first moving "_column_header.html.erb" to "_header.html.erb", "filters/_input_field.html.erb" to "filters/_input.html.erb" and "filters/_input_field_range.html.erb" to "filters/_input_range.html.erb". Then rerun `rails generate tableficate:theme NAME`. This will not overwrite files you have altered for your new theme.
