@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Aaron Lasseigne"]
   s.email       = ["alasseigne@sei-mi.com"]
   s.homepage    = "https://github.com/sei-mi/tableficate"
-  s.summary     = %q{Simple tables for Rails.}
-  s.description = %q{Simple tables for Rails.}
+  s.summary     = %q{A DSL for Rails that provides easy table creation with sorting and filtering.}
+  s.description = %q{A DSL for Rails that provides easy table creation with sorting and filtering.}
 
   s.rubyforge_project = "tableficate"
 
