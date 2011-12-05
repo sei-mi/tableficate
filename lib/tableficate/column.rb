@@ -14,8 +14,12 @@ module Tableficate
     def value(row)
       if @block
         output = @block.call(row)
-        output = output.html_safe if output.respond_to? :html_safe
-        output
+        if output.is_a?(ActionView::OutputBuffer)
+          ''
+        else
+          output = output.html_safe if output.respond_to? :html_safe
+          output
+        end
       else
         row.send(@name)
       end

@@ -39,20 +39,20 @@ Here we're getting active accounts, calling tableficate and then paginating with
 
 Our View:
 
-    <%= table_for @accounts, show_sorts: true do |t|
-      t.column :id, header: 'Account Number'
-      t.column :created_at do |account|
-        account.created_at.strftime('%m/%d/%Y')
-      end
-      t.column :first_name
-      t.column :last_name
-      t.actions do |account|
-        link_to('View', account_path(account))
-      end
+    <%= table_for @accounts, show_sorts: true do |t| %>
+      <% t.column :id, header: 'Account Number' %>
+      <% t.column :created_at do |account| %>
+        <%= account.created_at.strftime('%m/%d/%Y') %>
+      <% end %>
+      <% t.column :first_name %>
+      <% t.column :last_name %>
+      <% t.actions do |account| %>
+        <%= link_to('View', account_path(account)) %>
+      <% end %>
 
-      t.filter :first_name
-      t.filter :last_name
-    %>
+      <% t.filter :first_name %>
+      <% t.filter :last_name %>
+    <% end %>
 
 This creates a sortable table with two filters, 4 data columns and an action column. Column headers are automatically generated but can be overridden as seen on the `:id` column. The column output can also be overridden by passing a block to the call. This setup provides easy table creation but only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
 
@@ -94,18 +94,18 @@ The only change here is that `Accounts.active` has changed to `AccountReport`.
 
 Our new view:
 
-    <%= table_for @accounts, show_sorts: true do |t|
-      t.column :id, header: 'Account Number'
-      t.column :created_at do |account|
-        account.created_at.strftime('%m/%d/%Y')
-      end
-      t.column :full_name
-      t.actions do |account|
-        link_to('View', account_path(account))
-      end
+    <%= table_for @accounts, show_sorts: true do |t| %>
+      <% t.column :id, header: 'Account Number' %>
+      <% t.column :created_at do |account| %>
+        <%= account.created_at.strftime('%m/%d/%Y') %>
+      <% end %>
+      <% t.column :full_name %>
+      <% t.actions do |account| %>
+        <%= link_to('View', account_path(account)) %>
+      <% end %>
 
-      t.filter :full_name
-    %>
+      <% t.filter :full_name %>
+    <% end %>
 
 In the view we've merged the first and last name into a new full name column. Now we have default sorting, sortable columns and a full name filter.
 
@@ -117,11 +117,11 @@ New themes can be created using the theme generator.
 
 The theme can then be applied to a table by passing `theme: 'NAME'` to the `table_for` call.
 
-    <%= table_for @accounts, theme: 'foo' do |t|
+    <%= table_for @accounts, theme: 'foo' do |t| %>
       ...
-    %>
+    <% end %>
 
-## Changes From 0.1
+## Changes You Will Have to Make Coming From 0.1
 
 1. The filter functions used in the `table_for` call have been completely changed. They will need to be rewritten in all of your calls.
 2. New filter partials have been added to accomodate the new filter types that are available. If you have custom themes they will need to be updated. This can be done by first moving "_column_header.html.erb" to "_header.html.erb", "filters/_input_field.html.erb" to "filters/_input.html.erb" and "filters/_input_field_range.html.erb" to "filters/_input_range.html.erb". Then rerun `rails generate tableficate:theme NAME`. This will not overwrite files you have altered for your new theme.

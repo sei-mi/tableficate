@@ -4,6 +4,7 @@
  * added select based range filter
  * added radio button filter
  * added check box filter
+ * `column` and `actions` calls in `table_for` now accept template blocks
 
 ## 0.1.3
 * fixing html_safe break in 0.1.2
