@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Tableficate::ActionColumn do
   before(:all) do
-    @action_column = Tableficate::ActionColumn.new(nil, nil) do
+    @action_column = Tableficate::ActionColumn.new(nil) do
       Actions!
     end
   end

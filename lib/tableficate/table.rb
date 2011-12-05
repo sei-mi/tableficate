@@ -25,8 +25,8 @@ module Tableficate
       @columns.push(Column.new(self, name, options, &block))
     end
 
-    def actions(options = {}, &block)
-      @columns.push(ActionColumn.new(self, options, block))
+    def actions(&block)
+      @columns.push(ActionColumn.new(self, &block))
     end
 
     def show_sort?
