@@ -35,7 +35,7 @@ Our controller:
 
     @accounts = Accounts.active.tableficate(params[:accounts]).page(params.try(:[], :accounts_page) || 1)
 
-Here we're getting active accounts, calling tableficate and then paginating with Kaminari. Tableficate works on Arel objects and passes out an Arel so you can add things like pagination. We pass in the params for the table we'll create in the view. By default the params are stored under the primary table name of the query.
+Here we're getting active accounts, calling tableficate and then paginating with Kaminari. Tableficate works on Arel objects and passes out an Arel so you can add things like pagination. We pass in the params for the table we'll create in the view. By default `:accounts` is derived from the database table name of the primary table in the query.
 
 Our View:
 
@@ -54,26 +54,24 @@ Our View:
       <% t.filter :last_name %>
     <% end %>
 
-This creates a sortable table with two filters, 4 data columns and an action column. Column headers are automatically generated but can be overridden as seen on the `:id` column. The column output can also be overridden by passing a block to the call. This setup provides easy table creation but only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
+This creates a sortable table with 2 filters, 4 data columns and a column for actions. Column headers are automatically generated but can be overridden as seen on `:id`. The column output can also be overridden by passing a block to the call. This setup only covers basic functionality. Some of the more advanced functionality requires you to wrap your scope in a special table model.
 
-Having created the basic table we now want to default the sorting to show newest accounts first and we want the first and last name to be merged into one name column. First we'll need to create a table model.
+Having created the basic table we now want to default the sorting to show newest accounts first and we want `:first_name` and `:last_name` to be merged into one column. First, create a table model.
 
-In "app/tables/" we'll create a new table model. This can be done using a generator.
+In "app/tables/" we'll create a new table model using the generator. Provide the name of the new table model and then the model being wrapped.
 
-    $ rails generate tableficate:table AccountReport
+    $ rails generate tableficate:table AccountReport Account
 
 Our table model:
 
     class AccountReport < Tableficate::Base
-      scope do
-        Accounts.active
-      end
+      scope :accounts
 
-      default_sort(:created_at, 'DESC')
+      default_sort :created_at, 'DESC'
 
-      column(:full_name, sort: 'first_name ASC, last_name ASC')
+      column :full_name, sort: 'first_name ASC, last_name ASC'
 
-      filter(:full_name) do |value, scope|
+      filter :full_name do |value, scope|
         first_name, last_name = value.split(/\s+/)
 
         if last_name.nil?
@@ -86,20 +84,20 @@ Our table model:
 
 We've defined a scope that we're wrapping. Then we provide a default sorting and explain how to sort and filter a new column called `:full_name`.
 
-Our new controller:
+Our new controller using `AccountReport`:
 
-    @accounts = AccountReport.tableficate(params[:accounts]).page(params.try(:[], :accounts_page) || 1)
+    @accounts = AccountReport.active.tableficate(params[:accounts]).page(params.try(:[], :accounts_page) || 1)
 
-The only change here is that `Accounts.active` has changed to `AccountReport`.
-
-Our new view:
+Our new view using `:full_name`:
 
     <%= table_for @accounts, show_sorts: true do |t| %>
       <% t.column :id, header: 'Account Number' %>
       <% t.column :created_at do |account| %>
         <%= account.created_at.strftime('%m/%d/%Y') %>
       <% end %>
-      <% t.column :full_name %>
+      <% t.column :full_name do |account| %>
+        <%= "#{account.first_name} #{account.last_name}" %>
+      <% end %>
       <% t.actions do |account| %>
         <%= link_to('View', account_path(account)) %>
       <% end %>
@@ -107,21 +105,21 @@ Our new view:
       <% t.filter :full_name %>
     <% end %>
 
-In the view we've merged the first and last name into a new full name column. Now we have default sorting, sortable columns and a full name filter.
+Now we have default sorting, sortable columns and a full name filter.
 
 ## Themes
 
 New themes can be created using the theme generator.
 
-    $ rails generate tableficate:theme NAME
+    $ rails generate tableficate:theme foo
 
-The theme can then be applied to a table by passing `theme: 'NAME'` to the `table_for` call.
+The theme can then be applied to a table.
 
-    <%= table_for @accounts, theme: 'foo' do |t| %>
+    <%= table_for @records, theme: 'foo' do |t| %>
       ...
     <% end %>
 
-## Changes You Will Have to Make Coming From 0.1
+## Changes Needed to Upgrade From 0.1
 
 1. The filter functions used in the `table_for` call have been completely changed. They will need to be rewritten in all of your calls.
 2. New filter partials have been added to accomodate the new filter types that are available. If you have custom themes they will need to be updated. This can be done by first moving "_column_header.html.erb" to "_header.html.erb", "filters/_input_field.html.erb" to "filters/_input.html.erb" and "filters/_input_field_range.html.erb" to "filters/_input_range.html.erb". Then rerun `rails generate tableficate:theme NAME`. This will not overwrite files you have altered for your new theme.
