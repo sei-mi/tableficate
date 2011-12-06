@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](http://semver.org/).
 
 If you're using Bundler, add this to your Gemfile:
 
-    gem 'tableficate', '~0.2.0'
+    gem 'tableficate', '~>0.2.0'
 
 ## Support
 
