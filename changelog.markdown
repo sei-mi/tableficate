@@ -1,3 +1,5 @@
+## 0.3.0
+
 ## 0.2.0
  * complete filter rewrite
  * replaced existing filter functions in table_for calls
