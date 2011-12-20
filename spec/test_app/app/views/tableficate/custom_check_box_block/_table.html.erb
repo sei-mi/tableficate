@@ -1,36 +1,14 @@
-<% if table.filters.any? %>
-  <%= form_tag '', method: :get do %>
-    <% if params[table.as] and params[table.as][:sort] %>
-      <%= hidden_field_tag("#{table.as}[sort]", params[table.as][:sort]) %>
-    <% end %>
-    <% if params[table.as] and params[table.as][:dir] %>
-      <%= hidden_field_tag("#{table.as}[dir]", params[table.as][:dir]) %>
-    <% end %>
-    <% table.filters.each do |filter| %>
-      <%= tableficate_filter_tag filter %>
-    <% end %>
-
-    <%= submit_tag('Filter') %>
-  <% end %>
-<% end %>
-
-<% if defined? ::Kaminari %>
-  <%= paginate(table.rows, param_name: "#{table.as}_page") %>
-<% elsif defined? ::WillPaginate %>
-  <%= will_paginate(table.rows, param_name: "#{table.as}_page") %>
-<% end %>
-
 <%= content_tag(:table, table.attrs) do %>
   <thead>
     <tr>
       <% table.columns.each do |column| %>
-        <%= tableficate_header_tag column %>
+        <%= tableficate_header_tag(column) %>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% table.rows.each do |row| %>
-      <%= tableficate_row_tag row, table.columns %>
+      <%= tableficate_row_tag(row, table.columns) %>
     <% end %>
   </tbody>
 <% end %>
