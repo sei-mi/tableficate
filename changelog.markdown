@@ -1,4 +1,5 @@
 ## 0.3.0
+ * tables no longer take the :html option, all non-recognized options are passed through as HTML attributes
 
 ## 0.2.0
  * complete filter rewrite

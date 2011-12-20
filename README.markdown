@@ -118,3 +118,7 @@ The theme can then be applied to a table.
     <%= table_for @records, theme: 'foo' do |t| %>
       ...
     <% end %>
+
+## Changes Needed to Upgrade From 0.2
+
+1. HTML attributes passed to `table_for` will no longer be passed via the `:html` option. Now all unrecognized options are passed as HTML attributes. This is more consistant with the other functions.

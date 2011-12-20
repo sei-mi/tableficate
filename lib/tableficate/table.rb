@@ -1,28 +1,24 @@
 module Tableficate
   class Table
-    attr_reader :columns, :rows, :current_sort, :filters, :options, :as, :template
+    attr_reader :columns, :rows, :current_sort, :filters, :attrs, :as, :template, :theme
 
     def initialize(template, rows, options, data)
-      @template = template
-      @rows     = rows
-      @columns  = []
-      @filters  = []
-      @as       = options[:as] || rows.table_name
+      @template   = template
+      @rows       = rows
 
-      @options = {
-        show_sorts: false,
-        theme:      ''
-      }.merge(options)
+      @as         = options.delete(:as) || rows.table_name
+      @theme      = options.delete(:theme) || ''
+      @show_sorts = options.delete(:show_sorts) || false
+      @attrs      = options
+
+      @columns = []
+      @filters = []
 
       @current_sort = data[:current_sort]
     end
 
     def column(name, options = {}, &block)
-      options.reverse_merge!(
-        show_sort: @options[:show_sorts]
-      )
-
-      @columns.push(Column.new(self, name, options, &block))
+      @columns.push(Column.new(self, name, options.reverse_merge(show_sort: @show_sorts), &block))
     end
 
     def actions(&block)
@@ -93,11 +89,11 @@ module Tableficate
 
     def render(options = {})
       options.reverse_merge!(
-        partial: Tableficate::Utils::template_path('table', @options[:theme]),
+        partial: Tableficate::Utils::template_path('table', @theme),
         locals:  {table: self}
       )
 
-      @template.render options
+      @template.render(options)
     end
   end
 end

@@ -7,19 +7,19 @@ module Tableficate
     end
 
     def tableficate_header_tag(column)
-      render partial: Tableficate::Utils::template_path('header', column.table.options[:theme]), locals: {column: column}
+      render partial: Tableficate::Utils::template_path('header', column.table.theme), locals: {column: column}
     end
 
     def tableficate_data_tag(row, column)
-      render partial: Tableficate::Utils::template_path('data', column.table.options[:theme]), locals: {row: row, column: column}
+      render partial: Tableficate::Utils::template_path('data', column.table.theme), locals: {row: row, column: column}
     end
 
     def tableficate_row_tag(row, columns)
-      render partial: Tableficate::Utils::template_path('row', columns.first.table.options[:theme]), locals: {row: row, columns: columns}
+      render partial: Tableficate::Utils::template_path('row', columns.first.table.theme), locals: {row: row, columns: columns}
     end
 
     def tableficate_filter_tag(filter)
-      render partial: Tableficate::Utils::template_path(filter.template, filter.table.options[:theme]), locals: {filter: filter}
+      render partial: Tableficate::Utils::template_path(filter.template, filter.table.theme), locals: {filter: filter}
     end
 
     def tableficate_label_tag(filter)
