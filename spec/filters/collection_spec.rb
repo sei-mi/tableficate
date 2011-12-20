@@ -75,9 +75,9 @@ describe Tableficate::Filter::Collection do
 
     1.upto(3) do |i|
       if i == 2
-        collection[i - 1].options[:disabled].should == 'disabled'
+        collection[i - 1].attrs[:disabled].should == 'disabled'
       else
-        collection[i - 1].options.has_key?(:disabled).should be false
+        collection[i - 1].attrs.has_key?(:disabled).should be false
       end
     end
 
@@ -85,9 +85,9 @@ describe Tableficate::Filter::Collection do
 
     1.upto(3) do |i|
       if i == 2 or i == 3
-        collection[i - 1].options[:disabled].should == 'disabled'
+        collection[i - 1].attrs[:disabled].should == 'disabled'
       else
-        collection[i - 1].options.has_key?(:disabled).should be false
+        collection[i - 1].attrs.has_key?(:disabled).should be false
       end
     end
   end

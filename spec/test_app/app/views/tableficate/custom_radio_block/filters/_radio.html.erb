@@ -2,6 +2,6 @@
   <%= tableficate_label_tag(filter) %>
   <%= tableficate_radio_tags(filter) do |choice| %>
     <%= label_tag("#{filter.field_name}[#{choice.value}]", choice.name) %>
-    <%= radio_button_tag(filter.field_name, choice.value, choice.checked?, choice.options) %>
+    <%= radio_button_tag(filter.field_name, choice.value, choice.checked?, choice.attrs) %>
   <% end %>
 </div>

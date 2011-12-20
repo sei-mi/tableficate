@@ -41,15 +41,15 @@ module Tableficate
 
         super(table, name, options)
 
-        start_options.reverse_merge!(@options)
-        start_options.reverse_merge!(label: self.label)
-        stop_options.reverse_merge!(@options)
-        stop_options.reverse_merge!(label: self.label)
+        start_options.reverse_merge!(@attrs)
+        start_options.reverse_merge!(label: self.label, label_options: self.label_options)
+        stop_options.reverse_merge!(@attrs)
+        stop_options.reverse_merge!(label: self.label, label_options: self.label_options)
 
         @start = InputStart.new(table, name, start_options)
         @stop  = InputStop.new(table, name, stop_options)
 
-        new_template = "filters/input_range_#{options[:type]}"
+        new_template = "filters/input_range_#{@attrs[:type]}"
         @template = new_template if table.template.lookup_context.exists?(Tableficate::Utils::template_path(new_template, table.theme), [], true)
       end
     end

@@ -41,10 +41,10 @@ module Tableficate
 
         super(table, name, options)
 
-        start_options.reverse_merge!(@options)
-        start_options.reverse_merge!(label: self.label)
-        stop_options.reverse_merge!(@options)
-        stop_options.reverse_merge!(label: self.label)
+        start_options.reverse_merge!(@attrs)
+        start_options.reverse_merge!(label: self.label, label_options: self.label_options)
+        stop_options.reverse_merge!(@attrs)
+        stop_options.reverse_merge!(label: self.label, label_options: self.label_options)
 
         @start = SelectStart.new(table, name, start_options)
         @stop  = SelectStop.new(table, name, stop_options)

@@ -85,7 +85,7 @@ describe Tableficate::Table do
     @table.filter(:first_name, as: :search)
 
     @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
-    @table.filters.first.options[:type].should == 'search'
+    @table.filters.first.attrs[:type].should == 'search'
   end
 
   it 'should add a InputRange filter' do
@@ -105,7 +105,7 @@ describe Tableficate::Table do
     @table.filter_range(:first_name, as: :search)
 
     @table.filters.first.is_a?(Tableficate::Filter::InputRange).should be true
-    @table.filters.first.options[:type].should == 'search'
+    @table.filters.first.attrs[:type].should == 'search'
   end
 
   it 'should add a Select filter' do

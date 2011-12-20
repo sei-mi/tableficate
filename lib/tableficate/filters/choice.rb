@@ -1,7 +1,7 @@
 module Tableficate
   module Filter
     class Choice
-      attr_reader :name, :value, :options
+      attr_reader :name, :value, :attrs
 
       def initialize(name, value, options = {})
         @name  = name
@@ -11,7 +11,7 @@ module Tableficate
         options.delete(:selected)
         options.delete(:checked)
 
-        @options = options
+        @attrs = options
       end
 
       def selected?

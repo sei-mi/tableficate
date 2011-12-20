@@ -122,3 +122,4 @@ The theme can then be applied to a table.
 ## Changes Needed to Upgrade From 0.2
 
 1. HTML attributes passed to `table_for` will no longer be passed via the `:html` option. Now all unrecognized options are passed as HTML attributes. This is more consistant with the other functions.
+2. In custom templates the `options` attribute is no longer available on all objects that had it. Any options specific to the object have been turned into attributes. For example, `label_options` is now an attribute on filters and `collection` is now an attribute on select, radio and check box filters. All other options will be used as HTML attributes and can be found in the new `attrs` attribute.
