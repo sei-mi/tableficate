@@ -2,6 +2,7 @@
  * tables no longer take the :html option, all non-recognized options are passed through as HTML attributes
  * The `options` attribute on a variety of objects has been removed. It has been replaced with specialized functions such as `label_options` and `collection` with all unrecognized options placed into the `attrs` attribute.
  * adding `tableficate_table_tag` helper
+ * adding `tableficate_filter_form_tag` helper
 
 ## 0.2.0
  * complete filter rewrite

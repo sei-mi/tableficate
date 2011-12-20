@@ -22,6 +22,10 @@ module Tableficate
       render partial: Tableficate::Utils::template_path('row', columns.first.table.theme), locals: {row: row, columns: columns}
     end
 
+    def tableficate_filter_form_tag(table)
+      render partial: Tableficate::Utils::template_path('filters/form', table.theme), locals: {table: table}
+    end
+
     def tableficate_filter_tag(filter)
       render partial: Tableficate::Utils::template_path(filter.template, filter.table.theme), locals: {filter: filter}
     end
