@@ -86,14 +86,5 @@ module Tableficate
 
       @filters.push(as_map[as].new(self, name, options))
     end
-
-    def render(options = {})
-      options.reverse_merge!(
-        partial: Tableficate::Utils::template_path('table', @theme),
-        locals:  {table: self}
-      )
-
-      @template.render(options)
-    end
   end
 end
