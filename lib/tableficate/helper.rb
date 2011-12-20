@@ -3,7 +3,7 @@ module Tableficate
     def table_for(rows, options = {})
       t = Tableficate::Table.new(self, rows, options, rows.tableficate_get_data)
       yield(t)
-      t.template.render(partial: Tableficate::Utils::template_path('table', @theme), locals:  {table: t})
+      t.template.render(partial: Tableficate::Utils::template_path('table', t.theme), locals:  {table: t})
     end
 
     def tableficate_header_tag(column)
