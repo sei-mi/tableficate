@@ -49,8 +49,8 @@ module Tableficate
         @start = InputStart.new(table, name, start_options)
         @stop  = InputStop.new(table, name, stop_options)
 
-        new_template = "filters/input_range_#{@attrs[:type]}"
-        @template = new_template if table.template.lookup_context.exists?(Tableficate::Utils::template_path(new_template, table.theme), [], true)
+        new_partial = "filters/input_range_#{@attrs[:type]}"
+        @template = new_partial if table.template.lookup_context.exists?(Tableficate::Utils::template_path(table.template, new_partial, table.theme), [], true)
       end
     end
   end

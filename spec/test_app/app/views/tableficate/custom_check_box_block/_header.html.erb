@@ -1,8 +1,0 @@
-<th>
-  <%= column.header %>
-  <% table_params = (params[column.table.as] || {}) %>
-  <% if column.show_sort? %>
-    <%= link_to 'A', url_for(params.merge(column.table.as => table_params.merge({sort: column.name.to_s, dir: 'asc'}))) %><% if column.is_sorted?('asc') %>*<% end %>
-    <%= link_to 'D', url_for(params.merge(column.table.as => table_params.merge({sort: column.name.to_s, dir: 'desc'}))) %><% if column.is_sorted?('desc') %>*<% end %>
-  <% end %>
-</th>

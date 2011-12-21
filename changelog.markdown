@@ -4,6 +4,7 @@
  * adding `tableficate_table_tag` helper
  * adding `tableficate_filter_form_tag` helper
  * adding support for captions
+ * missing theme partials will default to the standard partial
 
 ## 0.2.0
  * complete filter rewrite
