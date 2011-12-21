@@ -1,6 +1,6 @@
 module Tableficate
   class Column
-    attr_reader :name, :header, :table
+    attr_reader :name, :header, :table, :header_attrs
 
     def initialize(table, name, options = {}, &block)
       @table   = table
@@ -8,7 +8,8 @@ module Tableficate
       @options = options
       @block   = block
 
-      @header = @options.delete(:header) || name.to_s.titleize
+      @header       = @options.delete(:header) || name.to_s.titleize
+      @header_attrs = @options.delete(:header_attrs) || {}
     end
 
     def value(row)

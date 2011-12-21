@@ -9,6 +9,12 @@ describe Tableficate::Column do
     column.header.should == 'Given Name'
   end
 
+  it 'should accept :header_attrs as an option' do
+    column = Tableficate::Column.new(nil, :first_name, header_attrs: {class: 'foo'})
+
+    column.header_attrs.should == {class: 'foo'}
+  end
+
   it 'should show the value from the database field if no alternative is provided' do
     row = NobelPrizeWinner.find_by_first_name('Norman')
     column = Tableficate::Column.new(nil, :first_name)

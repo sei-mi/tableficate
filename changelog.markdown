@@ -6,6 +6,7 @@
  * adding support for captions
  * missing theme partials will default to the standard partial
  * tableficate:theme generator now takes an optional `PARTIAL` arg to specify one file
+ * `column` now takes a `header_attrs` option to provide attributes for the `th`
 
 ## 0.2.0
  * complete filter rewrite
