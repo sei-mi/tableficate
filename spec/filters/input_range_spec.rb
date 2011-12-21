@@ -7,19 +7,20 @@ describe Tableficate::Filter::InputStart do
     template.lookup_context.stub!(:exists?).and_return(true)
     @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
+    @input_start_filter = Tableficate::Filter::InputStart.new(@table, :year)
   end
 
   it 'should append "[start]" to field_name' do
-    Tableficate::Filter::InputStart.new(@table, :year).field_name == "#{@table.as}[filter][year][start]"
+    @input_start_filter.field_name == "#{@table.as}[filter][year][start]"
   end
 
   it 'should append "_start" to the name' do
-    Tableficate::Filter::InputStart.new(@table, :year).name == :year_start
+    @input_start_filter.name == :year_start
   end
 
   it 'should provide a field value when given params or a blank value' do
-    Tableficate::Filter::InputStart.new(@table, :year).field_value({filter: {year: {start: '2011'}}}).should == '2011'
-    Tableficate::Filter::InputStart.new(@table, :year).field_value({}).should == ''
+    @input_start_filter.field_value({filter: {year: {start: '2011'}}}).should == '2011'
+    @input_start_filter.field_value({}).should == ''
   end
 end
 
@@ -30,19 +31,20 @@ describe Tableficate::Filter::InputStop do
     template.lookup_context.stub!(:exists?).and_return(true)
     @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {})
     @table.column(:year)
+    @input_stop_filter = Tableficate::Filter::InputStop.new(@table, :year)
   end
 
   it 'should append "[stop]" to field_name' do
-    Tableficate::Filter::InputStop.new(@table, :year).field_name == "#{@table.as}[filter][year][stop]"
+    @input_stop_filter.field_name == "#{@table.as}[filter][year][stop]"
   end
 
   it 'should append "_stop" to the name' do
-    Tableficate::Filter::InputStop.new(@table, :year).name == :year_stop
+    @input_stop_filter.name == :year_stop
   end
 
   it 'should provide a field value when given params or a blank value' do
-    Tableficate::Filter::InputStop.new(@table, :year).field_value({filter: {year: {stop: '2011'}}}).should == '2011'
-    Tableficate::Filter::InputStop.new(@table, :year).field_value({}).should == ''
+    @input_stop_filter.field_value({filter: {year: {stop: '2011'}}}).should == '2011'
+    @input_stop_filter.field_value({}).should == ''
   end
 end
 
