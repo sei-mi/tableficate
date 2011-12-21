@@ -116,4 +116,11 @@ describe Tableficate::Table do
     @table.filters.first.is_a?(Tableficate::Filter::Select).should be true
     @table.filters.last.name.should == :last_name
   end
+
+  it 'should add a caption' do
+    @table.caption('Nobel Prize Winners')
+
+    @table.caption.is_a?(Tableficate::Caption).should be true
+    @table.caption.value.should == 'Nobel Prize Winners'
+  end
 end

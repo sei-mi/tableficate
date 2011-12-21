@@ -17,6 +17,14 @@ module Tableficate
       @current_sort = data[:current_sort]
     end
 
+    def caption(*args, &block)
+      if args.empty? and not block_given?
+        @caption
+      else
+        @caption = Caption.new(*args, &block)
+      end
+    end
+
     def column(name, options = {}, &block)
       @columns.push(Column.new(self, name, options.reverse_merge(show_sort: @show_sorts), &block))
     end
