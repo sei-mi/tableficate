@@ -5,6 +5,7 @@
  * adding `tableficate_filter_form_tag` helper
  * adding support for captions
  * missing theme partials will default to the standard partial
+ * tableficate:theme generator now takes an optional `PARTIAL` arg to specify one file
 
 ## 0.2.0
  * complete filter rewrite
