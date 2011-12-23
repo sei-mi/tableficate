@@ -1,3 +1,6 @@
+## 0.2.1
+ * fix table generator to provide `scope` the proper argument and correct documentation
+
 ## 0.2.0
  * complete filter rewrite
  * replaced existing filter functions in table_for calls

@@ -1,5 +1,5 @@
 class <%= class_name %> < Tableficate::Base
 <% if scope -%>
-  scope :<%= scope.tableize %>
+  scope :<%= scope.underscore %>
 <% end -%>
 end

@@ -65,7 +65,7 @@ In "app/tables/" we'll create a new table model using the generator. Provide the
 Our table model:
 
     class AccountReport < Tableficate::Base
-      scope :accounts
+      scope :account
 
       default_sort :created_at, 'DESC'
 
