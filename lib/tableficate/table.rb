@@ -29,8 +29,8 @@ module Tableficate
       @columns.push(Column.new(self, name, options.reverse_merge(show_sort: @show_sorts), &block))
     end
 
-    def actions(&block)
-      @columns.push(ActionColumn.new(self, &block))
+    def actions(options = {}, &block)
+      @columns.push(ActionColumn.new(self, options, &block))
     end
 
     def show_sort?

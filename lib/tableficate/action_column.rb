@@ -1,7 +1,7 @@
 module Tableficate
   class ActionColumn < Column
-    def initialize(table, &block)
-      super(table, '', {}, &block)
+    def initialize(table, options = {}, &block)
+      super(table, '', options, &block)
     end
 
     def show_sort?

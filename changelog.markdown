@@ -7,6 +7,7 @@
  * missing theme partials will default to the standard partial
  * tableficate:theme generator now takes an optional `PARTIAL` arg to specify one file
  * `column` now takes a `header_attrs` option to provide attributes for the `th`
+ * `actions` now takes options just like `column`
 
 ## 0.2.0
  * complete filter rewrite

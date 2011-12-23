@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Tableficate::ActionColumn do
   before(:all) do
     @action_column = Tableficate::ActionColumn.new(nil) do
-      Actions!
+      'Actions Here!'
     end
   end
 
@@ -17,5 +17,13 @@ describe Tableficate::ActionColumn do
 
   it 'should have a blank name' do
     @action_column.name.should == ''
+  end
+
+  it 'should accept options' do
+    action_column = Tableficate::ActionColumn.new(nil, header: 'Actions') do
+      'Actions Here!'
+    end
+
+    action_column.header.should == 'Actions'
   end
 end
