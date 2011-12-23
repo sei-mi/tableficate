@@ -10,10 +10,18 @@ describe 'tableficate:table' do
     end
   end
 
-  with_args :foo, :bars do
-    it 'should generate app/tables/foo.rb' do
+  with_args :foo, :bar do
+    it 'should generate app/tables/foo.rb with a scope' do
       subject.should generate('app/tables/foo.rb') { |content|
-        content.should =~ /scope \:bars/
+        content.should =~ /scope \:bar/
+      }
+    end
+  end
+
+  with_args :foo, 'NobelPrizeWinner' do
+    it 'should generate app/tables/foo.rb with a scope based on the model' do
+      subject.should generate('app/tables/foo.rb') { |content|
+        content.should =~ /scope \:nobel_prize_winner/
       }
     end
   end
