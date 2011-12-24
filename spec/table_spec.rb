@@ -17,6 +17,18 @@ describe Tableficate::Table do
     @table.as.should == 'nobel_prize_winners'
   end
 
+  it 'should add a caption' do
+    @table.caption('Nobel Prize Winners')
+
+    @table.caption.is_a?(Tableficate::Caption).should be true
+    @table.caption.value.should == 'Nobel Prize Winners'
+
+    @table.caption do
+      'Nobel Winners'
+    end
+    @table.caption.value.should == 'Nobel Winners'
+  end
+
   it 'should add a Column' do
     @table.column(:first_name)
     @table.column(:last_name)
@@ -115,12 +127,5 @@ describe Tableficate::Table do
     @table.filters.first.name.should == :first_name
     @table.filters.first.is_a?(Tableficate::Filter::Select).should be true
     @table.filters.last.name.should == :last_name
-  end
-
-  it 'should add a caption' do
-    @table.caption('Nobel Prize Winners')
-
-    @table.caption.is_a?(Tableficate::Caption).should be true
-    @table.caption.value.should == 'Nobel Prize Winners'
   end
 end

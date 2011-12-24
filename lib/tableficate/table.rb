@@ -3,8 +3,8 @@ module Tableficate
     attr_reader :columns, :rows, :current_sort, :filters, :attrs, :as, :template, :theme
 
     def initialize(template, rows, options, data)
-      @template   = template
-      @rows       = rows
+      @template = template
+      @rows     = rows
 
       @as         = options.delete(:as) || rows.table_name
       @theme      = options.delete(:theme) || ''

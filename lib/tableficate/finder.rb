@@ -5,42 +5,40 @@ module Tableficate
       raise Tableficate::MissingScope unless scope.new.kind_of?(ActiveRecord::Base)
 
       # filtering
-      if params
-        if params[:filter]
-          params[:filter].each do |name, value|
-            next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
+      if params and params[:filter]
+        params[:filter].each do |name, value|
+          next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
 
-            name = name.to_sym
-            value.strip! if value.is_a?(String)
+          name = name.to_sym
+          value.strip! if value.is_a?(String)
 
-            if @filter and @filter[name]
-              if @filter[name].is_a?(Proc)
-                scope = @filter[name].call(value, scope)
-              elsif value.is_a?(String)
-                value = "%#{value}%" if @filter[name][:match] == 'contains'
+          if @filter and @filter[name]
+            if @filter[name].is_a?(Proc)
+              scope = @filter[name].call(value, scope)
+            elsif value.is_a?(String)
+              value = "%#{value}%" if @filter[name][:match] == 'contains'
 
-                scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
-              elsif value.is_a?(Array)
-                full_column_name = get_full_column_name(@filter[name][:field])
-
-                if @filter[name][:match] == 'contains'
-                  scope = scope.where([
-                    Array.new(value.size, "#{full_column_name} LIKE ?").join(' OR '),
-                    *value.map{|v| "%#{v}%"}
-                  ])
-                else
-                  scope = scope.where(["#{full_column_name} IN(?)", value])
-                end
-              elsif value.is_a?(Hash)
-                scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
-              end
+              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
             elsif value.is_a?(Array)
-              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} IN(?)", value])
+              full_column_name = get_full_column_name(@filter[name][:field])
+
+              if @filter[name][:match] == 'contains'
+                scope = scope.where([
+                  Array.new(value.size, "#{full_column_name} LIKE ?").join(' OR '),
+                  *value.map{|v| "%#{v}%"}
+                ])
+              else
+                scope = scope.where(["#{full_column_name} IN(?)", value])
+              end
             elsif value.is_a?(Hash)
-              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} BETWEEN :start AND :stop", value])
-            else
-              scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} LIKE ?", value])
+              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
             end
+          elsif value.is_a?(Array)
+            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} IN(?)", value])
+          elsif value.is_a?(Hash)
+            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} BETWEEN :start AND :stop", value])
+          else
+            scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} LIKE ?", value])
           end
         end
       end

@@ -18,6 +18,16 @@ describe Tableficate::Base do
     lambda {NoScope.tableficate({})}.should raise_error(Tableficate::MissingScope)
   end
 
+  it 'should allow for custom column sorting' do
+    class ColumnOrder < Tableficate::Base
+      scope(:nobel_prize_winner)
+      
+      column(:full_name, sort: 'first_name ASC, last_name ASC')
+    end
+
+    ColumnOrder.send(:instance_variable_get, '@sort')[:full_name].should == 'first_name ASC, last_name ASC'
+  end
+
   it 'should allow for a default order' do
     class DefaultOrder < Tableficate::Base
       scope(:nobel_prize_winner)

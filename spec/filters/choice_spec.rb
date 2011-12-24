@@ -6,6 +6,9 @@ describe Tableficate::Filter::Choice do
     choice.selected?.should be true
     choice.attrs[:selected].should be nil
 
+    choice = Tableficate::Filter::Choice.new('foo', 'bar')
+    choice.selected?.should be false
+
     choice = Tableficate::Filter::Choice.new('foo', 'bar', {checked: 'checked'})
     choice.checked?.should be true
     choice.attrs[:checked].should be nil

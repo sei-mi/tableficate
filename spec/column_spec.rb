@@ -11,8 +11,10 @@ describe Tableficate::Column do
 
   it 'should accept :header_attrs as an option' do
     column = Tableficate::Column.new(nil, :first_name, header_attrs: {class: 'foo'})
-
     column.header_attrs.should == {class: 'foo'}
+
+    column = Tableficate::Column.new(nil, :first_name)
+    column.header_attrs.should == {}
   end
 
   it 'should show the value from the database field if no alternative is provided' do
