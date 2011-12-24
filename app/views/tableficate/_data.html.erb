@@ -1,1 +1,3 @@
-<td><%= column.value(row) %></td>
+<%= content_tag(:td, column.cell_attrs) do %>
+  <%= column.value(row) %>
+<% end %>
