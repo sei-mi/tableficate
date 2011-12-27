@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tableficate::Column, type: :request do
+describe Tableficate::Column do
   it 'should show the header provided or default to the column name' do
     column = Tableficate::Column.new(nil, :first_name)
     column.header.should == 'First Name'
@@ -15,9 +15,6 @@ describe Tableficate::Column, type: :request do
 
     column = Tableficate::Column.new(nil, :first_name)
     column.attrs.should == {}
-
-    visit '/columns/attrs'
-    page.html.should match /<col span="3">\n<col style="background-color: red;">\n<col>/
   end
 
   it 'should accept :header_attrs as an option' do
@@ -26,19 +23,11 @@ describe Tableficate::Column, type: :request do
 
     column = Tableficate::Column.new(nil, :first_name)
     column.header_attrs.should == {}
-
-    visit '/columns/header_attrs'
-    page.should have_xpath('//th[4][@style="background-color: red;"]')
   end
 
   it 'should accept :cell_attrs as an option' do
     column = Tableficate::Column.new(nil, :first_name, cell_attrs: {class: 'cell'})
     column.cell_attrs.should == {class: 'cell'}
-
-    visit '/columns/cell_attrs'
-    NobelPrizeWinner.count.times do |i|
-      page.should have_xpath("//tr[#{i+1}]/td[4][@style=\"background-color: red;\"]")
-    end
   end
 
   it 'should show the value from the database field if no alternative is provided' do

@@ -1,4 +1,4 @@
-class ColumnsController < ApplicationController
+class ThemesController < ApplicationController
   before_filter :get_npw
 
   def get_npw
