@@ -1,0 +1,13 @@
+<h1>Tests</h1>
+
+<ul>
+  <% @files.group_by{|file| File.dirname(file)}.each do |dir_group| %>
+    <li><%= dir_group.first.split('/').last %><ul>
+      <% dir_group.last.each do |file| %>
+        <li>
+          <%= link_to(file.split('/').last.split('.').first, file.gsub(File.join(Rails.root, 'app', 'views'), '').gsub('.html.erb', '')) %>
+        </li>
+      <% end %>
+    </ul></li>
+  <% end %>
+</ul>
