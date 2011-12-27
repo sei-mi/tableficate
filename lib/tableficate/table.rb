@@ -17,6 +17,14 @@ module Tableficate
       @current_sort = data[:current_sort]
     end
 
+    def empty(*args, &block)
+      if args.empty? and not block_given?
+        @empty
+      else
+        @empty = Empty.new(self, *args, &block)
+      end
+    end
+
     def caption(*args, &block)
       if args.empty? and not block_given?
         @caption

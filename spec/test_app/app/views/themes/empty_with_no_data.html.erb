@@ -1,0 +1,9 @@
+<%= table_for @npw.limit(0) do |t|
+  t.empty 'There is no data.'
+
+  t.column :id
+  t.column :first_name
+  t.column :last_name
+  t.column :category
+  t.column :year
+end %>

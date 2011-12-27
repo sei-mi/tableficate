@@ -18,8 +18,12 @@
     </tr>
   </thead>
   <tbody>
-    <% table.rows.each do |row| %>
-      <%= tableficate_row_tag(row, table.columns) %>
+    <% if table.rows.size > 0 %>
+      <% table.rows.each do |row| %>
+        <%= tableficate_row_tag(row, table.columns) %>
+      <% end %>
+    <% elsif table.empty and table.empty.value.present? %>
+      <tr><%= content_tag(:td, table.empty.value, table.empty.attrs) %></tr>
     <% end %>
   </tbody>
 <% end %>

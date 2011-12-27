@@ -17,9 +17,19 @@ describe Tableficate::Table do
     @table.as.should == 'nobel_prize_winners'
   end
 
+  it 'should add a empty' do
+    @table.empty('There is no data.')
+    @table.empty.is_a?(Tableficate::Empty).should be true
+    @table.empty.value.should == 'There is no data.'
+
+    @table.empty do
+      'No data.'
+    end
+    @table.empty.value.should == 'No data.'
+  end
+
   it 'should add a caption' do
     @table.caption('Nobel Prize Winners')
-
     @table.caption.is_a?(Tableficate::Caption).should be true
     @table.caption.value.should == 'Nobel Prize Winners'
 

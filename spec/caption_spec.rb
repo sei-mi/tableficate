@@ -17,14 +17,14 @@ describe Tableficate::Caption do
     caption.value.should == 'Foo'
   end
   it 'should not escape html in block outputs' do
-    caption = Tableficate::Caption.new({class: 'title'}) do
+    caption = Tableficate::Caption.new do
       '<b>Foo</b>'
     end
 
     ERB::Util::html_escape(caption.value).should == '<b>Foo</b>'
   end
   it 'should allow ERB tags in block outputs' do
-    caption = Tableficate::Caption.new({class: 'title'}) do
+    caption = Tableficate::Caption.new do
       ERB.new("<%= 'Foo'.upcase %>").result(binding)
     end
 

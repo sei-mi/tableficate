@@ -10,6 +10,7 @@
  * `actions` now takes options just like `column`
  * `column` now takes a `cell_attrs` option to provide attributes for every `td` in the column
  * `column` now places all unrecognized options into the `attrs` attribute which is used on a `col` tag
+ * adding `empty` to display a message when a table has no data
 
 ## 0.2.1
  * fix table generator to provide `scope` the proper argument and correct documentation
