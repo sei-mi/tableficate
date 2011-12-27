@@ -2,6 +2,14 @@
   <% if table.caption %>
     <%= content_tag(:caption, table.caption.value, table.caption.attrs) %>
   <% end %>
+  <% if table.columns.any?{|column| column.attrs.present?} %>
+    <% table.columns.chunk{|column| column.attrs}.each do |column_group| %>
+      <% span = column_group.last.length %>
+      <% attrs = column_group.first %>
+      <% attrs.merge!(span: span) if span > 1 %>
+      <%= tag(:col, attrs) %>
+    <% end %>
+  <% end %>
   <thead>
     <tr>
       <% table.columns.each do |column| %>

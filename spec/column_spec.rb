@@ -1,12 +1,20 @@
 require 'spec_helper'
 
-describe Tableficate::Column do
+describe Tableficate::Column, type: :request do
   it 'should show the header provided or default to the column name' do
     column = Tableficate::Column.new(nil, :first_name)
     column.header.should == 'First Name'
 
     column = Tableficate::Column.new(nil, :first_name, header: 'Given Name')
     column.header.should == 'Given Name'
+  end
+
+  it 'should take all non-specialized options as attrs on the `col` tag' do
+    column = Tableficate::Column.new(nil, :first_name, class: 'attrs')
+    column.attrs.should == {class: 'attrs'}
+
+    visit '/columns/attrs'
+    page.html.should match /<col span="3">\n<col style="background-color: red;">\n<col>/
   end
 
   it 'should accept :header_attrs as an option' do

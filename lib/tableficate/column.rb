@@ -1,17 +1,20 @@
 module Tableficate
   class Column
-    attr_reader :name, :header, :table, :header_attrs, :cell_attrs
+    attr_reader :name, :header, :table, :header_attrs, :cell_attrs, :attrs
 
     def initialize(table, name, options = {}, &block)
-      @table   = table
-      @name    = name
-      @options = options
-      @block   = block
+      @table = table
+      @name  = name
+      @block = block
 
-      @header       = @options.delete(:header) || name.to_s.titleize
-      @header_attrs = @options.delete(:header_attrs) || {}
+      @header       = options.delete(:header) || name.to_s.titleize
+      @header_attrs = options.delete(:header_attrs) || {}
 
-      @cell_attrs = @options.delete(:cell_attrs) || {}
+      @cell_attrs = options.delete(:cell_attrs) || {}
+
+      @show_sort = options.delete(:show_sort) || false
+
+      @attrs = options
     end
 
     def value(row)
@@ -29,7 +32,7 @@ module Tableficate
     end
 
     def show_sort?
-      !!@options[:show_sort]
+      @show_sort
     end
 
     def is_sorted?(dir = nil)
