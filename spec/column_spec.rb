@@ -13,6 +13,9 @@ describe Tableficate::Column, type: :request do
     column = Tableficate::Column.new(nil, :first_name, class: 'attrs')
     column.attrs.should == {class: 'attrs'}
 
+    column = Tableficate::Column.new(nil, :first_name)
+    column.attrs.should == {}
+
     visit '/columns/attrs'
     page.html.should match /<col span="3">\n<col style="background-color: red;">\n<col>/
   end
@@ -23,12 +26,19 @@ describe Tableficate::Column, type: :request do
 
     column = Tableficate::Column.new(nil, :first_name)
     column.header_attrs.should == {}
+
+    visit '/columns/header_attrs'
+    page.should have_xpath('//th[4][@style="background-color: red;"]')
   end
 
   it 'should accept :cell_attrs as an option' do
     column = Tableficate::Column.new(nil, :first_name, cell_attrs: {class: 'cell'})
-
     column.cell_attrs.should == {class: 'cell'}
+
+    visit '/columns/cell_attrs'
+    NobelPrizeWinner.count.times do |i|
+      page.should have_xpath("//tr[#{i+1}]/td[4][@style=\"background-color: red;\"]")
+    end
   end
 
   it 'should show the value from the database field if no alternative is provided' do
@@ -52,6 +62,14 @@ describe Tableficate::Column, type: :request do
     end
 
     ERB::Util::html_escape(column.value(row)).should == 'Norman<br/>Borlaug'
+  end
+  it 'should allow ERB tags in block outputs' do
+    row = NobelPrizeWinner.find_by_first_name_and_last_name('Norman', 'Borlaug')
+    column = Tableficate::Column.new(nil, :first_name) do |row|
+      ERB.new("<%= row.first_name.upcase %>").result(binding)
+    end
+
+    column.value(row).should == 'NORMAN'
   end
 
   it 'should allow sorting to be turned on and off' do
