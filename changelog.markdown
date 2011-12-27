@@ -6,9 +6,9 @@
  * adding support for captions
  * missing theme partials will default to the standard partial
  * tableficate:theme generator now takes an optional `PARTIAL` arg to specify one file
- * `column` now takes a `header_attrs` option to provide attributes for the `th`
  * `actions` now takes options just like `column`
- * `column` now takes a `cell_attrs` option to provide attributes for every `td` in the column
+ * `column` now takes a `header_attrs` option to provide attributes for the `th`
+ * `column` now takes a `cell_attrs` option to provide attributes for every `td` in the column, a proc can be passed in place of a string for attributes to customize on a per cell basis
  * `column` now places all unrecognized options into the `attrs` attribute which is used on a `col` tag
  * adding `empty` to display a message when a table has no data
 
