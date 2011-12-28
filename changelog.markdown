@@ -12,6 +12,7 @@
  * `column` now places all unrecognized options into the `attrs` attribute which is used on a `col` tag
  * adding `empty` to display a message when a table has no data
  * input types are automatically figured out by label name and DB column type
+ * `tableficate_radio_tags` and `tableficate_check_box_tags` use partials now rather than block formatting
 
 ## 0.2.1
  * fix table generator to provide `scope` the proper argument and correct documentation

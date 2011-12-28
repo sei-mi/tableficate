@@ -69,55 +69,31 @@ module Tableficate
       select_tag(filter.field_name, collection, filter.attrs)
     end
 
-    def tableficate_radio_tags(filter, &block)
-      field_value = filter.field_value(params[filter.table.as])
-
-      collection = Tableficate::Filter::Collection.new(filter.collection, selected: filter.field_value(params[filter.table.as]))
-
-      html = []
-      if block_given?
-        html = collection.map {|choice| capture(choice, &block)}
-      else
-        collection.each do |choice|
-          html.push(
-            radio_button_tag(filter.field_name, choice.value, choice.checked?, choice.attrs),
-            label_tag("#{filter.field_name}[#{choice.value}]", choice.name),
-            '<br/>'
-          )
-        end
-      end
-
-      html.join("\n").html_safe
+    def tableficate_radio_tags(filter)
+      tableficate_collection_of_tags(filter)
     end
 
-    def tableficate_check_box_tags(filter, &block)
+    def tableficate_check_box_tags(filter)
+      if filter.collection.empty?
+        check_box_tag(filter.field_name, true, filter.field_value(params[filter.table.as]) == 'true', filter.attrs)
+      else
+        tableficate_collection_of_tags(filter)
+      end
+    end
+
+    def tableficate_collection_of_tags(filter)
+      table       = filter.table
       field_value = filter.field_value(params[filter.table.as])
 
-      collection = Tableficate::Filter::Collection.new(filter.collection, selected: filter.field_value(params[filter.table.as]))
-
       html = []
-      if block_given?
-        html = collection.map {|choice| capture(choice, &block)}
-      elsif collection.length == 1
-        choice = collection.first
+      Tableficate::Filter::Collection.new(filter.collection, selected: field_value).each do |choice|
         html.push(
-          check_box_tag(
-            "#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.attrs.reverse_merge(name: "#{filter.field_name}")
-          )
+          render(partial: Tableficate::Utils::template_path(table.template, filter.template + '_choice', table.theme), locals: {filter: filter, choice: choice})
         )
-      else
-        collection.each do |choice|
-          html.push(
-            check_box_tag(
-              "#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.attrs.reverse_merge(name: "#{filter.field_name}[]")
-            ),
-            label_tag("#{filter.field_name}[#{choice.value}]", choice.name),
-            '<br/>'
-          )
-        end
       end
 
       html.join("\n").html_safe
     end
+    private :tableficate_collection_of_tags
   end
 end

@@ -1,0 +1,2 @@
+<%= label_tag("#{filter.field_name}[#{choice.value}]", choice.name) %>
+<%= check_box_tag("#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.attrs.reverse_merge(name: "#{filter.field_name}[]")) %>

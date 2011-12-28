@@ -71,10 +71,6 @@ module Tableficate
 
       raise Filter::UnknownInputType if as_map[as].nil?
 
-      if as == :checkbox and not options.has_key?(:collection)
-        options[:collection] = [true]
-      end
-
       options[:type] = as.to_s
 
       @filters.push(as_map[as].new(self, name, options))
