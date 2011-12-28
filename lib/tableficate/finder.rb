@@ -10,15 +10,19 @@ module Tableficate
           next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
 
           name = name.to_sym
-          value.strip! if value.is_a?(String)
+          if value.is_a?(Array)
+            value.map!{|v| clean_value(v)}
+          elsif value.is_a?(Hash)
+            value.each do |k, v|
+              value[k] = clean_value(v)
+            end
+          else
+            value = clean_value(value)
+          end
 
           if @filter and @filter[name]
             if @filter[name].is_a?(Proc)
               scope = @filter[name].call(value, scope)
-            elsif value.is_a?(String)
-              value = "%#{value}%" if @filter[name][:match] == 'contains'
-
-              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
             elsif value.is_a?(Array)
               full_column_name = get_full_column_name(@filter[name][:field])
 
@@ -32,6 +36,10 @@ module Tableficate
               end
             elsif value.is_a?(Hash)
               scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
+            else
+              value = "%#{value}%" if @filter[name][:match] == 'contains'
+
+              scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
             end
           elsif value.is_a?(Array)
             scope = scope.where(["#{get_full_column_name(name.to_s.gsub(/\W/, ''))} IN(?)", value])
@@ -59,6 +67,14 @@ module Tableficate
         sorting[:dir]    = ['asc', 'desc'].include?(dir) ? dir : 'asc'
       end
       scope.tableficate_add_data(:current_sort, sorting)
+      scope.tableficate_add_data(
+        :field_map,
+        (
+          (@filter and @filter.reject{|name, options| options.is_a?(Proc)}.any?{|name, options| options.has_key?(:field)}) ?
+          Hash[@filter.map{|name, options| options.has_key?(:field) ? [name, options[:field]] : nil}.compact] :
+          {}
+        )
+      )
       scope
     end
 
@@ -73,5 +89,13 @@ module Tableficate
       end
     end
     private :get_full_column_name
+
+    def clean_value(value)
+      value.strip! if value.respond_to?(:strip!)
+      value = true if value == 'true'
+      value = false if value == 'false'
+      value
+    end
+    private :clean_value
   end
 end

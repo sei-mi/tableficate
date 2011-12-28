@@ -1,0 +1,31 @@
+<%= table_for @npw do |t|
+  t.column :id 
+  t.column :created_at
+  t.column :updated_at
+  t.column :first_name 
+  t.column :last_name 
+  t.column :birthdate
+  t.column :category 
+  t.column :year 
+  t.column :shared do |record|
+    record.shared? ? 'Yes' : 'No'
+  end
+  t.column :meaningless_time
+  t.column :meaningless_decimal
+  t.column :meaningless_float
+
+  t.filter :id
+  t.filter :created_at
+  t.filter :updated_at
+  t.filter :first_name
+  t.filter :last_name
+  t.filter :birthdate
+  t.filter :category,
+    collection:    ['Chemistry', 'Literature', 'Peace', 'Physics', 'Physiology or Medicine'],
+    include_blank: true
+  t.filter :year
+  t.filter :shared
+  t.filter :meaningless_time
+  t.filter :meaningless_decimal
+  t.filter :meaningless_float
+end %>

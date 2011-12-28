@@ -98,6 +98,13 @@ module Tableficate
       html = []
       if block_given?
         html = collection.map {|choice| capture(choice, &block)}
+      elsif collection.length == 1
+        choice = collection.first
+        html.push(
+          check_box_tag(
+            "#{filter.field_name}[#{choice.value}]", choice.value, choice.checked?, choice.attrs.reverse_merge(name: "#{filter.field_name}")
+          )
+        )
       else
         collection.each do |choice|
           html.push(

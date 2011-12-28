@@ -5,7 +5,7 @@ describe Tableficate::Table do
     template = mock('Template')
     template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
     template.lookup_context.stub!(:exists?).and_return(true)
-    @table = Tableficate::Table.new(template, NobelPrizeWinner.limit(1), {}, {current_sort: {column: :first_name, dir: 'asc'}})
+    @table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {current_sort: {column: :first_name, dir: 'asc'}})
   end
 
   it 'should have the current sort if provided' do
@@ -108,6 +108,95 @@ describe Tableficate::Table do
 
     @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
     @table.filters.first.attrs[:type].should == 'search'
+  end
+
+  it 'should default the type to "checkbox" for boolean fields' do
+    @table.filter(:shared)
+
+    @table.filters.first.is_a?(Tableficate::Filter::CheckBox).should be true
+    @table.filters.first.attrs[:type].should == 'checkbox'
+  end
+
+  it 'should default the type to "email" for string fields with "email" somewhere in the name' do
+    @table.filter(:email)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'email'
+  end
+
+  it 'should default the type to "url" for string fields with "url" somewhere in the name' do
+    @table.filter(:url)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'url'
+  end
+
+  it 'should default the type to "tel" for string fields with "phone" somewhere in the name' do
+    @table.filter(:home_phone)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'tel'
+  end
+
+  it 'should default the type to "number" for integer fields' do
+    @table.filter(:year)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'number'
+  end
+
+  it 'should default the type to "number" for float fields' do
+    @table.filter(:meaningless_float)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'number'
+  end
+
+  it 'should default the type to "number" for decimal fields' do
+    @table.filter(:meaningless_decimal)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'number'
+  end
+
+  it 'should default the type to "date" for date fields' do
+    @table.filter(:birthdate)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'date'
+  end
+
+  it 'should default the type to "time" for time fields' do
+    @table.filter(:meaningless_time)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'time'
+  end
+
+  it 'should default the type to "datetime" for datetime fields' do
+    @table.filter(:created_at)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'datetime'
+  end
+
+  it 'should default the type to "datetime" for timestamp fields' do
+    @table.filter(:updated_at)
+
+    @table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    @table.filters.first.attrs[:type].should == 'datetime'
+  end
+
+  it 'should default the type based on the actual field, not the label' do
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    table = Tableficate::Table.new(template, NobelPrizeWinner.joins(:nobel_prizes).limit(1), {}, {field_map: {foo: 'year'}})
+
+    table.filter(:foo)
+
+    table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    table.filters.first.attrs[:type].should == 'number'
   end
 
   it 'should add a InputRange filter' do

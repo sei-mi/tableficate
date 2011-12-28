@@ -15,6 +15,7 @@ module Tableficate
       @filters = []
 
       @current_sort = data[:current_sort]
+      @field_map    = data[:field_map] || {}
     end
 
     def empty(*args, &block)
@@ -66,9 +67,13 @@ module Tableficate
         checkbox: Filter::CheckBox
       }
 
-      as = options.delete(:as) || (options[:collection] ? :select : :text)
+      as = options.delete(:as) || find_as(name, options.has_key?(:collection))
 
       raise Filter::UnknownInputType if as_map[as].nil?
+
+      if as == :checkbox and not options.has_key?(:collection)
+        options[:collection] = [true]
+      end
 
       options[:type] = as.to_s
 
@@ -94,7 +99,7 @@ module Tableficate
         select:   Filter::SelectRange
       }
 
-      as = options.delete(:as) || (options[:collection] ? :select : :text)
+      as = options.delete(:as) || find_as(name, options.has_key?(:collection))
 
       raise Filter::UnknownInputType if as_map[as].nil?
 
@@ -102,5 +107,44 @@ module Tableficate
 
       @filters.push(as_map[as].new(self, name, options))
     end
+
+    def find_as(name, has_collection)
+      field_name = (@field_map[name] || name).to_s
+      as = :text
+
+      if has_collection
+        as = :select
+      elsif current_column = (
+        @rows.columns.detect{|column| column.name == field_name} ||
+        (@rows.joins_values + @rows.includes_values).uniq.map{|table_name| ActiveRecord::Base::connection_pool.columns[table_name]}.flatten.detect{|column| column.name == field_name}
+      )
+        case current_column.type
+        when :integer, :float, :decimal
+          as = :number
+        when :date
+          as = :date
+        when :time
+          as = :time
+        when :datetime, :timestamp
+          as = :datetime
+        when :boolean
+          as = :checkbox
+        end
+      end
+
+      if as == :text
+        case name
+        when /email/
+          as = :email
+        when /url/
+          as = :url
+        when /phone/
+          as = :tel
+        end
+      end
+
+      as
+    end
+    private :find_as
   end
 end
