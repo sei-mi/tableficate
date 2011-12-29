@@ -112,7 +112,7 @@ module Tableficate
         as = :select
       elsif current_column = (
         @rows.columns.detect{|column| column.name == field_name} ||
-        (@rows.joins_values + @rows.includes_values).uniq.map{|table_name| ActiveRecord::Base::connection_pool.columns[table_name]}.flatten.detect{|column| column.name == field_name}
+        (@rows.joins_values + @rows.includes_values).uniq.map{|table_name| ActiveRecord::Base::connection_pool.columns[table_name.to_s.tableize]}.flatten.detect{|column| column.name == field_name}
       )
         case current_column.type
         when :integer, :float, :decimal

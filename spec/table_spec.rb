@@ -199,6 +199,18 @@ describe Tableficate::Table do
     table.filters.first.attrs[:type].should == 'number'
   end
 
+  it 'should use the correct table name regardless of join direction' do
+    template = mock('Template')
+    template.stub!(:lookup_context).and_return(ActionView::LookupContext.new([]))
+    template.lookup_context.stub!(:exists?).and_return(true)
+    table = Tableficate::Table.new(template, NobelPrize.joins(:nobel_prize_winner).limit(1), {}, {field_map: {foo: 'first_name'}})
+
+    table.filter(:foo)
+
+    table.filters.first.is_a?(Tableficate::Filter::Input).should be true
+    table.filters.first.attrs[:type].should == 'text'
+  end
+
   it 'should add a InputRange filter' do
     @table.filter_range(:first_name, label: 'First')
     @table.filter_range(:last_name, label: 'Last')
