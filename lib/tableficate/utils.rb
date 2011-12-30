@@ -7,5 +7,23 @@ module Tableficate
 
       file
     end
+
+    def self.find_column_type(scope, name)
+      name = name.to_s
+      column = scope.columns.detect{|column| column.name == name} ||
+      (scope.joins_values + scope.includes_values).uniq.map{|join|
+        # convert string joins to table names
+        if join.is_a?(String)
+          join.scan(/(?:(?:,|\bjoin\s*)\s*(\w+))/i)
+        else
+          join
+        end
+      }.flatten.map{|table_name|
+        ActiveRecord::Base::connection_pool.columns[table_name.to_s.tableize]
+      }.flatten.detect{|column|
+        column.name == name
+      }
+      column.try(:type)
+    end
   end
 end
