@@ -9,17 +9,43 @@ module Tableficate
         params[:filter].each do |name, value|
           next if value.blank? or (value.is_a?(Hash) and value.all?{|key, value| value.blank?})
 
+          # cleanup filter params
           name = name.to_sym
           if value.is_a?(Array)
-            value.map!{|v| clean_value(v)}
+            value.map!{|v| prepare_value(v)}
           elsif value.is_a?(Hash)
             value.each do |k, v|
-              value[k] = clean_value(v)
+              value[k] = prepare_value(v)
             end
           else
-            value = clean_value(value)
+            value = prepare_value(value)
           end
 
+          # convert dates, datetimes, and timestamps to Ruby objects and account for date filtering on datetime type columns
+          case Tableficate::Utils::find_column_type(scope, name)
+          when :date
+            value = value.to_date
+          when :datetime, :timestamp
+            if value.is_a?(Hash)
+              # if it looks like it's only dates
+              if value[:start].gsub(/\D/, '').length <= 8 and value[:stop].gsub(/\D/, '').length <= 8
+                value = {start: Time.zone.parse(value[:start]), stop: Time.zone.parse(value[:stop]).advance(hours: 23, minutes: 59, seconds: 59)}
+              else
+                value[:start] = Time.zone.parse(value[:start])
+                value[:stop]  = Time.zone.parse(value[:stop])
+              end
+            elsif value.is_a?(String)
+              # if it looks like it's only a date
+              if value.gsub(/\D/, '').length <= 8
+                value = Time.zone.parse(value)
+                value = {start: value, stop: value.advance(hours: 23, minutes: 59, seconds: 59)}
+              else
+                value = Time.zone.parse(value)
+              end
+            end
+          end
+
+          # attach the filter
           if @filter and @filter[name]
             if @filter[name].is_a?(Proc)
               scope = @filter[name].call(value, scope)
@@ -84,12 +110,12 @@ module Tableficate
     end
     private :get_full_column_name
 
-    def clean_value(value)
+    def prepare_value(value)
       value.strip! if value.respond_to?(:strip!)
       value = true if value == 'true'
       value = false if value == 'false'
       value
     end
-    private :clean_value
+    private :prepare_value
   end
 end

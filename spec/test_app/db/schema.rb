@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227224959) do
+ActiveRecord::Schema.define(:version => 20111230203456) do
 
   create_table "nobel_prize_winners", :force => true do |t|
     t.string   "first_name"

@@ -59,4 +59,24 @@ describe Tableficate::Finder do
     np = NobelPrize.tableficate({filter: {"ye'ar" =>  {start: 1900, stop: 1930}}})
     np.size.should == 4
   end
+
+  it 'should handle a date string being used against a datetime or timestamp column' do
+    np = NobelPrizeWinner.tableficate({filter: {created_at: '20110101'}})
+    np.size.should == 1
+  end
+
+  it 'should handle a date range being used against a datetime or timestamp column' do
+    np = NobelPrizeWinner.tableficate({filter: {created_at: {start: '20110101', stop: '20110105'}}})
+    np.size.should == 5
+  end
+
+  it 'should match an exact datetime and account for the timezone setting' do
+    np = NobelPrizeWinner.tableficate({filter: {created_at: '20110101050112'}})
+    np.size.should == 1
+  end
+
+  it 'should match an exact datetime range and account for the timezone setting' do
+    np = NobelPrizeWinner.tableficate({filter: {created_at: {start: '20110101050112', stop: '20110102050212'}}})
+    np.size.should == 2
+  end
 end

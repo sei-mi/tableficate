@@ -13,6 +13,7 @@
  * adding `empty` to display a message when a table has no data
  * input types are automatically figured out by label name and DB column type
  * `tableficate_radio_tags` and `tableficate_check_box_tags` use partials now rather than block formatting
+ * dates and date ranges used against datetime and timestamp columns will automatically work as expected (i.e. 01/01/2011 will get everything between 00:00:00 and 23:59:59 for that day)
 
 ## 0.2.1
  * fix table generator to provide `scope` the proper argument and correct documentation
