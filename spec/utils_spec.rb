@@ -30,7 +30,7 @@ describe Tableficate::Utils do
 
   describe 'find_column_type' do
     it 'should find the column type' do
-      Tableficate::Utils::find_column_type(NobelPrizeWinner.limit(1), :first_name).should == :string
+      Tableficate::Utils::find_column_type(NobelPrizeWinner, :first_name).should == :string
     end
 
     it 'should find the column in a join' do
@@ -45,7 +45,7 @@ describe Tableficate::Utils do
     end
 
     it 'should return `nil` for unknown columns' do
-      Tableficate::Utils::find_column_type(NobelPrizeWinner.limit(1), :foo).should == nil
+      Tableficate::Utils::find_column_type(NobelPrizeWinner, :foo).should == nil
     end
   end
 end

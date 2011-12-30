@@ -11,7 +11,10 @@ module Tableficate
     def self.find_column_type(scope, name)
       name = name.to_s
       column = scope.columns.detect{|column| column.name == name} ||
-      (scope.joins_values + scope.includes_values).uniq.map{|join|
+      (
+        (scope.respond_to?(:joins_values) ? scope.joins_values : []) +
+        (scope.respond_to?(:includes_values) ? scope.includes_values : [])
+      ).uniq.map{|join|
         # convert string joins to table names
         if join.is_a?(String)
           join.scan(/(?:(?:,|\bjoin\s*)\s*(\w+))/i)
