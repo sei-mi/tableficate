@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](http://semver.org/).
 
 If you're using Bundler, add this to your Gemfile:
 
-    gem 'tableficate', '~>0.3.0'
+    gem 'tableficate', '~>0.4.0'
 
 ## Support
 
@@ -119,9 +119,6 @@ The theme can then be applied to a table.
       ...
     <% end %>
 
-## Changes Needed to Upgrade From 0.2
+## Changes Needed to Upgrade From 0.3
 
-1. HTML attributes passed to `table_for` will no longer be passed via the `:html` option. Now all unrecognized options are passed as HTML attributes. This is more consistent with the other functions.
-2. In custom templates the `options` attribute is no longer available on all objects that had it. Any options specific to the object have been turned into attributes. For example, `label_options` is now an attribute on filters and `collection` is now an attribute on select, radio and check box filters. All other options will be used as HTML attributes and can be found in the new `attrs` attribute.
-3. The `_table.html.erb` theme partial has been renamed to `_table_for.html.erb`. The `_table.html.erb` file has been repurposed for the new `tableficate_table_tag` helper. Another helper, `tableficate_filter_form_tag`, has replaced the filter form in `_table_for.html.erb`. A new partial, `filters/_form.html.erb` was created for this new helper. The `_header.html.erb` and `_data.html.erb` partials have been updated so that `th` and `td` tags can accept attributes. Running `rails generate tableficate:theme NAME` for an existing theme will provide an interactive means of updating your existing theme. Additionally, if a partial is missing it will now be retrieved from the standard theme. This means you can optionally delete any partials that you have not altered. This should make future upgrades easier.
-4. When creating custom themes the `tableficate_radio_tags` and `tableficate_check_box_tags` no longer accept blocks to format the output. Instead, they now use templates called "filters/_radio_choice.html.erb" and "filters/_check_box_choice.html.erb" respectively. All you have to do is move the block code into the new templates.
+1. 
