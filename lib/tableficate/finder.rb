@@ -52,7 +52,7 @@ module Tableficate
             elsif value.is_a?(Array)
               full_column_name = get_full_column_name(@filter[name][:field])
 
-              if @filter[name][:match] == 'contains'
+              if @filter[name][:match].to_sym == :contains
                 scope = scope.where([
                   Array.new(value.size, "#{full_column_name} LIKE ?").join(' OR '),
                   *value.map{|v| "%#{v}%"}
@@ -63,7 +63,7 @@ module Tableficate
             elsif value.is_a?(Hash)
               scope = scope.where(["#{get_full_column_name(@filter[name][:field])} BETWEEN :start AND :stop", value])
             else
-              value = "%#{value}%" if @filter[name][:match] == 'contains'
+              value = "%#{value}%" if @filter[name][:match].to_sym == :contains
 
               scope = scope.where(["#{get_full_column_name(@filter[name][:field])} LIKE ?", value])
             end

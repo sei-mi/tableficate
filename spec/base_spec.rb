@@ -74,7 +74,7 @@ describe Tableficate::Base do
     class FilterByContainsInput < Tableficate::Base
       scope(:nobel_prize_winner)
 
-      filter(:first_name, match: 'contains')
+      filter(:first_name, match: :contains)
     end
     npw = FilterByContainsInput.tableficate({filter: {first_name: 'Al'}})
     npw.size.should == 1
@@ -85,7 +85,7 @@ describe Tableficate::Base do
     class FilterByContainsInput < Tableficate::Base
       scope(:nobel_prize_winner)
 
-      filter(:first_name, match: 'contains')
+      filter(:first_name, match: :contains)
     end
     npw = FilterByContainsInput.tableficate({filter: {first_name: ['Al', 'Mar']}})
     npw.size.should == 2

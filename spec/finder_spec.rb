@@ -13,7 +13,7 @@ describe Tableficate::Finder do
     class ContainsNobelPrizeWinner < Tableficate::Base
       scope :nobel_prize_winner
 
-      filter(:first_name, match: 'contains')
+      filter(:first_name, match: :contains)
     end
     npw = ContainsNobelPrizeWinner.tableficate({filter: {first_name: 'Al'}})
     npw.size.should == 1
@@ -33,7 +33,7 @@ describe Tableficate::Finder do
     class ContainsNobelPrizeWinner < Tableficate::Base
       scope :nobel_prize_winner
 
-      filter(:first_name, match: 'contains')
+      filter(:first_name, match: :contains)
     end
     npw = ContainsNobelPrizeWinner.tableficate({filter: {first_name: ['Al', 'Mar']}})
     npw.size.should == 2
