@@ -13,20 +13,28 @@ If you're using Bundler, add this to your Gemfile:
 
 ## Support
 
-### Ruby
-1.9+
-
-### Rails
-3.1+
-
-### Templating
-Any templating engine can be used. The default theme uses ERB.
-
-### Database Framework
-ActiveRecord
-
-### Pagination
-Any pagination can be used. The default theme has built-in support for Kaminari and will_paginate.
+<table>
+  <tr>
+    <td><strong>Ruby</strong></td>
+    <td>1.9</td>
+  </tr>
+  <tr>
+    <td><strong>Rails</strong></td>
+    <td>3.1</td>
+  </tr>
+  <tr>
+    <td><strong>Database Framework</strong></td>
+    <td>ActiveRecord</td>
+  </tr>
+  <tr>
+    <td><strong>Templating</strong></td>
+    <td>Any templating engine can be used. The default theme uses ERB.</td>
+  </tr>
+  <tr>
+    <td><strong>Pagination</strong></td>
+    <td>Any pagination can be used. The default theme has built-in support for Kaminari and will_paginate.</td>
+  </tr>
+</table>
 
 ## Basic Usage
 Let's say that we want to create a table that lists active accounts in the system with their time of creation and the name on the account.
@@ -118,6 +126,8 @@ The theme can then be applied to a table.
     <%= table_for @records, theme: 'foo' do |t| %>
       ...
     <% end %>
+    
+[Find out more about themes.](https://github.com/sei-mi/tableficate/wiki/Custom-Themes)
 
 ## Changes Needed to Upgrade From 0.2
 
