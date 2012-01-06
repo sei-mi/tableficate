@@ -92,9 +92,10 @@ module Tableficate
         sorting[:column] = column.to_sym
         sorting[:dir]    = ['asc', 'desc'].include?(dir) ? dir : 'asc'
       end
-      scope.tableficate_add_data(:current_sort, sorting)
+      scope.tableficate_data = {}
+      scope.tableficate_data[:current_sort] = sorting
       filters_with_field = @filter ? @filter.select{|name, options| not options.is_a?(Proc) and options and options.has_key?(:field)} : {}
-      scope.tableficate_add_data(:field_map, Hash[filters_with_field.map{|name, options| [name, options[:field]]}])
+      scope.tableficate_data[:field_map] = Hash[filters_with_field.map{|name, options| [name, options[:field]]}]
       scope
     end
 
