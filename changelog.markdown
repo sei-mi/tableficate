@@ -1,3 +1,6 @@
+## 0.3.1
+ * converting scope to an array through functions like `all` no longer breaks
+
 ## 0.3.0
  * tables no longer take the :html option, all non-recognized options are passed through as HTML attributes
  * The `options` attribute on a variety of objects has been removed. It has been replaced with specialized functions such as `label_options` and `collection` with all unrecognized options placed into the `attrs` attribute.
