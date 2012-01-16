@@ -81,7 +81,7 @@ describe Tableficate::Helper, type: :request do
   end
 
   describe 'tableficate_radio_tags' do
-    it 'takes a block for custom output' do
+    it 'allows themes to customize output' do
       visit '/filters/radio_tags?theme=custom_radio_block'
 
       page.html.should match /<label for="nobel_prize_winners_filter_category_Chemistry">Chemistry<\/label>\s*<input id="nobel_prize_winners_filter_category_Chemistry" name="nobel_prize_winners\[filter\]\[category\]" type="radio" value="Chemistry">/
@@ -122,7 +122,7 @@ describe Tableficate::Helper, type: :request do
   end
 
   describe 'tableficate_check_box_tags' do
-    it 'takes a block for custom output' do
+    it 'allows themes to customize output' do
       visit '/filters/check_box_tags?theme=custom_check_box_block'
 
       page.html.should match /<label for="nobel_prize_winners_filter_category_Chemistry">Chemistry<\/label>\s*<input id="nobel_prize_winners_filter_category_Chemistry" name="nobel_prize_winners\[filter\]\[category\]\[\]" type="checkbox" value="Chemistry">/
