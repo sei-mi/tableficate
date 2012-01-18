@@ -1,6 +1,9 @@
 ## 0.4.0
  * the match option on filters takes symbols
 
+## 0.3.2
+ * fix join table name finder in find_column_type
+
 ## 0.3.1
  * converting scope to an array through functions like `all` no longer breaks
 

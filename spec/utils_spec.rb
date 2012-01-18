@@ -42,6 +42,8 @@ describe Tableficate::Utils do
 
     it 'should find the column for manual joins' do
       Tableficate::Utils::find_column_type(NobelPrizeWinner.joins('JOIN nobel_prizes ON nobel_prizes.nobel_prize_winner_id = nobel_prize_winners.id'), :shared).should == :boolean
+
+      Tableficate::Utils::find_column_type(NobelPrizeWinner.joins('JOIN nobel_prizes USING(id, id)'), :shared).should == :boolean
     end
 
     it 'should return `nil` for unknown columns' do
