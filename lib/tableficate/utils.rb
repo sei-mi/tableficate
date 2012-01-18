@@ -17,7 +17,7 @@ module Tableficate
       ).uniq.map{|join|
         # convert string joins to table names
         if join.is_a?(String)
-          join.scan(/(?:(?:,|\bjoin\s*)\s*(\w+))/i)
+          join.scan(/\G(?:(?:,|\bjoin\s)\s*(\w+))/i)
         else
           join
         end
