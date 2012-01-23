@@ -1,6 +1,6 @@
 <% if table.filters.any? %>
   <%= form_tag('', method: :get, novalidate: 'novalidate') do %>
-    <%= tableficate_hidden_tags(table.hidden_filters) %>
+    <%= tableficate_hidden_tags(table) %>
 
     <% table.visible_filters.each do |filter| %>
       <%= tableficate_filter_tag(filter) %>

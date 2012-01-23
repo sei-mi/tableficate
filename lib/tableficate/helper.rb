@@ -42,7 +42,7 @@ module Tableficate
       text_field_tag(filter.field_name, filter.field_value(params[filter.table.as]), filter.attrs)
     end
 
-    def tableficate_hidden_tags(filters)
+    def tableficate_hidden_tags(table)
       html = []
 
       if params[table.as] and params[table.as][:sort] 
@@ -52,7 +52,7 @@ module Tableficate
         html.push(hidden_field_tag("#{table.as}[dir]", params[table.as][:dir]))
       end 
 
-      filters.each do |filter|
+      table.hidden_filters.each do |filter|
         html.push(hidden_field_tag(filter.field_name, filter.attrs[:value], filter.attrs))
       end
 

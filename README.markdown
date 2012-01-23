@@ -131,4 +131,4 @@ The theme can then be applied to a table.
 
 ## Changes Needed to Upgrade From 0.3
 
-1. The hidden `sort` and `dir` fields should be removed from the `filters/_form.html.erb` partial and replaced with `<%= tableficate_hidden_tags(table.hidden_filters) %>`.
+1. The hidden `sort` and `dir` fields should be removed from the `filters/_form.html.erb` partial and replaced with `<%= tableficate_hidden_tags(table) %>`.
