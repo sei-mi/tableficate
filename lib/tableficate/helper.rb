@@ -42,6 +42,14 @@ module Tableficate
       text_field_tag(filter.field_name, filter.field_value(params[filter.table.as]), filter.attrs)
     end
 
+    def tableficate_hidden_tags(filters)
+      html = []
+      filters.each do |filter|
+        html.push(hidden_field_tag(filter.field_name, filter.attrs[:value], filter.attrs))
+      end
+      html.join("\n").html_safe
+    end
+
     def tableficate_select_tag(filter)
       field_value = filter.field_value(params[filter.table.as])
 

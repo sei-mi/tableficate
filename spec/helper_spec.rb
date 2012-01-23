@@ -161,4 +161,16 @@ describe Tableficate::Helper, type: :request do
       page.should have_xpath('//table/tbody/tr', count: NobelPrizeWinner.joins(:nobel_prizes).where('nobel_prizes.category = ?', selected_category).size)
     end
   end
+
+  describe 'tableficate_hidden_tags' do
+    it 'displays hidden tags' do
+      visit '/filters/hidden_tags'
+
+      1.upto(2) do |i|
+        field = page.find("#nobel_prize_winners_filter_hidden_id_#{i}")
+        field[:type].should == 'hidden'
+        field.value.should == i.to_s
+      end
+    end
+  end
 end

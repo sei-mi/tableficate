@@ -1,0 +1,20 @@
+<%= table_for @npw do |t|
+  t.column :id 
+  t.column :created_at
+  t.column :updated_at
+  t.column :first_name 
+  t.column :last_name 
+  t.column :birthdate
+  t.column :category 
+  t.column :year 
+  t.column :shared do |record|
+    record.shared? ? 'Yes' : 'No'
+  end
+  t.column :meaningless_time
+  t.column :meaningless_decimal
+  t.column :meaningless_float
+
+  t.filter :id
+  t.filter :hidden_id_1, as: :hidden, value: 1
+  t.filter :hidden_id_2, as: :hidden, value: 2
+end %>

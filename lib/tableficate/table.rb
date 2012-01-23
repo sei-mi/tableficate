@@ -18,6 +18,14 @@ module Tableficate
       @field_map    = data[:field_map] || {}
     end
 
+    def hidden_filters
+      @filters.select{|filter| filter.attrs[:type] == 'hidden'}
+    end
+
+    def visible_filters
+      @filters.reject{|filter| filter.attrs[:type] == 'hidden'}
+    end
+
     def empty(*args, &block)
       if args.empty? and not block_given?
         @empty
@@ -62,6 +70,7 @@ module Tableficate
         datetime: Filter::Input,
         search:   Filter::Input,
         color:    Filter::Input,
+        hidden:   Filter::Input,
         select:   Filter::Select,
         radio:    Filter::Radio,
         checkbox: Filter::CheckBox

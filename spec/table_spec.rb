@@ -227,4 +227,24 @@ describe Tableficate::Table do
     @table.filters.first.is_a?(Tableficate::Filter::Select).should be true
     @table.filters.last.name.should == :last_name
   end
+
+  it 'should return hidden_filters' do
+    @table.hidden_filters.should == []
+
+    @table.filter(:hidden, as: :hidden, value: 1)
+    @table.filter(:visible)
+
+    @table.hidden_filters.length.should == 1
+    @table.hidden_filters.first.name.should == :hidden
+  end
+
+  it 'should return visible_filters' do
+    @table.visible_filters.should == []
+
+    @table.filter(:hidden, as: :hidden, value: 1)
+    @table.filter(:visible)
+
+    @table.visible_filters.length.should == 1
+    @table.visible_filters.first.name.should == :visible
+  end
 end
