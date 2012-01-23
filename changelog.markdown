@@ -1,6 +1,7 @@
 ## 0.4.0
  * the match option on filters takes symbols
  * adding support for hidden filters
+ * sort and dir hidden field moved from the template into the tableficate_hidden_tags helper
 
 ## 0.3.2
  * fix join table name finder in find_column_type

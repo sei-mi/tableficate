@@ -44,9 +44,18 @@ module Tableficate
 
     def tableficate_hidden_tags(filters)
       html = []
+
+      if params[table.as] and params[table.as][:sort] 
+        html.push(hidden_field_tag("#{table.as}[sort]", params[table.as][:sort]))
+      end 
+      if params[table.as] and params[table.as][:dir] 
+        html.push(hidden_field_tag("#{table.as}[dir]", params[table.as][:dir]))
+      end 
+
       filters.each do |filter|
         html.push(hidden_field_tag(filter.field_name, filter.attrs[:value], filter.attrs))
       end
+
       html.join("\n").html_safe
     end
 

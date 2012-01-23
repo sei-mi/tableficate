@@ -1,12 +1,6 @@
 <% if table.filters.any? %>
   <%= form_tag('', method: :get, novalidate: 'novalidate') do %>
     <%= tableficate_hidden_tags(table.hidden_filters) %>
-    <% if params[table.as] and params[table.as][:sort] %>
-      <%= hidden_field_tag("#{table.as}[sort]", params[table.as][:sort]) %>
-    <% end %>
-    <% if params[table.as] and params[table.as][:dir] %>
-      <%= hidden_field_tag("#{table.as}[dir]", params[table.as][:dir]) %>
-    <% end %>
 
     <% table.visible_filters.each do |filter| %>
       <%= tableficate_filter_tag(filter) %>
